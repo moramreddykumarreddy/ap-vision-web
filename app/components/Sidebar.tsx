@@ -93,7 +93,7 @@ export default function Sidebar({ role, userName, userSub }: SidebarProps) {
           className="size-8 shrink-0 rounded-lg bg-white object-contain p-0.5"
         />
         <div>
-          <h2 className="font-display text-xs font-extrabold leading-tight text-white">
+          <h2 className="text-xs font-extrabold leading-tight text-white">
             AP Vision Care
           </h2>
           <p className="text-[9px] text-white/50">Govt. of Andhra Pradesh</p>

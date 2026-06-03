@@ -174,10 +174,7 @@ export function StatCard({
       <h4 className="text-[10px] font-semibold uppercase tracking-wide text-grey-500">
         {title}
       </h4>
-      <div
-        className="font-heading text-[22px] font-black leading-tight"
-        style={{ color }}
-      >
+      <div className="text-[22px] font-black leading-tight" style={{ color }}>
         {value}
       </div>
       {subtitle && <div className="text-[10px] text-grey-500">{subtitle}</div>}
@@ -288,7 +285,7 @@ export function BannerCard({
         <div className="mt-2.5 flex">
           {kpis.map((k, i) => (
             <div key={i} className="flex-1 text-center">
-              <div className="font-heading text-xl font-black">{k.value}</div>
+              <div className="text-xl font-black">{k.value}</div>
               <div className="text-[10px] opacity-75">{k.label}</div>
             </div>
           ))}
