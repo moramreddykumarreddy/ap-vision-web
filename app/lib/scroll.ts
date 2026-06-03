@@ -1,5 +1,5 @@
-/** Height of the sticky landing nav (matches `LandingNav` / `scroll-padding-top`). */
-export const LANDING_HEADER_OFFSET = 72;
+/** Height of the fixed landing nav (matches `LandingNav` / `scroll-padding-top`). */
+export const LANDING_HEADER_OFFSET = 70;
 
 /** Soft scroll bounds — eases in and out gently (not abrupt). */
 const MIN_DURATION_MS = 520;
@@ -14,21 +14,27 @@ function easeInOutQuart(t: number) {
 }
 
 function getTargetTop(el: HTMLElement) {
-  return Math.max(0, el.getBoundingClientRect().top + window.scrollY - LANDING_HEADER_OFFSET);
+  return Math.max(
+    0,
+    el.getBoundingClientRect().top + window.scrollY - LANDING_HEADER_OFFSET,
+  );
 }
 
 function getDuration(distancePx: number) {
-  return Math.min(MAX_DURATION_MS, Math.max(MIN_DURATION_MS, Math.abs(distancePx) * MS_PER_PX));
+  return Math.min(
+    MAX_DURATION_MS,
+    Math.max(MIN_DURATION_MS, Math.abs(distancePx) * MS_PER_PX),
+  );
 }
 
 export function scrollToSection(href: string) {
-  const id = href.replace(/^#/, '');
+  const id = href.replace(/^#/, "");
   const el = document.getElementById(id);
   if (!el) return;
 
   const targetTop = getTargetTop(el);
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     if (activeScroll !== null) cancelAnimationFrame(activeScroll);
     activeScroll = null;
     window.scrollTo(0, targetTop);

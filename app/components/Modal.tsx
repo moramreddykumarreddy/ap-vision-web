@@ -44,7 +44,7 @@ export default function Modal({
       >
         <div className="flex shrink-0 items-start justify-between border-b border-grey-200 px-[22px] pb-3.5 pt-[18px]">
           <div>
-            <div className="font-heading text-base font-extrabold text-primary-dark">
+            <div className="text-base font-extrabold text-primary-dark">
               {title}
             </div>
             {subtitle && (

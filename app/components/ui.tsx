@@ -25,7 +25,7 @@ type ButtonVariant = "primary" | "accent" | "outline" | "ghost" | "danger";
 type ButtonSize = "sm" | "md" | "lg";
 
 const btnBase =
-  "inline-flex items-center justify-center gap-1.5 rounded-md border-0 font-semibold transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex items-center justify-center gap-1.5 rounded-lg border-0 font-semibold transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-60";
 
 const btnVariants: Record<ButtonVariant, string> = {
   primary:
@@ -95,7 +95,7 @@ export function Input({
   return (
     <input
       className={cn(
-        "w-full rounded-md border-[1.5px] border-grey-300 bg-white px-3.5 py-2.5 text-sm text-grey-900 transition-[border-color,box-shadow] placeholder:text-grey-400 focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/10",
+        "w-full rounded-lg border-[1.5px] border-grey-300 bg-white px-3.5 py-2.5 text-sm text-grey-900 transition-[border-color,box-shadow] placeholder:text-grey-400 focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/10",
         className,
       )}
       {...props}
@@ -111,7 +111,7 @@ export function Select({
   return (
     <select
       className={cn(
-        "w-full appearance-none rounded-md border-[1.5px] border-grey-300 bg-white px-3.5 py-2.5 text-sm text-grey-900 focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/10",
+        "w-full appearance-none rounded-lg border-[1.5px] border-grey-300 bg-white px-3.5 py-2.5 text-sm text-grey-900 focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/10",
         className,
       )}
       {...props}
@@ -128,7 +128,7 @@ export function Textarea({
   return (
     <textarea
       className={cn(
-        "w-full resize-y rounded-md border-[1.5px] border-grey-300 bg-white px-3.5 py-2.5 text-sm text-grey-900 focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/10",
+        "w-full resize-y rounded-lg border-[1.5px] border-grey-300 bg-white px-3.5 py-2.5 text-sm text-grey-900 focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/10",
         className,
       )}
       {...props}
@@ -174,10 +174,7 @@ export function StatCard({
       <h4 className="text-[10px] font-semibold uppercase tracking-wide text-grey-500">
         {title}
       </h4>
-      <div
-        className="font-heading text-[22px] font-black leading-tight"
-        style={{ color }}
-      >
+      <div className="text-[22px] font-black leading-tight" style={{ color }}>
         {value}
       </div>
       {subtitle && <div className="text-[10px] text-grey-500">{subtitle}</div>}
@@ -288,7 +285,7 @@ export function BannerCard({
         <div className="mt-2.5 flex">
           {kpis.map((k, i) => (
             <div key={i} className="flex-1 text-center">
-              <div className="font-heading text-xl font-black">{k.value}</div>
+              <div className="text-xl font-black">{k.value}</div>
               <div className="text-[10px] opacity-75">{k.label}</div>
             </div>
           ))}

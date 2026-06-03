@@ -1,13 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
+/* AP Vision Care mobile app — lib/core/theme/app_colors.dart + app_theme.dart */
 @theme {
   --color-primary: #1a3a6b;
   --color-primary-dark: #0d2347;
   --color-primary-light: #2952a3;
+  --color-primary-container: #d6e4ff;
   --color-accent: #00897b;
   --color-accent-light: #4db6ac;
   --color-accent-dark: #00695c;
+  --color-accent-soft: #b2dfdb;
   --color-gold: #d4a017;
   --color-gold-light: #ffd54f;
   --color-success: #2e7d32;
@@ -28,24 +31,39 @@
   --color-grey-700: #616161;
   --color-grey-800: #424242;
   --color-grey-900: #212121;
+
+  /* Semantic aliases (landing + dashboards) */
+  --color-navy: #1a3a6b;
+  --color-navy-2: #0d2347;
+  --color-ink: #212121;
+  --color-teal: #00897b;
+  --color-teal-d: #00695c;
+  --color-teal-soft: #b2dfdb;
+  --color-blue: #2952a3;
+  --color-blue-soft: #d6e4ff;
+  --color-amber: #e65100;
+  --color-amber-soft: #fff3e0;
+  --color-green: #2e7d32;
+  --color-green-soft: #e8f5e9;
+  --color-red: #c62828;
+  --color-red-soft: #ffebee;
+  --color-bg-app: #fafafa;
+  --color-surface: #ffffff;
+  --color-line: #eeeeee;
+  --color-line-2: #f5f5f5;
+  --color-muted: #757575;
+  --color-muted-2: #bdbdbd;
+
   --font-sans: "Inter", system-ui, sans-serif;
-  --font-display: "Outfit", sans-serif;
-  --font-heading: "Space Grotesk", sans-serif;
-  --font-landing: "Plus Jakarta Sans", sans-serif;
-  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
-  --color-outreach-teal: #134e4a;
-  --color-outreach-teal-dark: #0a3d3a;
-  --color-outreach-teal-footer: #0f4c5c;
-  --color-outreach-orange: #e07030;
-  --color-outreach-orange-muted: #c45c20;
-  --color-nav-bg: #f4f3ef;
-  --color-outreach-cream: #fdf8f1;
-  --color-outreach-ink: #0f2d33;
-  --color-outreach-slate: #475569;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-heading: "Inter", system-ui, sans-serif;
+  --font-landing: "Inter", system-ui, sans-serif;
+  --font-serif: "Inter", system-ui, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
@@ -94,7 +112,7 @@
 
   html {
     scroll-behavior: auto;
-    scroll-padding-top: 72px;
+    scroll-padding-top: 70px;
   }
 
   body {
