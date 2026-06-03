@@ -17,11 +17,6 @@ export default function Topbar({ title, subtitle }: TopbarProps) {
           🔔
           <div className="notif-dot" />
         </div>
-        <div className="topbar-icon-btn" title="Search">🔍</div>
-        <div className="topbar-user">
-          <span>👤</span>
-          <span>Profile</span>
-        </div>
       </div>
     </header>
   );

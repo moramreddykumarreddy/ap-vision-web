@@ -79,7 +79,11 @@ export default function Sidebar({ role, userName, userSub }: SidebarProps) {
     <aside className="sidebar">
       {/* Logo */}
       <div className="sidebar-logo">
-        <div className="sidebar-logo-icon">AP</div>
+        <img
+          src="/apvision.png"
+          alt="AP Vision Care"
+          style={{ width: 32, height: 32, borderRadius: 8, objectFit: 'contain', background: 'white', padding: 2, flexShrink: 0 }}
+        />
         <div className="sidebar-logo-text">
           <h2>AP Vision Care</h2>
           <p>Govt. of Andhra Pradesh</p>

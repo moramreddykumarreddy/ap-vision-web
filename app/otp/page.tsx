@@ -40,7 +40,7 @@ function OtpContent() {
     <div className="auth-page">
       <div className="auth-card animate-fade-up" style={{ maxWidth: 400 }}>
         <div className="auth-logo">
-          <div className="auth-logo-circle">AP</div>
+          <img src="/apvision.png" alt="AP Vision Care" style={{ width: 72, height: 72, borderRadius: 18, objectFit: 'contain', background: '#f0f4ff', padding: 6, margin: '0 auto 12px', display: 'block', boxShadow: '0 4px 20px rgba(26,58,107,0.15)' }} />
           <h1>OTP Verification</h1>
           <p>Code sent to +91 {mobile}</p>
         </div>

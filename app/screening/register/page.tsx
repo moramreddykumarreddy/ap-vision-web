@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
+import Modal, { SuccessBanner, downloadFile } from '@/app/components/Modal';
 
 const steps = [
   'Basic Info',
@@ -25,7 +26,7 @@ export default function RegistrationFlow() {
   const [form, setForm] = useState<Record<string, string>>({});
 
   const update = (k: string, v: string) => setForm(prev => ({ ...prev, [k]: v }));
-  const next = () => { if (step < steps.length - 1) setStep(s => s + 1); else router.push('/screening/dashboard'); };
+  const next = () => { if (step < steps.length - 1) setStep(s => s + 1); else router.push('/screening/camps'); };
   const prev = () => { if (step > 0) setStep(s => s - 1); };
 
   return (
@@ -315,17 +316,67 @@ function DecisionEngineStep({ form }: { form: Record<string, string> }) {
 }
 
 function PrescriptionStep({ form }: { form: Record<string, string> }) {
+  const [smsOpen, setSmsOpen] = useState(false);
+  const [smsSuccess, setSmsSuccess] = useState(false);
+  const patientPhone = form.mobile || '9876543210';
+  const patientName = `${form.fname || 'Ramaiah'} ${form.lname || 'Venkata'}`;
+
+  const getPrescriptionText = () => {
+    return `==================================================
+AP DIGITAL VISION PROGRAM - CLINICAL PRESCRIPTION
+==================================================
+Patient ID: APV-${Math.floor(100000 + Math.random() * 900000)}
+Patient Name: ${patientName}
+Age/Gender: ${form.dob ? (new Date().getFullYear() - new Date(form.dob).getFullYear()) : '58'} / ${form.gender || 'Male'}
+Mobile: ${patientPhone}
+District/Mandal: ${form.district || 'Krishna'} / ${form.mandal || 'Vijayawada'}
+
+VISUAL ACUITY UNAIDED:
+Right Eye (OD): ${form['va-od-un'] || '6/12'}
+Left Eye (OS): ${form['va-os-un'] || '6/12'}
+
+REFRACTION DETAILS:
+Right Eye (OD) - Sph: ${form['Right Eye (OD)-Sphere (D)'] || '+1.25'} | Cyl: ${form['Right Eye (OD)-Cylinder (D)'] || '-0.50'} | Axis: ${form['Right Eye (OD)-Axis (°)'] || '90'} | Add: ${form['Right Eye (OD)-Add (D)'] || '+2.00'}
+Left Eye (OS)  - Sph: ${form['Left Eye (OS)-Sphere (D)'] || '+1.25'} | Cyl: ${form['Left Eye (OS)-Cylinder (D)'] || '-0.50'} | Axis: ${form['Left Eye (OS)-Axis (°)'] || '90'} | Add: ${form['Left Eye (OS)-Add (D)'] || '+2.00'}
+
+CLINICAL RECOMMENDATION:
+Standard reading glasses for Presbyopia corrected.
+Report generated on: ${new Date().toLocaleDateString('en-IN')}
+==================================================`;
+  };
+
+  const handlePrint = () => {
+    downloadFile(`Prescription_${patientName.replace(/\s+/g, '_')}_Print.txt`, getPrescriptionText());
+  };
+
+  const handleSavePdf = () => {
+    downloadFile(`Prescription_${patientName.replace(/\s+/g, '_')}.pdf`, getPrescriptionText());
+  };
+
+  const handleSendSms = () => {
+    setSmsSuccess(true);
+    setTimeout(() => {
+      setSmsOpen(false);
+      setSmsSuccess(false);
+    }, 1500);
+  };
+
   return (
     <>
       <div style={{ background: '#F3F8FF', border: '1.5px solid #1A3A6B20', borderRadius: 12, padding: 20, marginBottom: 20 }}>
         <div style={{ fontSize: 16, fontWeight: 800, color: '#1A3A6B', marginBottom: 4 }}>Prescription Summary</div>
-        <div style={{ fontSize: 12, color: '#9E9E9E' }}>Camp: Vijayawada Urban Camp • Date: 02 Jun 2025</div>
+        <div style={{ fontSize: 12, color: '#9E9E9E' }}>Camp: Vijayawada Urban Camp • Date: {new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
         {['Right Eye (OD)', 'Left Eye (OS)'].map(eye => (
           <div key={eye} style={{ border: '1px solid #E0E0E0', borderRadius: 10, padding: 14 }}>
             <div style={{ fontSize: 12, fontWeight: 700, color: '#1A3A6B', marginBottom: 10 }}>{eye}</div>
-            {[['Sph', '+1.25'], ['Cyl', '-0.50'], ['Axis', '90°'], ['Add', '+2.00']].map(([l, v]) => (
+            {[
+              ['Sph', form[`${eye}-Sphere (D)`] || '+1.25'],
+              ['Cyl', form[`${eye}-Cylinder (D)`] || '-0.50'],
+              ['Axis', form[`${eye}-Axis (°)`] ? `${form[`${eye}-Axis (°)`]}°` : '90°'],
+              ['Add', form[`${eye}-Add (D)`] || '+2.00']
+            ].map(([l, v]) => (
               <div key={l} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 4 }}>
                 <span style={{ color: '#757575' }}>{l}</span>
                 <span style={{ fontWeight: 700 }}>{v}</span>
@@ -335,10 +386,43 @@ function PrescriptionStep({ form }: { form: Record<string, string> }) {
         ))}
       </div>
       <div style={{ display: 'flex', gap: 10 }}>
-        <button className="btn btn-primary btn-sm">🖨️ Print Prescription</button>
-        <button className="btn btn-accent btn-sm">📱 Send via SMS</button>
-        <button className="btn btn-outline btn-sm">💾 Save as PDF</button>
+        <button className="btn btn-primary btn-sm" onClick={handlePrint}>🖨️ Print Prescription</button>
+        <button className="btn btn-accent btn-sm" onClick={() => setSmsOpen(true)}>📱 Send via SMS</button>
+        <button className="btn btn-outline btn-sm" onClick={handleSavePdf}>💾 Save as PDF</button>
       </div>
+
+      {/* SMS Modal */}
+      <Modal
+        open={smsOpen}
+        onClose={() => setSmsOpen(false)}
+        title="Send Prescription via SMS"
+        subtitle={`To: ${patientName}`}
+        actions={
+          <>
+            <button className="btn btn-outline" onClick={() => setSmsOpen(false)} disabled={smsSuccess}>Cancel</button>
+            <button className="btn btn-accent" onClick={handleSendSms} disabled={smsSuccess}>Send SMS</button>
+          </>
+        }
+      >
+        {smsSuccess ? (
+          <SuccessBanner message={`Prescription SMS successfully sent to +91 ${patientPhone}!`} />
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div style={{ fontSize: 13, color: '#424242', lineHeight: 1.5 }}>
+              Are you sure you want to send the digital prescription and spectacle collection link to the patient?
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <label style={{ fontSize: 12, fontWeight: 700, color: '#0D2347' }}>Patient Mobile Number</label>
+              <input
+                type="tel"
+                disabled
+                value={`+91 ${patientPhone}`}
+                style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13, background: '#F5F5F5', color: '#616161' }}
+              />
+            </div>
+          </div>
+        )}
+      </Modal>
     </>
   );
 }

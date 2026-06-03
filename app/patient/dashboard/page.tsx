@@ -64,7 +64,9 @@ export default function PatientDashboard() {
           </div>
 
           {/* Quick Actions */}
-          <SectionHeader title="Quick Access" actionLabel="" className="mt-24" />
+          <div style={{ marginTop: 24 }}>
+            <SectionHeader title="Quick Access" actionLabel="" />
+          </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginTop: 12 }}>
             {[
               { icon: '💊', label: 'Prescriptions', color: '#1A3A6B', href: '/patient/prescriptions' },

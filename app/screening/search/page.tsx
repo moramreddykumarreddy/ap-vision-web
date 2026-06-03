@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
 import { StatusBadge } from '@/app/components/ui';
+import Modal, { SuccessBanner } from '@/app/components/Modal';
 
 const patients = [
   { id: 'APV-001234', name: 'Ramaiah Venkata', age: 58, gender: 'M', village: 'Nandyal', phone: '9876543210', lastVisit: '01 Jun 2025', diagnosis: 'Presbyopia', status: 'Active' },
@@ -17,12 +18,30 @@ export default function PatientSearch() {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [searched, setSearched] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
+  const [qrScanning, setQrScanning] = useState(false);
+  const [successMsg, setSuccessMsg] = useState('');
 
   const results = searched ? patients.filter(p =>
     p.name.toLowerCase().includes(query.toLowerCase()) ||
     p.id.toLowerCase().includes(query.toLowerCase()) ||
     p.phone.includes(query)
   ) : [];
+
+  const handleSimulateScan = (patientId: string) => {
+    setQrScanning(true);
+    setTimeout(() => {
+      setQrScanning(false);
+      const pat = patients.find(p => p.id === patientId);
+      setSuccessMsg(`QR Code scanned! Found: ${pat?.name}`);
+      setTimeout(() => {
+        setQuery(patientId);
+        setSearched(true);
+        setQrOpen(false);
+        setSuccessMsg('');
+      }, 1500);
+    }, 1500);
+  };
 
   return (
     <div className="app-layout">
@@ -42,7 +61,7 @@ export default function PatientSearch() {
               onKeyDown={e => e.key === 'Enter' && setSearched(true)}
             />
             <button className="btn btn-primary" onClick={() => setSearched(true)}>🔍 Search</button>
-            <button className="btn btn-outline" onClick={() => alert('QR Scanner')}>📷 Scan QR</button>
+            <button className="btn btn-outline" onClick={() => setQrOpen(true)}>📷 Scan QR</button>
           </div>
 
           {!searched && (
@@ -88,6 +107,68 @@ export default function PatientSearch() {
               ))}
             </div>
           )}
+
+          {/* Scan QR Modal */}
+          <Modal
+            open={qrOpen}
+            onClose={() => setQrOpen(false)}
+            title="Scan Patient QR Code"
+            subtitle="Place the patient's QR code in front of the camera"
+            actions={
+              <button className="btn btn-outline" onClick={() => setQrOpen(false)} disabled={qrScanning || !!successMsg}>Cancel</button>
+            }
+          >
+            {successMsg ? (
+              <SuccessBanner message={successMsg} />
+            ) : qrScanning ? (
+              <div style={{ textAlign: 'center', padding: '24px 0' }}>
+                <div className="spinner" style={{ margin: '0 auto 16px' }} />
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#1A3A6B' }}>Reading QR Code...</div>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18 }}>
+                {/* Visual Camera Scan Area */}
+                <div style={{
+                  width: 220, height: 220,
+                  border: '3px dashed #1A3A6B', borderRadius: 16,
+                  position: 'relative', background: '#ECEFF1',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  overflow: 'hidden',
+                }}>
+                  <div style={{
+                    position: 'absolute', top: 0, left: 0, right: 0, height: 4,
+                    background: '#E53935', boxShadow: '0 0 8px #E53935',
+                    animation: 'scanLine 2.5s linear infinite',
+                  }} />
+                  <span style={{ fontSize: 48 }}>📷</span>
+                </div>
+                <div style={{ fontSize: 12, color: '#757575', textAlign: 'center' }}>
+                  Simulate scanning by selecting a patient's QR code card below:
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
+                  {patients.slice(0, 3).map(p => (
+                    <button
+                      key={p.id}
+                      className="btn btn-sm btn-outline"
+                      onClick={() => handleSimulateScan(p.id)}
+                      style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 14px' }}
+                    >
+                      <span>🪪 {p.name}</span>
+                      <span style={{ opacity: 0.7 }}>{p.id}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </Modal>
+
+          <style jsx global>{`
+            @keyframes scanLine {
+              0% { top: 0%; }
+              50% { top: 100%; }
+              100% { top: 0%; }
+            }
+          `}</style>
         </main>
       </div>
     </div>
@@ -130,3 +211,4 @@ function PatientCard({ patient: p, index: i, router }: { patient: typeof patient
     </div>
   );
 }
+

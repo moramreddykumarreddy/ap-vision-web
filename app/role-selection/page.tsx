@@ -23,7 +23,7 @@ export default function RoleSelectionPage() {
   return (
     <div className="auth-page" style={{ flexDirection: 'column', gap: 0 }}>
       <div style={{ textAlign: 'center', marginBottom: 32, color: 'white' }}>
-        <div style={{ width: 56, height: 56, borderRadius: 16, background: '#D4A017', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 900, fontFamily: 'Outfit, sans-serif', color: '#0D2347', margin: '0 auto 12px' }}>AP</div>
+        <img src="/apvision.png" alt="AP Vision Care" style={{ width: 64, height: 64, borderRadius: 18, objectFit: 'contain', background: 'rgba(255,255,255,0.95)', padding: 6, margin: '0 auto 12px', display: 'block', boxShadow: '0 8px 28px rgba(0,0,0,0.25)' }} />
         <h1 style={{ fontSize: 22, fontWeight: 900, fontFamily: 'Outfit, sans-serif', marginBottom: 4 }}>Select Your Role</h1>
         <p style={{ fontSize: 13, opacity: 0.65 }}>Choose the role to continue to your dashboard</p>
       </div>

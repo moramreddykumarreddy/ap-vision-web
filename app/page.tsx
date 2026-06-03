@@ -41,7 +41,7 @@ export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div style={{ minHeight: '100vh', fontFamily: "'Inter', sans-serif", background: '#f0f4ff' }}>
+    <div style={{ minHeight: '100vh', fontFamily: "'Plus Jakarta Sans', sans-serif", background: '#f0f4ff' }}>
 
       {/* ─── Navbar ──────────────────────────────────────────── */}
       <nav style={{
@@ -55,22 +55,19 @@ export default function LandingPage() {
         <div style={{
           maxWidth: 1280, margin: '0 auto',
           padding: '0 24px',
-          height: 68,
+          height: 58,
           display: 'flex', alignItems: 'center', gap: 16,
         }}>
           {/* Logo */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-            <div style={{
-              width: 42, height: 42, borderRadius: 12,
-              background: 'linear-gradient(135deg, #D4A017, #FFD54F)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontWeight: 900, fontSize: 17, color: '#0D2347',
-              fontFamily: "'Outfit', sans-serif",
-              boxShadow: '0 4px 16px rgba(212,160,23,0.4)',
-            }}>AP</div>
+            <img
+              src="/apvision.png"
+              alt="AP Vision Care"
+              style={{ width: 42, height: 42, borderRadius: 10, objectFit: 'contain', background: 'white', padding: 2 }}
+            />
             <div>
-              <div style={{ color: '#fff', fontWeight: 800, fontSize: 15, fontFamily: "'Outfit', sans-serif", lineHeight: 1.2 }}>AP Vision Care</div>
-              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 10, lineHeight: 1.2 }}>Govt. of Andhra Pradesh</div>
+              <div style={{ color: '#fff', fontWeight: 800, fontSize: 15, fontFamily: "'Space Grotesk', sans-serif", lineHeight: 1.2, letterSpacing: '-0.2px' }}>AP Vision Care</div>
+              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 10, lineHeight: 1.2, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Govt. of Andhra Pradesh</div>
             </div>
           </div>
 
@@ -95,6 +92,8 @@ export default function LandingPage() {
                   color: activeTab === tab.id ? '#FFD54F' : 'rgba(255,255,255,0.72)',
                   padding: '7px 14px',
                   fontSize: 13, fontWeight: 600,
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  letterSpacing: '0.1px',
                   cursor: 'pointer',
                   display: 'flex', alignItems: 'center', gap: 5,
                   transition: 'all 0.18s ease',
@@ -127,8 +126,10 @@ export default function LandingPage() {
               color: '#0D2347',
               border: 'none',
               borderRadius: 10,
-              padding: '9px 22px',
-              fontSize: 13, fontWeight: 800,
+              padding: '11px 28px',
+              fontSize: 14, fontWeight: 600,
+              fontFamily: "'Space Grotesk', sans-serif",
+              letterSpacing: '0.2px',
               cursor: 'pointer',
               display: 'flex', alignItems: 'center', gap: 6,
               boxShadow: '0 4px 16px rgba(212,160,23,0.35)',
@@ -188,7 +189,7 @@ export default function LandingPage() {
             <button
               onClick={() => router.push('/login')}
               style={{
-                marginTop: 12, width: '100%',
+                marginTop: 10, width: '100%',
                 background: 'linear-gradient(135deg, #D4A017, #FFD54F)',
                 color: '#0D2347', border: 'none', borderRadius: 10,
                 padding: '12px', fontSize: 14, fontWeight: 800, cursor: 'pointer',
@@ -206,7 +207,7 @@ export default function LandingPage() {
         background: 'linear-gradient(160deg, #061529 0%, #0D2347 45%, #1A3A6B 80%, #1a4a8a 100%)',
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
-        padding: '100px 24px 60px',
+        padding: '72px 24px 36px',
         position: 'relative',
         overflow: 'hidden',
       }}>
@@ -245,20 +246,24 @@ export default function LandingPage() {
         </div>
 
         {/* Logo Icon */}
-        <div className="animate-fade-up d1" style={{
-          width: 100, height: 100, borderRadius: 28,
-          background: 'linear-gradient(135deg, #D4A017, #FFD54F)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 42, fontWeight: 900, fontFamily: "'Outfit', sans-serif",
-          color: '#0D2347', marginBottom: 28,
-          boxShadow: '0 12px 48px rgba(212,160,23,0.4), 0 0 0 1px rgba(212,160,23,0.2)',
-        }}>AP</div>
+        <img
+          className="animate-fade-up d1"
+          src="/apvision.png"
+          alt="AP Vision Care"
+          style={{
+            width: 90, height: 90, borderRadius: 24,
+            objectFit: 'contain',
+            background: 'rgba(255,255,255,0.95)',
+            padding: 8, marginBottom: 16,
+            boxShadow: '0 12px 48px rgba(212,160,23,0.35), 0 0 0 1px rgba(212,160,23,0.2)',
+          }}
+        />
 
         <h1 className="animate-fade-up d2" style={{
-          fontSize: 'clamp(32px, 5vw, 60px)', fontWeight: 900,
-          fontFamily: "'Outfit', sans-serif", color: '#fff',
-          textAlign: 'center', lineHeight: 1.15, marginBottom: 20,
-          maxWidth: 820,
+          fontSize: 'clamp(26px, 4vw, 48px)', fontWeight: 800,
+          fontFamily: "'Playfair Display', serif", color: '#fff',
+          textAlign: 'center', lineHeight: 1.18, marginBottom: 20,
+          maxWidth: 820, letterSpacing: '-0.5px',
         }}>
           Bringing <span style={{ color: '#FFD54F' }}>Clarity</span> to Every<br />
           Corner of Andhra Pradesh
@@ -266,22 +271,26 @@ export default function LandingPage() {
 
         <p className="animate-fade-up d3" style={{
           fontSize: 'clamp(14px, 1.8vw, 18px)',
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
           color: 'rgba(255,255,255,0.65)',
           textAlign: 'center', maxWidth: 600,
-          lineHeight: 1.7, marginBottom: 44,
+          lineHeight: 1.65, marginBottom: 28,
+          fontWeight: 400,
         }}>
           A comprehensive digital platform connecting patients, screening teams, tele-ophthalmologists,
           and government administrators — delivering world-class eye care at scale.
         </p>
 
-        <div className="animate-fade-up d4" style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center', marginBottom: 72 }}>
+        <div className="animate-fade-up d4" style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginBottom: 36 }}>
           <button
             id="hero-get-started-btn"
             onClick={() => router.push('/role-selection')}
             style={{
               background: 'linear-gradient(135deg, #D4A017, #FFD54F)',
               color: '#0D2347', border: 'none', borderRadius: 14,
-              padding: '15px 36px', fontSize: 15, fontWeight: 800,
+              padding: '15px 36px', fontSize: 15, fontWeight: 700,
+              fontFamily: "'Space Grotesk', sans-serif",
+              letterSpacing: '0.2px',
               cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,
               boxShadow: '0 6px 24px rgba(212,160,23,0.45)',
               transition: 'all 0.2s ease',
@@ -304,7 +313,9 @@ export default function LandingPage() {
               background: 'rgba(255,255,255,0.08)',
               color: '#fff', border: '1.5px solid rgba(255,255,255,0.2)',
               borderRadius: 14, padding: '15px 36px',
-              fontSize: 15, fontWeight: 700,
+              fontSize: 15, fontWeight: 600,
+              fontFamily: "'Space Grotesk', sans-serif",
+              letterSpacing: '0.2px',
               cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,
               backdropFilter: 'blur(8px)',
               transition: 'all 0.2s ease',
@@ -337,8 +348,8 @@ export default function LandingPage() {
               textAlign: 'center', padding: '8px 20px',
               borderRight: i < 3 ? '1px solid rgba(255,255,255,0.1)' : 'none',
             }}>
-              <div style={{ fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: 900, color: s.color, fontFamily: "'Outfit', sans-serif" }}>{s.value}</div>
-              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)', marginTop: 3 }}>{s.label}</div>
+              <div style={{ fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: 700, color: s.color, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: '-0.5px' }}>{s.value}</div>
+              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)', marginTop: 3, fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -355,7 +366,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── Services Section ─────────────────────────────────── */}
-      <section style={{ padding: '80px 24px', background: 'white' }}>
+      <section style={{ padding: '44px 24px', background: 'white' }}>
         <div style={{ maxWidth: 1140, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 52 }}>
             <div style={{
@@ -365,10 +376,10 @@ export default function LandingPage() {
               fontSize: 11, fontWeight: 700, letterSpacing: 1,
               textTransform: 'uppercase', marginBottom: 14,
             }}>Our Services</div>
-            <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 38px)', fontWeight: 900, color: '#0D2347', fontFamily: "'Outfit', sans-serif", marginBottom: 12 }}>
+            <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 800, color: '#0D2347', fontFamily: "'Playfair Display', serif", marginBottom: 12, letterSpacing: '-0.3px' }}>
               Comprehensive Eye Care Services
             </h2>
-            <p style={{ color: '#757575', fontSize: 15, maxWidth: 520, margin: '0 auto', lineHeight: 1.7 }}>
+            <p style={{ color: '#757575', fontSize: 15, maxWidth: 520, margin: '0 auto', lineHeight: 1.75, fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 400 }}>
               Free, high-quality eye care delivered across all districts of Andhra Pradesh.
             </p>
           </div>
@@ -395,8 +406,8 @@ export default function LandingPage() {
                 }}
               >
                 <div style={{ fontSize: 36, marginBottom: 14 }}>{s.icon}</div>
-                <h3 style={{ fontSize: 16, fontWeight: 800, color: '#0D2347', marginBottom: 8, fontFamily: "'Outfit', sans-serif" }}>{s.title}</h3>
-                <p style={{ fontSize: 13, color: '#616161', lineHeight: 1.6 }}>{s.desc}</p>
+                <h3 style={{ fontSize: 17, fontWeight: 700, color: '#0D2347', marginBottom: 8, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: '-0.2px' }}>{s.title}</h3>
+                <p style={{ fontSize: 13, color: '#616161', lineHeight: 1.7, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -409,7 +420,7 @@ export default function LandingPage() {
         background: 'linear-gradient(160deg, #0D2347, #1A3A6B)',
       }}>
         <div style={{ maxWidth: 1140, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 52 }}>
+          <div style={{ textAlign: 'center', marginBottom: 32 }}>
             <div style={{
               display: 'inline-block',
               background: 'rgba(212,160,23,0.15)', color: '#FFD54F',
@@ -417,10 +428,10 @@ export default function LandingPage() {
               fontSize: 11, fontWeight: 700, letterSpacing: 1,
               textTransform: 'uppercase', marginBottom: 14,
             }}>Platform Features</div>
-            <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 38px)', fontWeight: 900, color: '#fff', fontFamily: "'Outfit', sans-serif", marginBottom: 12 }}>
+            <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 800, color: '#fff', fontFamily: "'Playfair Display', serif", marginBottom: 12, letterSpacing: '-0.3px' }}>
               Built for Every Stakeholder
             </h2>
-            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15, maxWidth: 500, margin: '0 auto', lineHeight: 1.7 }}>
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15, maxWidth: 500, margin: '0 auto', lineHeight: 1.75, fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 400 }}>
               A unified digital ecosystem purpose-built for the AP Vision Care programme.
             </p>
           </div>
@@ -451,8 +462,8 @@ export default function LandingPage() {
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontSize: 26, marginBottom: 16,
                 }}>{f.icon}</div>
-                <h3 style={{ fontSize: 16, fontWeight: 800, color: '#FFD54F', marginBottom: 8, fontFamily: "'Outfit', sans-serif" }}>{f.title}</h3>
-                <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.7 }}>{f.desc}</p>
+                <h3 style={{ fontSize: 17, fontWeight: 700, color: '#FFD54F', marginBottom: 8, fontFamily: "'Space Grotesk', sans-serif", letterSpacing: '-0.2px' }}>{f.title}</h3>
+                <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{f.desc}</p>
               </div>
             ))}
           </div>
@@ -460,7 +471,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── Stats Section ────────────────────────────────────── */}
-      <section style={{ padding: '80px 24px', background: '#f8faff' }}>
+      <section style={{ padding: '44px 24px', background: '#f8faff' }}>
         <div style={{ maxWidth: 1140, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 52 }}>
             <div style={{
@@ -470,7 +481,7 @@ export default function LandingPage() {
               fontSize: 11, fontWeight: 700, letterSpacing: 1,
               textTransform: 'uppercase', marginBottom: 14,
             }}>Programme Impact</div>
-            <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 38px)', fontWeight: 900, color: '#0D2347', fontFamily: "'Outfit', sans-serif" }}>
+            <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 800, color: '#0D2347', fontFamily: "'Playfair Display', serif", letterSpacing: '-0.3px' }}>
               Transforming Lives at Scale
             </h2>
           </div>
@@ -500,8 +511,8 @@ export default function LandingPage() {
                   width: 80, height: 80, borderRadius: '50%',
                   background: s.color, opacity: 0.07,
                 }} />
-                <div style={{ fontSize: 'clamp(26px, 3.5vw, 36px)', fontWeight: 900, color: s.color, fontFamily: "'Outfit', sans-serif", marginBottom: 8 }}>{s.value}</div>
-                <div style={{ fontSize: 12, color: '#757575', fontWeight: 600 }}>{s.label}</div>
+                <div style={{ fontSize: 'clamp(26px, 3.5vw, 36px)', fontWeight: 700, color: s.color, fontFamily: "'Space Grotesk', sans-serif", marginBottom: 8, letterSpacing: '-0.5px' }}>{s.value}</div>
+                <div style={{ fontSize: 12, color: '#757575', fontWeight: 500, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -514,10 +525,10 @@ export default function LandingPage() {
         background: 'linear-gradient(135deg, #D4A017 0%, #F5C842 50%, #D4A017 100%)',
       }}>
         <div style={{ maxWidth: 760, margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: 'clamp(26px, 4vw, 44px)', fontWeight: 900, color: '#0D2347', fontFamily: "'Outfit', sans-serif", marginBottom: 16 }}>
+          <h2 style={{ fontSize: 'clamp(26px, 4vw, 46px)', fontWeight: 800, color: '#0D2347', fontFamily: "'Playfair Display', serif", marginBottom: 16, letterSpacing: '-0.4px' }}>
             Ready to Join the Programme?
           </h2>
-          <p style={{ fontSize: 16, color: 'rgba(13,35,71,0.7)', marginBottom: 40, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 16, color: 'rgba(13,35,71,0.7)', marginBottom: 40, lineHeight: 1.75, fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 400 }}>
             Access the platform as a patient, screening officer, tele-ophthalmologist, vendor, or administrator.
           </p>
           <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -527,7 +538,9 @@ export default function LandingPage() {
               style={{
                 background: '#0D2347', color: '#FFD54F',
                 border: 'none', borderRadius: 14,
-                padding: '15px 36px', fontSize: 15, fontWeight: 800,
+                padding: '15px 36px', fontSize: 15, fontWeight: 700,
+                fontFamily: "'Space Grotesk', sans-serif",
+                letterSpacing: '0.2px',
                 cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,
                 boxShadow: '0 6px 24px rgba(13,35,71,0.3)',
                 transition: 'all 0.2s ease',
@@ -543,7 +556,9 @@ export default function LandingPage() {
               style={{
                 background: 'rgba(13,35,71,0.1)', color: '#0D2347',
                 border: '2px solid rgba(13,35,71,0.25)', borderRadius: 14,
-                padding: '15px 36px', fontSize: 15, fontWeight: 700,
+                padding: '15px 36px', fontSize: 15, fontWeight: 600,
+                fontFamily: "'Space Grotesk', sans-serif",
+                letterSpacing: '0.2px',
                 cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,
                 transition: 'all 0.2s ease',
               }}
@@ -557,21 +572,20 @@ export default function LandingPage() {
       </section>
 
       {/* ─── Footer ──────────────────────────────────────────── */}
-      <footer style={{ background: '#061529', padding: '40px 24px' }}>
+      <footer style={{ background: '#061529', padding: '24px' }}>
         <div style={{ maxWidth: 1140, margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: 24, alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{
-              width: 36, height: 36, borderRadius: 10,
-              background: 'linear-gradient(135deg, #D4A017, #FFD54F)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontWeight: 900, fontSize: 14, color: '#0D2347',
-            }}>AP</div>
+            <img
+              src="/apvision.png"
+              alt="AP Vision Care"
+              style={{ width: 36, height: 36, borderRadius: 8, objectFit: 'contain', background: 'white', padding: 2 }}
+            />
             <div>
-              <div style={{ color: '#fff', fontWeight: 800, fontSize: 13 }}>AP Vision Care</div>
-              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10 }}>Government of Andhra Pradesh</div>
+              <div style={{ color: '#fff', fontWeight: 700, fontSize: 13, fontFamily: "'Space Grotesk', sans-serif" }}>AP Vision Care</div>
+              <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Government of Andhra Pradesh</div>
             </div>
           </div>
-          <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: 12, textAlign: 'center' }}>
+          <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: 12, textAlign: 'center', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Digital Vision Programme 2024–25 &nbsp;·&nbsp; Toll Free: 1800-XXX-XXXX
           </div>
           <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: 11 }}>

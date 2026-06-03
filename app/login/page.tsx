@@ -26,7 +26,11 @@ export default function LoginPage() {
 
       <div className="auth-card animate-fade-up">
         <div className="auth-logo">
-          <div className="auth-logo-circle">AP</div>
+          <img
+            src="/apvision.png"
+            alt="AP Vision Care"
+            style={{ width: 80, height: 80, borderRadius: 20, objectFit: 'contain', background: '#f0f4ff', padding: 6, margin: '0 auto 12px', display: 'block', boxShadow: '0 4px 20px rgba(26,58,107,0.15)' }}
+          />
           <h1>AP Vision Program</h1>
           <p>Government of Andhra Pradesh</p>
         </div>
