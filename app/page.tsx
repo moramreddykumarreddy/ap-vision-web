@@ -21,8 +21,8 @@ const ABOUT_CARDS: {
 }[] = [
   {
     icon: "target",
-    bg: "bg-teal-soft",
-    color: "text-teal-d",
+    bg: "bg-accent-soft",
+    color: "text-accent-dark",
     title: "Universal Screening",
     desc: "Universal vision screening across villages, tribal areas, urban slums, schools, and industrial zones — detecting refractive errors and eye disease early.",
   },
@@ -51,8 +51,8 @@ const PLATFORM_CARDS: {
 }[] = [
   {
     icon: "stetho",
-    bg: "bg-teal-soft",
-    color: "text-teal-d",
+    bg: "bg-accent-soft",
+    color: "text-accent-dark",
     title: "Community Screening",
     desc: "Mobile camps across the state.",
   },
@@ -93,8 +93,8 @@ const PLATFORM_CARDS: {
   },
   {
     icon: "glasses",
-    bg: "bg-teal-soft",
-    color: "text-teal-d",
+    bg: "bg-accent-soft",
+    color: "text-accent-dark",
     title: "Spectacle Distribution",
     desc: "Order to last-mile delivery.",
   },
@@ -128,8 +128,8 @@ const PLATFORM_CARDS: {
   },
   {
     icon: "id",
-    bg: "bg-teal-soft",
-    color: "text-teal-d",
+    bg: "bg-accent-soft",
+    color: "text-accent-dark",
     title: "ABHA Verification",
     desc: "Auto-fetch demographics.",
   },
@@ -140,8 +140,6 @@ const ROLES = [
     id: "admin",
     href: "/admin/dashboard",
     icon: "shield" as IconName,
-    bg: "bg-[rgba(17,181,168,0.16)]",
-    color: "text-teal",
     title: "Super Admin",
     scope: "State Program Mgmt Unit",
     items: [
@@ -155,8 +153,6 @@ const ROLES = [
     id: "nodal",
     href: "/nodal/dashboard",
     icon: "medal" as IconName,
-    bg: "bg-[rgba(59,111,224,0.18)]",
-    color: "text-[#7DA0F0]",
     title: "Nodal Officer",
     scope: "State / District Level",
     items: [
@@ -170,8 +166,6 @@ const ROLES = [
     id: "team",
     href: "/screening/dashboard",
     icon: "stetho" as IconName,
-    bg: "bg-[rgba(238,157,30,0.18)]",
-    color: "text-[#F4B95A]",
     title: "Screening Team",
     scope: "Assigned Locations",
     items: [
@@ -185,8 +179,6 @@ const ROLES = [
     id: "patient",
     href: "/patient/dashboard",
     icon: "user" as IconName,
-    bg: "bg-[rgba(31,164,99,0.2)]",
-    color: "text-[#5CCB8E]",
     title: "Patient / Citizen",
     scope: "Personal Records",
     items: [
@@ -258,15 +250,15 @@ const HOTSPOTS = [
   { name: "Anantapur", pct: 88, color: "bg-red" },
   { name: "Kurnool", pct: 74, color: "bg-amber" },
   { name: "Chittoor", pct: 61, color: "bg-[#F4B95A]" },
-  { name: "Guntur", pct: 45, color: "bg-teal" },
+  { name: "Guntur", pct: 45, color: "bg-accent" },
   { name: "Visakhapatnam", pct: 33, color: "bg-green" },
 ];
 
 const JOURNEY_STEPS = [
   {
     icon: "clipboard" as IconName,
-    bg: "bg-teal-soft",
-    color: "text-teal-d",
+    bg: "bg-accent-soft",
+    color: "text-accent-dark",
     title: "Registered & Screened",
     sub: "Anantapur Camp · 09:14 AM",
     done: true,
@@ -289,8 +281,8 @@ const JOURNEY_STEPS = [
   },
   {
     icon: "truck" as IconName,
-    bg: "bg-line-2",
-    color: "text-muted",
+    bg: "bg-grey-200-2",
+    color: "text-grey-600",
     title: "Spectacles in Manufacturing",
     sub: "Vendor: ClearView Optics",
     done: false,
@@ -313,7 +305,7 @@ function SectionHead({
       <span
         className={cn(
           "mb-3.5 inline-block text-xs font-bold uppercase tracking-[0.12em]",
-          light ? "text-teal" : "text-teal-d",
+          light ? "text-accent" : "text-accent-dark",
         )}
       >
         {tag}
@@ -321,7 +313,7 @@ function SectionHead({
       <h2
         className={cn(
           "text-[clamp(28px,3.3vw,42px)] font-extrabold leading-[1.12]",
-          light ? "text-white" : "text-navy",
+          light ? "text-white" : "text-primary",
         )}
       >
         {title}
@@ -330,7 +322,7 @@ function SectionHead({
         <p
           className={cn(
             "mx-auto mt-4 max-w-[620px] text-[16.5px] leading-relaxed",
-            light ? "text-white/60" : "text-muted",
+            light ? "text-white/60" : "text-grey-600",
           )}
         >
           {sub}
@@ -354,7 +346,7 @@ function CompCard({
   desc: string;
 }) {
   return (
-    <article className="rounded-[18px] border border-line bg-surface p-[26px_22px] transition-all hover:-translate-y-[3px] hover:border-teal/30 hover:shadow-[0_6px_20px_rgba(16,40,70,0.07)]">
+    <article className="rounded-2xl border border-grey-200 bg-white p-[26px_22px] shadow-sm transition-all hover:-translate-y-[3px] hover:border-primary/25 hover:shadow-md">
       <div
         className={cn(
           "mb-4 flex size-[50px] items-center justify-center rounded-[13px]",
@@ -363,8 +355,8 @@ function CompCard({
       >
         <Icon name={icon} className={color} size={23} />
       </div>
-      <h4 className="mb-[7px] text-[15.5px] font-bold text-navy">{title}</h4>
-      <p className="text-[13px] leading-[1.55] text-muted">{desc}</p>
+      <h4 className="mb-[7px] text-[15.5px] font-bold text-primary">{title}</h4>
+      <p className="text-[13px] leading-[1.55] text-grey-600">{desc}</p>
     </article>
   );
 }
@@ -373,7 +365,7 @@ export default function LandingPage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-bg-app font-sans text-ink">
+    <div className="min-h-screen bg-grey-50 font-sans text-grey-900">
       <LandingNav />
 
       {/* Hero */}
@@ -381,21 +373,21 @@ export default function LandingPage() {
         className="relative overflow-hidden px-6 pb-[84px] pt-[138px] lg:px-[46px]"
         style={{
           background:
-            "radial-gradient(ellipse 55% 50% at 78% 5%, rgba(17,181,168,0.09), transparent 65%), radial-gradient(ellipse 45% 40% at 5% 95%, rgba(59,111,224,0.05), transparent 70%)",
+            "radial-gradient(ellipse 55% 50% at 78% 5%, rgba(0,137,123,0.08), transparent 65%), radial-gradient(ellipse 45% 40% at 5% 95%, rgba(26,58,107,0.06), transparent 70%)",
         }}
       >
         <div className="mx-auto grid max-w-[1260px] items-center gap-14 lg:grid-cols-[1.04fr_0.96fr] lg:gap-14">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-teal/22 bg-teal-soft px-[15px] py-[7px] text-[12.5px] font-semibold text-teal-d">
-              <span className="size-[7px] animate-pulse-soft rounded-full bg-teal" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent-soft px-[15px] py-[7px] text-[12.5px] font-semibold text-accent-darkark">
+              <span className="size-[7px] animate-pulse-soft rounded-full bg-accent" />
               Government of Andhra Pradesh · Public Health Initiative
             </div>
-            <h1 className="mb-[22px] mt-6 text-[clamp(40px,4.8vw,62px)] font-extrabold leading-[1.05] text-navy">
+            <h1 className="mb-[22px] mt-6 text-[clamp(40px,4.8vw,62px)] font-extrabold leading-[1.05] text-primary">
               Universal eye care,{" "}
-              <span className="text-teal">digitally tracked</span> from
+              <span className="text-accent">digitally tracked</span> from
               screening to delivery.
             </h1>
-            <p className="mb-[34px] max-w-[540px] text-lg leading-[1.62] text-muted">
+            <p className="mb-[34px] max-w-[540px] text-lg leading-[1.62] text-grey-600">
               A statewide platform integrating mobile screening teams, EMR,
               tele-ophthalmology, AI analytics, and last-mile spectacle delivery
               — ensuring every citizen has equitable access to quality vision
@@ -404,8 +396,8 @@ export default function LandingPage() {
             <div className="mb-[42px] flex flex-wrap gap-[13px]">
               <button
                 type="button"
-                onClick={() => router.push("/screening/register")}
-                className="inline-flex items-center gap-2 rounded-[13px] bg-teal px-[22px] py-3 text-[14.5px] font-semibold text-white shadow-[0_4px_14px_rgba(17,181,168,0.28)] transition-all hover:-translate-y-px hover:bg-teal-d"
+                onClick={() => router.push("/register")}
+                className="inline-flex items-center gap-2 rounded-lg bg-accent px-[22px] py-3 text-[14.5px] font-semibold text-white shadow-md transition-all hover:-translate-y-px hover:bg-accent-dark"
               >
                 Register as Patient
                 <Icon name="arrow-right" size={17} />
@@ -413,7 +405,7 @@ export default function LandingPage() {
               <button
                 type="button"
                 onClick={() => router.push("/login")}
-                className="inline-flex items-center gap-2 rounded-[13px] border-[1.5px] border-line bg-surface px-[22px] py-3 text-[14.5px] font-semibold text-ink transition-colors hover:border-teal hover:text-teal-d"
+                className="inline-flex items-center gap-2 rounded-lg border-[1.5px] border-grey-300 bg-white px-[22px] py-3 text-[14.5px] font-semibold text-primary transition-colors hover:border-primary hover:bg-primary/5"
               >
                 Staff / Admin Login
               </button>
@@ -421,11 +413,13 @@ export default function LandingPage() {
             <div className="flex flex-wrap gap-[38px]">
               {HERO_STATS.map((s) => (
                 <div key={s.label}>
-                  <div className="text-[30px] font-extrabold text-navy">
+                  <div className="text-[30px] font-extrabold text-primary">
                     {s.num}
-                    {s.suffix && <span className="text-teal">{s.suffix}</span>}
+                    {s.suffix && (
+                      <span className="text-accent">{s.suffix}</span>
+                    )}
                   </div>
-                  <div className="mt-0.5 text-[12.5px] text-muted">
+                  <div className="mt-0.5 text-[12.5px] text-grey-600">
                     {s.label}
                   </div>
                 </div>
@@ -434,29 +428,31 @@ export default function LandingPage() {
           </div>
 
           <div className="relative">
-            <div className="absolute -right-2 -top-[22px] z-[3] flex items-center gap-[11px] rounded-[13px] border border-line bg-surface px-[17px] py-[13px] shadow-[0_6px_20px_rgba(16,40,70,0.07)]">
+            <div className="absolute -right-2 -top-[22px] z-[3] flex items-center gap-[11px] rounded-[13px] border border-grey-200 bg-white px-[17px] py-[13px] shadow-[0_6px_20px_rgba(16,40,70,0.07)]">
               <div className="flex size-9 items-center justify-center rounded-[10px] bg-green-soft">
                 <Icon name="trend" className="text-green" size={18} />
               </div>
               <div>
-                <div className="text-base font-bold text-navy">12,480</div>
-                <div className="text-[10.5px] text-muted">Screened today</div>
+                <div className="text-base font-bold text-primary">12,480</div>
+                <div className="text-[10.5px] text-grey-600">
+                  Screened today
+                </div>
               </div>
             </div>
-            <div className="absolute -bottom-5 -left-7 z-[3] flex items-center gap-[11px] rounded-[13px] border border-line bg-surface px-[17px] py-[13px] shadow-[0_6px_20px_rgba(16,40,70,0.07)]">
+            <div className="absolute -bottom-5 -left-7 z-[3] flex items-center gap-[11px] rounded-[13px] border border-grey-200 bg-white px-[17px] py-[13px] shadow-[0_6px_20px_rgba(16,40,70,0.07)]">
               <div className="flex size-9 items-center justify-center rounded-[10px] bg-blue-soft">
                 <Icon name="glasses" className="text-blue" size={18} />
               </div>
               <div>
-                <div className="text-base font-bold text-navy">8,912</div>
-                <div className="text-[10.5px] text-muted">
+                <div className="text-base font-bold text-primary">8,912</div>
+                <div className="text-[10.5px] text-grey-600">
                   Spectacles delivered
                 </div>
               </div>
             </div>
-            <div className="relative z-[2] rounded-[24px] border border-line bg-surface p-[26px] shadow-[0_20px_50px_rgba(16,40,70,0.12)]">
+            <div className="relative z-[2] rounded-[24px] border border-grey-200 bg-white p-[26px] shadow-[0_20px_50px_rgba(16,40,70,0.12)]">
               <div className="mb-5 flex items-center justify-between">
-                <div className="text-[14.5px] font-bold text-navy">
+                <div className="text-[14.5px] font-bold text-primary">
                   Citizen Journey · Ramesh K.
                 </div>
                 <div className="flex items-center gap-1.5 rounded-full bg-green-soft px-2.5 py-1 text-[11px] font-bold text-green">
@@ -467,7 +463,7 @@ export default function LandingPage() {
               {JOURNEY_STEPS.map((step) => (
                 <div
                   key={step.title}
-                  className="flex items-center gap-[13px] border-b border-line-2 py-[13px] last:border-b-0"
+                  className="flex items-center gap-[13px] border-b border-grey-200-2 py-[13px] last:border-b-0"
                 >
                   <div
                     className={cn(
@@ -478,17 +474,19 @@ export default function LandingPage() {
                     <Icon name={step.icon} className={step.color} size={19} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[13.5px] font-semibold text-navy">
+                    <div className="text-[13.5px] font-semibold text-primary">
                       {step.title}
                     </div>
-                    <div className="mt-px text-xs text-muted">{step.sub}</div>
+                    <div className="mt-px text-xs text-grey-600">
+                      {step.sub}
+                    </div>
                   </div>
                   <div
                     className={cn(
                       "flex size-6 items-center justify-center rounded-full",
                       step.done
                         ? "bg-green text-white"
-                        : "bg-line text-muted-2",
+                        : "bg-grey-200 text-grey-600-2",
                     )}
                   >
                     {step.done && (
@@ -503,7 +501,7 @@ export default function LandingPage() {
       </section>
 
       {/* About */}
-      <section id="about" className="bg-surface px-6 py-[92px] lg:px-[46px]">
+      <section id="about" className="bg-white px-6 py-[92px] lg:px-[46px]">
         <div className="mx-auto max-w-[1200px]">
           <SectionHead
             tag="About the Program"
@@ -547,7 +545,10 @@ export default function LandingPage() {
       </section>
 
       {/* Roles */}
-      <section id="roles" className="bg-navy px-6 py-[92px] lg:px-[46px]">
+      <section
+        id="roles"
+        className="bg-gradient-to-br from-primary-dark via-primary to-primary-dark px-6 py-[92px] lg:px-[46px]"
+      >
         <div className="mx-auto max-w-[1200px]">
           <SectionHead
             tag="User Hierarchy & Governance"
@@ -555,46 +556,38 @@ export default function LandingPage() {
             sub="Each role logs in with OTP authentication and accesses a dashboard tailored to their responsibilities and access level. Click any role to preview its portal."
             light
           />
-          <div className="grid gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {ROLES.map((role) => (
               <button
                 key={role.id}
                 type="button"
                 onClick={() => router.push(role.href)}
-                className="rounded-[18px] border border-white/9 bg-white/[0.04] p-[28px_24px] text-left transition-all hover:-translate-y-1 hover:border-teal/40 hover:bg-white/[0.07]"
+                className="rounded-2xl border border-grey-200 bg-white p-6 text-left shadow-md transition-all hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg"
               >
-                <div
-                  className={cn(
-                    "mb-[18px] flex size-[54px] items-center justify-center rounded-[14px]",
-                    role.bg,
-                  )}
-                >
-                  <Icon name={role.icon} className={role.color} size={26} />
+                <div className="mb-4 flex size-14 items-center justify-center rounded-2xl bg-primary/10">
+                  <Icon name={role.icon} className="text-primary" size={28} />
                 </div>
-                <h4 className="mb-[7px] text-lg font-bold text-white">
+                <h4 className="mb-1.5 text-sm font-bold text-primary">
                   {role.title}
                 </h4>
-                <div className="mb-4 text-[11.5px] font-semibold uppercase tracking-wide text-teal">
+                <div className="mb-3 text-[11px] text-grey-500">
                   {role.scope}
                 </div>
-                <ul className="flex flex-col gap-[9px]">
+                <ul className="flex flex-col gap-2">
                   {role.items.map((item) => (
-                    <li
-                      key={item}
-                      className="flex gap-[9px] text-[13px] text-white/62"
-                    >
+                    <li key={item} className="flex gap-2 text-xs text-grey-600">
                       <Icon
                         name="check"
-                        className="mt-px shrink-0 text-teal"
-                        size={15}
+                        className="mt-px shrink-0 text-accent"
+                        size={14}
                       />
                       {item}
                     </li>
                   ))}
                 </ul>
-                <span className="mt-[18px] inline-flex items-center gap-1.5 text-[13px] font-semibold text-teal">
+                <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary">
                   Open portal
-                  <Icon name="arrow-right" size={15} />
+                  <Icon name="arrow-right" size={14} />
                 </span>
               </button>
             ))}
@@ -603,7 +596,7 @@ export default function LandingPage() {
       </section>
 
       {/* Workflow */}
-      <section id="workflow" className="bg-surface px-6 py-[92px] lg:px-[46px]">
+      <section id="workflow" className="bg-white px-6 py-[92px] lg:px-[46px]">
         <div className="mx-auto max-w-[1200px]">
           <SectionHead
             tag="End-to-End Citizen Journey"
@@ -616,15 +609,15 @@ export default function LandingPage() {
                 className="relative flex-1 px-[13px] text-center"
               >
                 {i < WORKFLOW.length - 1 && (
-                  <span className="absolute right-0 top-[27px] hidden h-0.5 w-4 bg-line lg:block" />
+                  <span className="absolute right-0 top-[27px] hidden h-0.5 w-4 bg-grey-200 lg:block" />
                 )}
-                <div className="mx-auto mb-[18px] flex size-14 items-center justify-center rounded-2xl border-[1.5px] border-line bg-surface text-teal-d shadow-[0_1px_3px_rgba(16,40,70,0.06)]">
+                <div className="mx-auto mb-[18px] flex size-14 items-center justify-center rounded-2xl border-[1.5px] border-grey-200 bg-white text-accent-dark shadow-[0_1px_3px_rgba(16,40,70,0.06)]">
                   <Icon name={step.icon} size={24} />
                 </div>
-                <h4 className="mb-2 text-[15px] font-bold text-navy">
+                <h4 className="mb-2 text-[15px] font-bold text-primary">
                   {step.title}
                 </h4>
-                <p className="text-[12.5px] leading-normal text-muted">
+                <p className="text-[12.5px] leading-normal text-grey-600">
                   {step.desc}
                 </p>
               </div>
@@ -636,11 +629,11 @@ export default function LandingPage() {
       {/* AI */}
       <section
         id="ai"
-        className="bg-gradient-to-br from-[#08172a] to-navy px-6 py-[92px] lg:px-[46px]"
+        className="bg-gradient-to-br from-primary-dark to-primary px-6 py-[92px] lg:px-[46px]"
       >
         <div className="mx-auto grid max-w-[1200px] items-center gap-12 lg:grid-cols-2 lg:gap-12">
           <div>
-            <span className="mb-3.5 inline-block text-xs font-bold uppercase tracking-[0.12em] text-teal">
+            <span className="mb-3.5 inline-block text-xs font-bold uppercase tracking-[0.12em] text-accent">
               AI &amp; Advanced Analytics
             </span>
             <h2 className="mb-[18px] text-[clamp(28px,3.1vw,40px)] font-extrabold leading-[1.13] text-white">
@@ -655,8 +648,8 @@ export default function LandingPage() {
             <div className="grid gap-[15px] sm:grid-cols-2">
               {AI_FEATURES.map((f) => (
                 <div key={f.title} className="flex gap-3">
-                  <div className="flex size-[38px] shrink-0 items-center justify-center rounded-[11px] bg-teal/15">
-                    <Icon name={f.icon} className="text-teal" size={19} />
+                  <div className="flex size-[38px] shrink-0 items-center justify-center rounded-[11px] bg-accent/15">
+                    <Icon name={f.icon} className="text-accent" size={19} />
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-white">
@@ -708,7 +701,7 @@ export default function LandingPage() {
 
       {/* CTA */}
       <section className="px-6 py-[90px] lg:px-[46px]">
-        <div className="relative mx-auto max-w-[980px] overflow-hidden rounded-[24px] bg-gradient-to-br from-teal to-teal-d px-[54px] py-[62px] text-center text-white">
+        <div className="relative mx-auto max-w-[980px] overflow-hidden rounded-2xl bg-gradient-to-br from-accent to-accent-dark px-[54px] py-[62px] text-center text-white">
           <div className="pointer-events-none absolute -right-[8%] -top-1/2 size-[380px] rounded-full bg-white/8" />
           <h2 className="relative mb-3.5 text-[clamp(26px,3vw,38px)] font-extrabold">
             Every citizen&apos;s journey,
@@ -722,8 +715,8 @@ export default function LandingPage() {
           <div className="relative flex flex-wrap justify-center gap-[13px]">
             <button
               type="button"
-              onClick={() => router.push("/screening/register")}
-              className="inline-flex items-center justify-center rounded-[13px] bg-white px-[22px] py-3 text-[14.5px] font-semibold text-navy shadow-[0_1px_3px_rgba(16,40,70,0.06)] transition-all hover:-translate-y-px"
+              onClick={() => router.push("/register")}
+              className="inline-flex items-center justify-center rounded-[13px] bg-white px-[22px] py-3 text-[14.5px] font-semibold text-primary shadow-[0_1px_3px_rgba(16,40,70,0.06)] transition-all hover:-translate-y-px"
             >
               Patient Registration
             </button>
@@ -739,7 +732,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#07111f] px-6 py-[50px] text-white/50 lg:px-[46px]">
+      <footer className="bg-primary-dark px-6 py-[50px] text-white/50 lg:px-[46px]">
         <div className="mx-auto grid max-w-[1200px] gap-10 border-b border-white/8 pb-[34px] md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
@@ -759,20 +752,23 @@ export default function LandingPage() {
             </h5>
             <a
               href="#components"
-              className="mb-2.5 block text-[13px] hover:text-teal"
+              className="mb-2.5 block text-[13px] hover:text-accent"
             >
               Components
             </a>
             <a
               href="#workflow"
-              className="mb-2.5 block text-[13px] hover:text-teal"
+              className="mb-2.5 block text-[13px] hover:text-accent"
             >
               Workflow
             </a>
-            <a href="#ai" className="mb-2.5 block text-[13px] hover:text-teal">
+            <a
+              href="#ai"
+              className="mb-2.5 block text-[13px] hover:text-accent"
+            >
               AI Analytics
             </a>
-            <a href="#roles" className="block text-[13px] hover:text-teal">
+            <a href="#roles" className="block text-[13px] hover:text-accent">
               User Roles
             </a>
           </div>
@@ -783,21 +779,21 @@ export default function LandingPage() {
             <button
               type="button"
               onClick={() => router.push("/login")}
-              className="mb-2.5 block text-left text-[13px] hover:text-teal"
+              className="mb-2.5 block text-left text-[13px] hover:text-accent"
             >
               Staff Login
             </button>
             <button
               type="button"
-              onClick={() => router.push("/screening/register")}
-              className="mb-2.5 block text-left text-[13px] hover:text-teal"
+              onClick={() => router.push("/register")}
+              className="mb-2.5 block text-left text-[13px] hover:text-accent"
             >
               Patient Registration
             </button>
             <button
               type="button"
               onClick={() => router.push("/patient/dashboard")}
-              className="block text-left text-[13px] hover:text-teal"
+              className="block text-left text-[13px] hover:text-accent"
             >
               Patient Portal
             </button>

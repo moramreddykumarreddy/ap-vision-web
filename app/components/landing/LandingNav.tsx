@@ -30,14 +30,14 @@ export default function LandingNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[100] flex h-[70px] items-center justify-between border-b border-line bg-white/82 px-6 backdrop-blur-[18px] lg:px-[46px]">
+    <header className="fixed inset-x-0 top-0 z-[100] flex h-[70px] items-center justify-between border-b border-grey-200 bg-white/90 px-6 backdrop-blur-[18px] lg:px-[46px]">
       <Link href="/" className="flex items-center gap-3">
         <BrandLogo />
         <div className="leading-tight">
-          <div className="text-[16.5px] font-extrabold leading-none text-navy">
+          <div className="text-[16.5px] font-extrabold leading-none text-primary">
             AP Vision Care
           </div>
-          <div className="mt-[3px] text-[10.5px] text-muted">
+          <div className="mt-[3px] text-[10.5px] text-grey-600">
             Digital Vision Care &amp; Health Intelligence
           </div>
         </div>
@@ -49,7 +49,7 @@ export default function LandingNav() {
             key={link.href}
             href={link.href}
             onClick={(e) => handleNavClick(e, link.href)}
-            className="rounded-[9px] px-[15px] py-[9px] text-sm font-medium text-muted transition-colors hover:bg-bg-app hover:text-navy"
+            className="rounded-lg px-[15px] py-[9px] text-sm font-medium text-grey-600 transition-colors hover:bg-grey-100 hover:text-primary"
           >
             {link.label}
           </a>
@@ -60,14 +60,14 @@ export default function LandingNav() {
         <button
           type="button"
           onClick={() => router.push("/login")}
-          className="inline-flex items-center justify-center rounded-[13px] border-[1.5px] border-line bg-surface px-[15px] py-2 text-[13px] font-semibold text-ink transition-colors hover:border-teal hover:text-teal-d"
+          className="inline-flex items-center justify-center rounded-lg border-[1.5px] border-grey-300 bg-white px-[15px] py-2 text-[13px] font-semibold text-grey-900 transition-colors hover:border-primary hover:text-primary"
         >
           Login
         </button>
         <button
           type="button"
-          onClick={() => router.push("/screening/register")}
-          className="inline-flex items-center justify-center rounded-[13px] bg-teal px-[15px] py-2 text-[13px] font-semibold text-white shadow-[0_4px_14px_rgba(17,181,168,0.28)] transition-all hover:bg-teal-d hover:-translate-y-px"
+          onClick={() => router.push("/register")}
+          className="inline-flex items-center justify-center rounded-lg bg-accent px-[15px] py-2 text-[13px] font-semibold text-white shadow-md transition-all hover:bg-accent-dark hover:-translate-y-px"
         >
           Patient Registration
         </button>
@@ -75,7 +75,7 @@ export default function LandingNav() {
 
       <button
         type="button"
-        className="ml-auto text-xl text-navy md:hidden"
+        className="ml-auto text-xl text-primary md:hidden"
         onClick={() => setOpen((o) => !o)}
         aria-label="Menu"
       >
@@ -95,7 +95,7 @@ export default function LandingNav() {
               onClick={(e) =>
                 handleNavClick(e, link.href, () => setOpen(false))
               }
-              className="block border-b border-line-2 py-3 text-sm font-medium text-muted"
+              className="block border-b border-grey-100 py-3 text-sm font-medium text-grey-600"
             >
               {link.label}
             </a>
@@ -104,14 +104,14 @@ export default function LandingNav() {
             <button
               type="button"
               onClick={() => router.push("/login")}
-              className="w-full rounded-[13px] border-[1.5px] border-line py-3 text-sm font-semibold text-ink"
+              className="w-full rounded-lg border-[1.5px] border-grey-300 py-3 text-sm font-semibold text-grey-900"
             >
               Login
             </button>
             <button
               type="button"
-              onClick={() => router.push("/screening/register")}
-              className="w-full rounded-[13px] bg-teal py-3 text-sm font-semibold text-white"
+              onClick={() => router.push("/register")}
+              className="w-full rounded-lg bg-accent py-3 text-sm font-semibold text-white"
             >
               Patient Registration
             </button>

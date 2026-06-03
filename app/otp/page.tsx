@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { getRoleById } from "@/app/lib/auth-roles";
 import { Button } from "@/app/components/ui";
 import { cn } from "@/app/lib/cn";
 
@@ -8,6 +9,8 @@ function OtpContent() {
   const router = useRouter();
   const params = useSearchParams();
   const mobile = params.get("mobile") ?? "";
+  const role = params.get("role") ?? "";
+  const routeParam = params.get("route") ?? "";
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [loading, setLoading] = useState(false);
   const [timer, setTimer] = useState(30);
@@ -39,7 +42,8 @@ function OtpContent() {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 800));
     setLoading(false);
-    router.push("/role-selection");
+    const destination = routeParam || getRoleById(role)?.href || "/login";
+    router.push(destination);
   };
 
   return (
@@ -52,7 +56,17 @@ function OtpContent() {
             className="mx-auto mb-3 block size-[72px] rounded-[18px] bg-[#f0f4ff] object-contain p-1.5 shadow-[0_4px_20px_rgba(26,58,107,0.15)]"
           />
           <h1 className="text-xl font-black text-primary">OTP Verification</h1>
-          <p className="text-xs text-grey-500">Code sent to +91 {mobile}</p>
+          <p className="text-xs text-grey-500">
+            Code sent to +91 {mobile}
+            {role && (
+              <>
+                <br />
+                <span className="font-semibold text-primary">
+                  {getRoleById(role)?.title ?? role}
+                </span>
+              </>
+            )}
+          </p>
         </div>
 
         <p className="mb-7 text-center text-[13px] text-grey-600">
