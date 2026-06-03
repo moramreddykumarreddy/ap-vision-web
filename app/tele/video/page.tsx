@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
+import { AppShell } from '@/app/components/app-shell';
+import { Button, Textarea, Input, Select, FormGroup, Card, CardBody, CardHeader, CardTitle } from '@/app/components/ui';
 import Modal, { DetailRow, SuccessBanner } from '@/app/components/Modal';
 
 export default function VideoConsultation() {
@@ -46,16 +48,15 @@ export default function VideoConsultation() {
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar role="tele" userName="Dr. Anita Rao" userSub="SVIMS, Tirupati" />
-      <div className="main-content">
-        <Topbar title="Video Consultation" subtitle="Ramaiah Venkata • Diabetic Retinopathy" />
-        <main className="page-body">
+    <AppShell
+      sidebar={<Sidebar role="tele" userName="Dr. Anita Rao" userSub="SVIMS, Tirupati" />}
+      topbar={<Topbar title="Video Consultation" subtitle="Ramaiah Venkata • Diabetic Retinopathy" />}
+    >
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20 }}>
             {/* Video */}
             <div>
-              <div className="video-container">
-                <div className="video-placeholder">
+              <div className="relative max-h-[380px] aspect-video overflow-hidden rounded-xl bg-[#0a0a12]">
+                <div className="flex h-full flex-col items-center justify-center gap-3 text-white/60">
                   <div style={{ fontSize: 48 }}>👤</div>
                   <div style={{ fontSize: 16, fontWeight: 600 }}>Ramaiah Venkata</div>
                   <div style={{ fontSize: 12 }}>Vijayawada Urban Camp</div>
@@ -79,23 +80,23 @@ export default function VideoConsultation() {
 
               {/* Controls */}
               <div style={{ background: '#1C2333', borderRadius: '0 0 20px 20px', padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
-                <button className="video-btn video-btn-grey" onClick={() => setMuted(!muted)} title="Mute" style={{ background: muted ? '#C62828' : 'rgba(255,255,255,.1)' }}>
+                <button className="flex size-10 items-center justify-center rounded-full text-lg transition-colors" onClick={() => setMuted(!muted)} title="Mute" style={{ background: muted ? '#C62828' : 'rgba(255,255,255,.1)' }}>
                   {muted ? '🔇' : '🎙️'}
                 </button>
-                <button className="video-btn video-btn-grey" onClick={() => setVideoOff(!videoOff)} title="Video" style={{ background: videoOff ? '#C62828' : 'rgba(255,255,255,.1)' }}>
+                <button className="flex size-10 items-center justify-center rounded-full text-lg transition-colors" onClick={() => setVideoOff(!videoOff)} title="Video" style={{ background: videoOff ? '#C62828' : 'rgba(255,255,255,.1)' }}>
                   {videoOff ? '📷' : '📹'}
                 </button>
-                <button className="video-btn video-btn-grey" title="Screen Share">🖥️</button>
-                <button className="video-btn video-btn-red" onClick={() => router.push('/tele/consultations')} title="End Call">📵</button>
+                <button className="flex size-10 items-center justify-center rounded-full text-lg transition-colors" title="Screen Share">🖥️</button>
+                <button className="flex size-10 items-center justify-center rounded-full bg-error text-lg transition-colors" onClick={() => router.push('/tele/consultations')} title="End Call">📵</button>
               </div>
             </div>
 
             {/* Patient Info + Notes */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {/* Patient card */}
-              <div className="card">
-                <div className="card-header"><h3>Patient Details</h3></div>
-                <div className="card-body">
+              <Card>
+                <CardHeader><CardTitle>Patient Details</CardTitle></CardHeader>
+                <CardBody>
                   {[
                     { l: 'Name', v: 'Ramaiah Venkata' },
                     { l: 'Age / Gender', v: '58 years • Male' },
@@ -109,37 +110,34 @@ export default function VideoConsultation() {
                       <span style={{ fontSize: 12, fontWeight: 700 }}>{item.v}</span>
                     </div>
                   ))}
-                </div>
-              </div>
+                </CardBody>
+              </Card>
 
-              {/* Notes */}
-              <div className="card" style={{ flex: 1 }}>
-                <div className="card-header"><h3>Consultation Notes</h3></div>
-                <div className="card-body">
-                  <textarea
+              <Card className="flex-1">
+                <CardHeader><CardTitle>Consultation Notes</CardTitle></CardHeader>
+                <CardBody>
+                  <Textarea
                     id="consultation-notes"
-                    className="form-input"
-                    style={{ height: 80, resize: 'none', fontSize: 13, marginBottom: 12 }}
+                    className="mb-3 h-20 resize-none text-[13px]"
                     placeholder="Add clinical notes, observations, diagnosis..."
                     value={notes}
                     onChange={e => setNotes(e.target.value)}
                   />
-                  <div style={{ display: 'flex', gap: 8 }}>
-                    <button className="btn btn-primary btn-sm" style={{ flex: 1 }} onClick={() => setRxOpen(true)}>💊 Write Prescription</button>
-                    <button className="btn btn-sm" style={{ background: '#C62828', color: 'white', flex: 1 }} onClick={() => setReferOpen(true)}>🏥 Refer Patient</button>
+                  <div className="flex gap-2">
+                    <Button size="sm" variant="primary" className="flex-1" onClick={() => setRxOpen(true)}>💊 Write Prescription</Button>
+                    <Button size="sm" variant="danger" className="flex-1" onClick={() => setReferOpen(true)}>🏥 Refer Patient</Button>
                   </div>
-                </div>
-              </div>
+                </CardBody>
+              </Card>
 
-              {/* Fundus image placeholder */}
-              <div className="card">
-                <div className="card-header"><h3>Retinal Images</h3></div>
-                <div className="card-body" style={{ textAlign: 'center', color: '#BDBDBD', padding: '12px 16px' }}>
-                  <div style={{ fontSize: 24, marginBottom: 4 }}>👁️</div>
-                  <div style={{ fontSize: 11 }}>Retinal fundus scans captured at camp</div>
-                  <button className="btn btn-outline btn-sm" style={{ marginTop: 8 }} onClick={() => setImagesOpen(true)}>View Images</button>
-                </div>
-              </div>
+              <Card>
+                <CardHeader><CardTitle>Retinal Images</CardTitle></CardHeader>
+                <CardBody className="px-4 py-3 text-center text-grey-300">
+                  <div className="mb-1 text-2xl">👁️</div>
+                  <div className="text-[11px]">Retinal fundus scans captured at camp</div>
+                  <Button size="sm" variant="outline" className="mt-2" onClick={() => setImagesOpen(true)}>View Images</Button>
+                </CardBody>
+              </Card>
             </div>
           </div>
 
@@ -151,8 +149,8 @@ export default function VideoConsultation() {
             subtitle="Add refraction coordinates for spects dispensing"
             actions={
               <>
-                <button className="btn btn-outline" onClick={() => setRxOpen(false)} disabled={!!successMsg}>Cancel</button>
-                <button className="btn btn-primary" onClick={handleSaveRx} disabled={!!successMsg}>Issue Prescription</button>
+                <Button variant="outline" onClick={() => setRxOpen(false)} disabled={!!successMsg}>Cancel</Button>
+                <Button variant="primary" onClick={handleSaveRx} disabled={!!successMsg}>Issue Prescription</Button>
               </>
             }
           >
@@ -200,8 +198,8 @@ export default function VideoConsultation() {
             subtitle="Referral pathway for surgical or advanced clinical assessment"
             actions={
               <>
-                <button className="btn btn-outline" onClick={() => setReferOpen(false)} disabled={!!successMsg}>Cancel</button>
-                <button className="btn btn-primary" style={{ background: '#C62828', borderColor: '#C62828' }} onClick={handleSaveReferral} disabled={!!successMsg}>Submit Referral</button>
+                <Button variant="outline" onClick={() => setReferOpen(false)} disabled={!!successMsg}>Cancel</Button>
+                <Button variant="danger" onClick={handleSaveReferral} disabled={!!successMsg}>Submit Referral</Button>
               </>
             }
           >
@@ -240,7 +238,7 @@ export default function VideoConsultation() {
             title="Patient Retinal Scans"
             subtitle="APV-001234 • Ramaiah Venkata"
             actions={
-              <button className="btn btn-primary" onClick={() => setImagesOpen(false)}>Close</button>
+              <Button variant="primary" onClick={() => setImagesOpen(false)}>Close</Button>
             }
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14, alignItems: 'center' }}>
@@ -290,9 +288,7 @@ export default function VideoConsultation() {
               </div>
             </div>
           </Modal>
-        </main>
-      </div>
-    </div>
+        </AppShell>
   );
 }
 

@@ -1,9 +1,8 @@
 'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { StatusBadge } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { StatusBadge, Card, CardBody, Button, fadeDelay } from '@/app/components/ui';
 
 const consultations = [
   { id: 'TC-001', doctor: 'Dr. Anita Rao', specialty: 'Tele-Ophthalmologist', hospital: 'SVIMS, Tirupati', scheduledTime: '10 Jun 2025, 10:00 AM', condition: 'Diabetic Retinopathy', status: 'Scheduled' },
@@ -11,51 +10,44 @@ const consultations = [
 ];
 
 export default function TeleconsultationScreen() {
-  const router = useRouter();
   return (
-    <div className="app-layout">
-      <Sidebar role="patient" userName="Ramaiah Venkata" userSub="Patient" />
-      <div className="main-content">
-        <Topbar title="Teleconsultation" subtitle="Video consultations with specialists" />
-        <main className="page-body">
-          {/* Upcoming */}
-          {consultations.filter(c => c.status === 'Scheduled').map((c, i) => (
-            <div key={c.id} className="animate-fade-up mb-20" style={{
-              background: 'linear-gradient(135deg, #1A3A6B, #01579B)', borderRadius: 20, padding: 24, color: 'white',
-            }}>
-              <span style={{ background: 'rgba(255,255,255,.2)', padding: '2px 10px', borderRadius: 20, fontSize: 9, fontWeight: 800, letterSpacing: 1 }}>UPCOMING</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 14 }}>
-                <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(255,255,255,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24 }}>👨‍⚕️</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 18, fontWeight: 800 }}>{c.doctor}</div>
-                  <div style={{ fontSize: 12, opacity: 0.8 }}>{c.specialty} • {c.hospital}</div>
-                  <div style={{ fontSize: 12, opacity: 0.7 }}>🕐 {c.scheduledTime}</div>
-                </div>
-              </div>
-              <button className="btn btn-full" style={{ marginTop: 16, background: 'white', color: '#1A3A6B', fontWeight: 800 }}>
-                📹 Join Video Call
-              </button>
+    <AppShell
+      sidebar={<Sidebar role="patient" userName="Ramaiah Venkata" userSub="Patient" />}
+      topbar={<Topbar title="Teleconsultation" subtitle="Video consultations with specialists" />}
+    >
+      {consultations.filter(c => c.status === 'Scheduled').map(c => (
+        <div key={c.id} className="animate-fade-up mb-3 rounded-[20px] bg-gradient-to-br from-primary to-[#01579B] p-6 text-white">
+          <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-[9px] font-extrabold tracking-wide">UPCOMING</span>
+          <div className="mt-3.5 flex items-center gap-4">
+            <div className="flex size-[52px] items-center justify-center rounded-full bg-white/20 text-2xl">👨‍⚕️</div>
+            <div className="min-w-0 flex-1">
+              <div className="text-lg font-extrabold">{c.doctor}</div>
+              <div className="text-xs opacity-80">{c.specialty} • {c.hospital}</div>
+              <div className="text-xs opacity-70">🕐 {c.scheduledTime}</div>
             </div>
-          ))}
+          </div>
+          <Button full className="mt-4 bg-white font-extrabold text-primary hover:bg-white/90">
+            📹 Join Video Call
+          </Button>
+        </div>
+      ))}
 
-          <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 12 }}>Consultation History</div>
-          {consultations.map((c, i) => (
-            <div key={c.id} className={`card animate-fade-up d${i + 1} mb-12`}>
-              <div className="card-body">
-                <div className="flex items-center gap-12">
-                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: '#1A3A6B18', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>👨‍⚕️</div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 14, fontWeight: 800 }}>{c.doctor}</div>
-                    <div style={{ fontSize: 12, color: '#757575' }}>{c.specialty}</div>
-                    <div style={{ fontSize: 11, color: '#1A3A6B' }}>🕐 {c.scheduledTime}</div>
-                  </div>
-                  <StatusBadge label={c.status} />
-                </div>
+      <div className="mb-3 text-[15px] font-bold">Consultation History</div>
+      {consultations.map((c, i) => (
+        <Card key={c.id} className={`animate-fade-up mb-2 ${fadeDelay(i + 1)}`}>
+          <CardBody>
+            <div className="flex items-center gap-2">
+              <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xl">👨‍⚕️</div>
+              <div className="min-w-0 flex-1">
+                <div className="text-sm font-extrabold">{c.doctor}</div>
+                <div className="text-xs text-grey-600">{c.specialty}</div>
+                <div className="text-[11px] text-primary">🕐 {c.scheduledTime}</div>
               </div>
+              <StatusBadge label={c.status} />
             </div>
-          ))}
-        </main>
-      </div>
-    </div>
+          </CardBody>
+        </Card>
+      ))}
+    </AppShell>
   );
 }

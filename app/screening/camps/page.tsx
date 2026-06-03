@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { SectionHeader, StatusBadge } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { SectionHeader, StatusBadge, Button, Input, Select, Textarea, FormGroup, Card, CardBody, fadeDelay } from '@/app/components/ui';
+import { cn } from '@/app/lib/cn';
 import Modal, { DetailRow, RosterTable, SuccessBanner } from '@/app/components/Modal';
 
 const initialCamps = [
@@ -74,70 +76,68 @@ export default function CampManagement() {
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar role="screening" userName="Dr. Srinivasa Rao" userSub="Team Lead" />
-      <div className="main-content">
-        <Topbar title="Camp Management" subtitle="All screening camps" />
-        <main className="page-body">
-          {/* Filter tabs */}
-          <div style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
+    <AppShell
+      sidebar={<Sidebar role="screening" userName="Dr. Srinivasa Rao" userSub="Team Lead" />}
+      topbar={<Topbar title="Camp Management" subtitle="All screening camps" />}
+    >
+          <div className="mb-3 flex flex-wrap gap-1.5">
             {statuses.map(s => (
-              <button key={s} onClick={() => setFilter(s)} className="btn btn-sm"
-                style={{
-                  background: filter === s ? '#1A3A6B' : 'white',
-                  color: filter === s ? 'white' : '#616161',
-                  border: '1.5px solid', borderColor: filter === s ? '#1A3A6B' : '#E0E0E0',
-                }}>
+              <Button
+                key={s}
+                size="sm"
+                variant={filter === s ? 'primary' : 'outline'}
+                className={cn(filter !== s && 'border-grey-300 bg-white text-grey-600')}
+                onClick={() => setFilter(s)}
+              >
                 {s} {s !== 'All' && `(${camps.filter(c => c.status === s).length})`}
-              </button>
+              </Button>
             ))}
-            <button className="btn btn-accent btn-sm" style={{ marginLeft: 'auto' }} onClick={() => setNewCampOpen(true)}>
+            <Button variant="accent" size="sm" className="ml-auto" onClick={() => setNewCampOpen(true)}>
               + New Camp
-            </button>
+            </Button>
           </div>
 
-          {/* Camp Cards */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="flex flex-col gap-2.5">
             {filtered.map((c, i) => (
-              <div key={c.id} className={`card animate-fade-up d${i + 1}`}>
-                <div className="card-body">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+              <Card key={c.id} className={`animate-fade-up ${fadeDelay(i + 1)}`}>
+                <CardBody>
+                  <div className="mb-1 flex items-center justify-between">
                     <div>
-                      <div style={{ fontSize: 15, fontWeight: 800 }}>{c.name}</div>
-                      <div style={{ fontSize: 12, color: '#9E9E9E' }}>{c.id}</div>
+                      <div className="text-[15px] font-extrabold">{c.name}</div>
+                      <div className="text-xs text-grey-400">{c.id}</div>
                     </div>
                     <StatusBadge label={c.status} />
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
-                    <div style={{ fontSize: 12, color: '#757575' }}>📍 {c.mandal}, {c.district}</div>
-                    <div style={{ fontSize: 12, color: '#757575' }}>📅 {c.date}</div>
-                    <div style={{ fontSize: 12, color: '#757575' }}>👨‍⚕️ {c.doctor}</div>
-                    <div style={{ fontSize: 12, color: '#757575' }}>🏛️ {c.venue}</div>
+                  <div className="mb-2 grid grid-cols-2 gap-1.5">
+                    <div className="text-xs text-grey-500">📍 {c.mandal}, {c.district}</div>
+                    <div className="text-xs text-grey-500">📅 {c.date}</div>
+                    <div className="text-xs text-grey-500">👨‍⚕️ {c.doctor}</div>
+                    <div className="text-xs text-grey-500">🏛️ {c.venue}</div>
                   </div>
-                  <div style={{ background: '#F5F5F5', borderRadius: 10, padding: '12px 16px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+                  <div className="grid grid-cols-4 gap-1.5 rounded-[10px] bg-grey-100 px-3 py-2">
                     {[
                       { l: 'Registered', v: c.registered },
                       { l: 'Screened', v: c.screened },
                       { l: 'Prescriptions', v: c.prescriptions },
                       { l: 'Referrals', v: c.referrals },
                     ].map(m => (
-                      <div key={m.l} style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: 20, fontWeight: 900 }}>{m.v}</div>
-                        <div style={{ fontSize: 10, color: '#9E9E9E' }}>{m.l}</div>
+                      <div key={m.l} className="text-center">
+                        <div className="text-xl font-black">{m.v}</div>
+                        <div className="text-[10px] text-grey-400">{m.l}</div>
                       </div>
                     ))}
                   </div>
-                  <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
+                  <div className="mt-2 flex gap-1.5">
                     {c.status === 'Active' && (
-                      <button className="btn btn-primary btn-sm" onClick={() => router.push('/screening/register')}>+ Register Patient</button>
+                      <Button variant="primary" size="sm" onClick={() => router.push('/screening/register')}>+ Register Patient</Button>
                     )}
-                    <button className="btn btn-outline btn-sm" onClick={() => setViewCamp(c)}>View Details</button>
+                    <Button variant="outline" size="sm" onClick={() => setViewCamp(c)}>View Details</Button>
                     {c.status === 'Active' && (
-                      <button className="btn btn-outline btn-sm" style={{ marginLeft: 'auto' }} onClick={() => setEndCampTarget(c)}>End Camp</button>
+                      <Button variant="outline" size="sm" className="ml-auto" onClick={() => setEndCampTarget(c)}>End Camp</Button>
                     )}
                   </div>
-                </div>
-              </div>
+                </CardBody>
+              </Card>
             ))}
           </div>
 
@@ -149,82 +149,45 @@ export default function CampManagement() {
             subtitle="Schedule a new eye screening camp session"
             actions={
               <>
-                <button className="btn btn-outline" onClick={() => setNewCampOpen(false)} disabled={success}>Cancel</button>
-                <button className="btn btn-primary" onClick={handleCreateCamp} disabled={success}>Schedule Camp</button>
+                <Button variant="outline" onClick={() => setNewCampOpen(false)} disabled={success}>Cancel</Button>
+                <Button variant="primary" onClick={handleCreateCamp} disabled={success}>Schedule Camp</Button>
               </>
             }
           >
             {success ? (
               <SuccessBanner message="Camp scheduled successfully!" />
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: '#0D2347' }}>Camp Name</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Vijayawada Ward 12 Camp"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13 }}
-                  />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: '#0D2347' }}>Venue / Building</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Community Hall / Public School"
-                    value={venue}
-                    onChange={e => setVenue(e.target.value)}
-                    style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13 }}
-                  />
-                </div>
-                <div style={{ display: 'flex', gap: 12 }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#0D2347' }}>Mandal</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Tenali"
-                      value={mandal}
-                      onChange={e => setMandal(e.target.value)}
-                      style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13 }}
-                    />
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#0D2347' }}>District</label>
-                    <select
-                      value={district}
-                      onChange={e => setDistrict(e.target.value)}
-                      style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13, background: 'white' }}
-                    >
+              <div className="flex flex-col gap-2">
+                <FormGroup label="Camp Name">
+                  <Input type="text" placeholder="e.g. Vijayawada Ward 12 Camp" value={name} onChange={e => setName(e.target.value)} />
+                </FormGroup>
+                <FormGroup label="Venue / Building">
+                  <Input type="text" placeholder="e.g. Community Hall / Public School" value={venue} onChange={e => setVenue(e.target.value)} />
+                </FormGroup>
+                <div className="grid grid-cols-2 gap-2">
+                  <FormGroup label="Mandal">
+                    <Input type="text" placeholder="e.g. Tenali" value={mandal} onChange={e => setMandal(e.target.value)} />
+                  </FormGroup>
+                  <FormGroup label="District">
+                    <Select value={district} onChange={e => setDistrict(e.target.value)}>
                       <option value="Krishna">Krishna</option>
                       <option value="Guntur">Guntur</option>
                       <option value="Kurnool">Kurnool</option>
                       <option value="Nellore">Nellore</option>
-                    </select>
-                  </div>
+                    </Select>
+                  </FormGroup>
                 </div>
-                <div style={{ display: 'flex', gap: 12 }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#0D2347' }}>Assigned Doctor</label>
-                    <select
-                      value={doctor}
-                      onChange={e => setDoctor(e.target.value)}
-                      style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13, background: 'white' }}
-                    >
+                <div className="grid grid-cols-2 gap-2">
+                  <FormGroup label="Assigned Doctor">
+                    <Select value={doctor} onChange={e => setDoctor(e.target.value)}>
                       <option value="Dr. Srinivasa Rao">Dr. Srinivasa Rao</option>
                       <option value="Dr. Priya Devi">Dr. Priya Devi</option>
                       <option value="Dr. Ramesh Kumar">Dr. Ramesh Kumar</option>
-                    </select>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#0D2347' }}>Schedule Date</label>
-                    <input
-                      type="date"
-                      value={date}
-                      onChange={e => setDate(e.target.value)}
-                      style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13 }}
-                    />
-                  </div>
+                    </Select>
+                  </FormGroup>
+                  <FormGroup label="Schedule Date">
+                    <Input type="date" value={date} onChange={e => setDate(e.target.value)} />
+                  </FormGroup>
                 </div>
               </div>
             )}
@@ -238,7 +201,7 @@ export default function CampManagement() {
               title={viewCamp.name}
               subtitle={`Camp Code: ${viewCamp.id}`}
               actions={
-                <button className="btn btn-primary" onClick={() => setViewCamp(null)}>Close</button>
+                <Button variant="primary" onClick={() => setViewCamp(null)}>Close</Button>
               }
             >
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 14 }}>
@@ -271,8 +234,8 @@ export default function CampManagement() {
               subtitle={endCampTarget.name}
               actions={
                 <>
-                  <button className="btn btn-outline" onClick={() => setEndCampTarget(null)} disabled={success}>Cancel</button>
-                  <button className="btn btn-primary" onClick={handleEndCamp} disabled={success}>Confirm End Camp</button>
+                  <Button variant="outline" onClick={() => setEndCampTarget(null)} disabled={success}>Cancel</Button>
+                  <Button variant="primary" onClick={handleEndCamp} disabled={success}>Confirm End Camp</Button>
                 </>
               }
             >
@@ -285,9 +248,7 @@ export default function CampManagement() {
               )}
             </Modal>
           )}
-        </main>
-      </div>
-    </div>
+        </AppShell>
   );
 }
 

@@ -2,7 +2,9 @@
 import { useState } from 'react';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { StatCard, ProgressBar } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { StatCard, ProgressBar, StatsGrid, Card, CardBody, CardHeader, CardTitle, Button } from '@/app/components/ui';
+import { cn } from '@/app/lib/cn';
 
 const districts = [
   { name: 'Krishna', mandals: 50, camps: 42, screened: 48200, target: 55000, referrals: 1620, spectacles: 11400 },
@@ -12,69 +14,68 @@ const districts = [
 
 export default function DistrictDashboard() {
   const [selected, setSelected] = useState('Krishna');
-  const d = districts.find(d => d.name === selected) ?? districts[0];
+  const d = districts.find(x => x.name === selected) ?? districts[0];
   const pct = Math.round((d.screened / d.target) * 100);
 
   return (
-    <div className="app-layout">
-      <Sidebar role="admin" userName="Venkat Rao" userSub="Super Admin" />
-      <div className="main-content">
-        <Topbar title="District Analytics" subtitle="District-wise performance overview" />
-        <main className="page-body">
-          {/* District selector */}
-          <div style={{ display: 'flex', gap: 8, marginBottom: 24, flexWrap: 'wrap' }}>
-            {districts.map(d => (
-              <button key={d.name} onClick={() => setSelected(d.name)} className="btn btn-sm"
-                style={{ background: selected === d.name ? '#1A3A6B' : 'white', color: selected === d.name ? 'white' : '#616161', border: '1.5px solid', borderColor: selected === d.name ? '#1A3A6B' : '#E0E0E0' }}>
-                {d.name}
-              </button>
-            ))}
-          </div>
-
-          {/* Summary banner */}
-          <div className="animate-fade-up" style={{ background: 'linear-gradient(135deg, #1A3A6B, #2952A3)', borderRadius: 20, padding: 24, color: 'white', marginBottom: 24 }}>
-            <div style={{ fontSize: 20, fontWeight: 900 }}>{d.name} District</div>
-            <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 16 }}>{d.mandals} Mandals • {d.camps} Camps Completed</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div style={{ flex: 1 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                  <span style={{ fontSize: 12 }}>Coverage Progress</span>
-                  <span style={{ fontSize: 14, fontWeight: 800 }}>{pct}%</span>
-                </div>
-                <div style={{ background: 'rgba(255,255,255,.2)', borderRadius: 99, height: 8 }}>
-                  <div style={{ background: pct >= 85 ? '#FFD54F' : '#FF9800', borderRadius: 99, height: '100%', width: `${pct}%` }} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="stats-grid stats-grid-4 mb-24">
-            <StatCard title="Total Screened" value={d.screened.toLocaleString()} icon="👁️" color="#1A3A6B" delay={0.05} />
-            <StatCard title="Target" value={d.target.toLocaleString()} icon="🎯" color="#D4A017" delay={0.10} />
-            <StatCard title="Referrals" value={d.referrals.toLocaleString()} icon="🏥" color="#C62828" delay={0.15} />
-            <StatCard title="Spectacles Given" value={d.spectacles.toLocaleString()} icon="👓" color="#00897B" delay={0.20} />
-          </div>
-
-          {/* Mandal-wise chart placeholder */}
-          <div className="card">
-            <div className="card-header"><h3>Mandal-wise Coverage – {d.name}</h3></div>
-            <div className="card-body">
-              {['Vijayawada', 'Machilipatnam', 'Gudivada', 'Nuzvid', 'Jaggaiahpet', 'Nandigama'].map((m, i) => {
-                const pctM = Math.max(55, 95 - i * 7);
-                return (
-                  <div key={m} style={{ marginBottom: 14 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                      <span style={{ fontSize: 13, fontWeight: 600 }}>{m}</span>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: pctM >= 85 ? '#2E7D32' : '#E65100' }}>{pctM}%</span>
-                    </div>
-                    <ProgressBar value={pctM} color={pctM >= 85 ? '#2E7D32' : pctM >= 70 ? '#D4A017' : '#E65100'} />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </main>
+    <AppShell
+      sidebar={<Sidebar role="admin" userName="Venkat Rao" userSub="Super Admin" />}
+      topbar={<Topbar title="District Analytics" subtitle="District-wise performance overview" />}
+    >
+      <div className="mb-6 flex flex-wrap gap-2">
+        {districts.map(dist => (
+          <Button
+            key={dist.name}
+            size="sm"
+            variant={selected === dist.name ? 'primary' : 'outline'}
+            className={cn(selected !== dist.name && 'border-grey-300 bg-white text-grey-600')}
+            onClick={() => setSelected(dist.name)}
+          >
+            {dist.name}
+          </Button>
+        ))}
       </div>
-    </div>
+
+      <div className="animate-fade-up mb-6 rounded-[20px] bg-gradient-to-br from-primary to-primary-light p-6 text-white">
+        <div className="text-xl font-black">{d.name} District</div>
+        <div className="mb-4 text-xs opacity-70">{d.mandals} Mandals • {d.camps} Camps Completed</div>
+        <div className="flex items-center gap-3">
+          <div className="flex-1">
+            <div className="mb-1.5 flex justify-between text-xs">
+              <span>Coverage Progress</span>
+              <span className="text-sm font-extrabold">{pct}%</span>
+            </div>
+            <div className="h-2 overflow-hidden rounded-full bg-white/20">
+              <div className="h-full rounded-full" style={{ width: `${pct}%`, background: pct >= 85 ? '#FFD54F' : '#FF9800' }} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <StatsGrid cols={4} className="mb-3.5">
+        <StatCard title="Total Screened" value={d.screened.toLocaleString()} icon="👁️" color="#1A3A6B" delay={0.05} />
+        <StatCard title="Target" value={d.target.toLocaleString()} icon="🎯" color="#D4A017" delay={0.10} />
+        <StatCard title="Referrals" value={d.referrals.toLocaleString()} icon="🏥" color="#C62828" delay={0.15} />
+        <StatCard title="Spectacles Given" value={d.spectacles.toLocaleString()} icon="👓" color="#00897B" delay={0.20} />
+      </StatsGrid>
+
+      <Card>
+        <CardHeader><CardTitle>Mandal-wise Coverage – {d.name}</CardTitle></CardHeader>
+        <CardBody>
+          {['Vijayawada', 'Machilipatnam', 'Gudivada', 'Nuzvid', 'Jaggaiahpet', 'Nandigama'].map((m, i) => {
+            const pctM = Math.max(55, 95 - i * 7);
+            return (
+              <div key={m} className="mb-3.5 last:mb-0">
+                <div className="mb-1 flex justify-between">
+                  <span className="text-[13px] font-semibold">{m}</span>
+                  <span className="text-xs font-bold" style={{ color: pctM >= 85 ? '#2E7D32' : '#E65100' }}>{pctM}%</span>
+                </div>
+                <ProgressBar value={pctM} color={pctM >= 85 ? '#2E7D32' : pctM >= 70 ? '#D4A017' : '#E65100'} />
+              </div>
+            );
+          })}
+        </CardBody>
+      </Card>
+    </AppShell>
   );
 }

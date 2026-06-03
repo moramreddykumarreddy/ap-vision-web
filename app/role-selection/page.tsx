@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Button, fadeDelay } from '@/app/components/ui';
+import { cn } from '@/app/lib/cn';
 
 const roles = [
   { id: 'admin', icon: '👑', title: 'Super Admin', desc: 'State-level administration', href: '/admin/dashboard', color: '#1A3A6B' },
@@ -21,44 +23,49 @@ export default function RoleSelectionPage() {
   };
 
   return (
-    <div className="auth-page" style={{ flexDirection: 'column', gap: 0 }}>
-      <div style={{ textAlign: 'center', marginBottom: 32, color: 'white' }}>
-        <img src="/apvision.png" alt="AP Vision Care" style={{ width: 64, height: 64, borderRadius: 18, objectFit: 'contain', background: 'rgba(255,255,255,0.95)', padding: 6, margin: '0 auto 12px', display: 'block', boxShadow: '0 8px 28px rgba(0,0,0,0.25)' }} />
-        <h1 style={{ fontSize: 22, fontWeight: 900, fontFamily: 'Outfit, sans-serif', marginBottom: 4 }}>Select Your Role</h1>
-        <p style={{ fontSize: 13, opacity: 0.65 }}>Choose the role to continue to your dashboard</p>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-0 bg-gradient-to-br from-primary-dark to-primary p-6">
+      <div className="mb-8 text-center text-white">
+        <img src="/apvision.png" alt="AP Vision Care" className="mx-auto mb-3 block size-16 rounded-[18px] bg-white/95 object-contain p-1.5 shadow-[0_8px_28px_rgba(0,0,0,0.25)]" />
+        <h1 className="mb-1 font-heading text-[22px] font-black">Select Your Role</h1>
+        <p className="text-[13px] opacity-65">Choose the role to continue to your dashboard</p>
       </div>
 
-      <div style={{ background: 'white', borderRadius: 20, padding: 32, width: '100%', maxWidth: 540, boxShadow: '0 20px 60px rgba(0,0,0,.2)' }} className="animate-fade-up">
-        <div className="role-grid">
+      <div className="w-full max-w-[540px] animate-fade-up rounded-[20px] bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
+        <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
           {roles.map((role, i) => (
             <div
               key={role.id}
               id={`role-${role.id}`}
-              className={`role-card animate-fade-up d${i + 1}${selected === role.id ? ' selected' : ''}`}
+              className={cn(
+                'animate-fade-up cursor-pointer rounded-xl border-2 border-grey-200 p-5 text-center transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:shadow-md',
+                fadeDelay(i + 1),
+                selected === role.id && 'border-primary bg-primary/5 shadow-md',
+              )}
               onClick={() => setSelected(role.id)}
             >
-              <div className="role-icon">{role.icon}</div>
-              <div className="role-title">{role.title}</div>
-              <div className="role-desc">{role.desc}</div>
+              <div className="mb-2 text-[28px]">{role.icon}</div>
+              <div className="text-sm font-extrabold text-primary">{role.title}</div>
+              <div className="text-[11px] text-grey-500">{role.desc}</div>
             </div>
           ))}
         </div>
 
-        <button
+        <Button
           id="continue-btn"
-          className="btn btn-primary btn-full btn-lg"
-          style={{ marginTop: 20 }}
+          variant="primary"
+          size="lg"
+          full
+          className="mt-5"
           disabled={!selected}
           onClick={handleContinue}
         >
           Continue as {selected ? roles.find(r => r.id === selected)?.title : '...'} →
-        </button>
+        </Button>
       </div>
 
-      <button className="btn btn-ghost" style={{ marginTop: 16, color: 'rgba(255,255,255,.6)', fontSize: 12 }}
-        onClick={() => router.push('/login')}>
+      <Button variant="ghost" className="mt-4 text-xs text-white/60" onClick={() => router.push('/login')}>
         ← Back to Login
-      </button>
+      </Button>
     </div>
   );
 }

@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { StatusBadge } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { StatusBadge, Card, CardBody, Button, fadeDelay } from '@/app/components/ui';
+import { cn } from '@/app/lib/cn';
 
 const consultations = [
   { id: 'CON-001', patientName: 'Ramaiah Venkata', condition: 'Diabetic Retinopathy', scheduledTime: 'Today, 10:00 AM', status: 'Scheduled', age: 58, village: 'Patamata', notes: '' },
@@ -19,46 +21,47 @@ export default function ConsultationList() {
   const filtered = filter === 'All' ? consultations : consultations.filter(c => c.status === filter);
 
   return (
-    <div className="app-layout">
-      <Sidebar role="tele" userName="Dr. Anita Rao" userSub="SVIMS, Tirupati" />
-      <div className="main-content">
-        <Topbar title="Consultation List" subtitle="All teleconsultations" />
-        <main className="page-body">
-          {/* Filter */}
-          <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
-            {['All', 'Scheduled', 'Completed'].map(s => (
-              <button key={s} onClick={() => setFilter(s)} className="btn btn-sm"
-                style={{ background: filter === s ? '#1A3A6B' : 'white', color: filter === s ? 'white' : '#616161', border: '1.5px solid', borderColor: filter === s ? '#1A3A6B' : '#E0E0E0' }}>
-                {s} ({(s === 'All' ? consultations : consultations.filter(c => c.status === s)).length})
-              </button>
-            ))}
-          </div>
+    <AppShell
+      sidebar={<Sidebar role="tele" userName="Dr. Anita Rao" userSub="SVIMS, Tirupati" />}
+      topbar={<Topbar title="Consultation List" subtitle="All teleconsultations" />}
+    >
+      <div className="mb-5 flex gap-2">
+        {['All', 'Scheduled', 'Completed'].map(s => (
+          <Button
+            key={s}
+            size="sm"
+            variant={filter === s ? 'primary' : 'outline'}
+            className={cn(filter !== s && 'border-grey-300 bg-white text-grey-600')}
+            onClick={() => setFilter(s)}
+          >
+            {s} ({(s === 'All' ? consultations : consultations.filter(c => c.status === s)).length})
+          </Button>
+        ))}
+      </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {filtered.map((c, i) => (
-              <div key={c.id} className={`card animate-fade-up d${i + 1}`}>
-                <div className="card-body">
-                  <div className="flex items-center gap-12">
-                    <div style={{ width: 44, height: 44, borderRadius: '50%', background: '#1A3A6B18', color: '#1A3A6B', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 16 }}>{c.patientName[0]}</div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 14, fontWeight: 800 }}>{c.patientName}</div>
-                      <div style={{ fontSize: 12, color: '#757575' }}>{c.condition} • {c.age}y • {c.village}</div>
-                      <div style={{ fontSize: 11, color: '#1A3A6B', marginTop: 2 }}>🕐 {c.scheduledTime}</div>
-                      {c.notes && <div style={{ fontSize: 11, color: '#9E9E9E', fontStyle: 'italic', marginTop: 2 }}>📝 {c.notes}</div>}
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
-                      <StatusBadge label={c.status} />
-                      {c.status === 'Scheduled' && (
-                        <button className="btn btn-sm btn-primary" onClick={() => router.push('/tele/video')}>📹 Join</button>
-                      )}
-                    </div>
-                  </div>
+      <div className="flex flex-col gap-3">
+        {filtered.map((c, i) => (
+          <Card key={c.id} className={`animate-fade-up ${fadeDelay(i + 1)}`}>
+            <CardBody>
+              <div className="flex items-center gap-2">
+                <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-base font-extrabold text-primary">{c.patientName[0]}</div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-extrabold">{c.patientName}</div>
+                  <div className="text-xs text-grey-600">{c.condition} • {c.age}y • {c.village}</div>
+                  <div className="mt-0.5 text-[11px] text-primary">🕐 {c.scheduledTime}</div>
+                  {c.notes && <div className="mt-0.5 text-[11px] italic text-grey-400">📝 {c.notes}</div>}
+                </div>
+                <div className="flex flex-col items-end gap-2">
+                  <StatusBadge label={c.status} />
+                  {c.status === 'Scheduled' && (
+                    <Button size="sm" variant="primary" onClick={() => router.push('/tele/video')}>📹 Join</Button>
+                  )}
                 </div>
               </div>
-            ))}
-          </div>
-        </main>
+            </CardBody>
+          </Card>
+        ))}
       </div>
-    </div>
+    </AppShell>
   );
 }

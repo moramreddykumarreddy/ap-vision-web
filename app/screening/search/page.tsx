@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { StatusBadge } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { StatusBadge, Button, Input, Card, CardBody, fadeDelay } from '@/app/components/ui';
 import Modal, { SuccessBanner } from '@/app/components/Modal';
 
 const patients = [
@@ -44,24 +45,22 @@ export default function PatientSearch() {
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar role="screening" userName="Dr. Srinivasa Rao" userSub="Team Lead" />
-      <div className="main-content">
-        <Topbar title="Patient Search" subtitle="Find patients by name, ID, or phone" />
-        <main className="page-body">
+    <AppShell
+      sidebar={<Sidebar role="screening" userName="Dr. Srinivasa Rao" userSub="Team Lead" />}
+      topbar={<Topbar title="Patient Search" subtitle="Find patients by name, ID, or phone" />}
+    >
           {/* Search bar */}
-          <div style={{ display: 'flex', gap: 10, marginBottom: 24 }}>
-            <input
+          <div className="mb-6 flex gap-2.5">
+            <Input
               id="patient-search-input"
-              className="form-input"
-              style={{ flex: 1 }}
+              className="flex-1"
               placeholder="Search by name, APV ID, or phone number..."
               value={query}
               onChange={e => setQuery(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && setSearched(true)}
             />
-            <button className="btn btn-primary" onClick={() => setSearched(true)}>🔍 Search</button>
-            <button className="btn btn-outline" onClick={() => setQrOpen(true)}>📷 Scan QR</button>
+            <Button variant="primary" onClick={() => setSearched(true)}>🔍 Search</Button>
+            <Button variant="outline" onClick={() => setQrOpen(true)}>📷 Scan QR</Button>
           </div>
 
           {!searched && (
@@ -69,9 +68,9 @@ export default function PatientSearch() {
               <div style={{ fontSize: 48, marginBottom: 12 }}>🔍</div>
               <div style={{ fontSize: 16, fontWeight: 600 }}>Search for a Patient</div>
               <div style={{ fontSize: 13, marginTop: 4 }}>Enter name, APV ID, or phone number above</div>
-              <button className="btn btn-primary" style={{ marginTop: 20 }} onClick={() => router.push('/screening/register')}>
+              <Button variant="primary" className="mt-5" onClick={() => router.push('/screening/register')}>
                 + Register New Patient
-              </button>
+              </Button>
             </div>
           )}
 
@@ -80,9 +79,9 @@ export default function PatientSearch() {
               <div style={{ fontSize: 48, marginBottom: 12 }}>😕</div>
               <div style={{ fontSize: 16, fontWeight: 600 }}>No patients found</div>
               <div style={{ fontSize: 13, marginTop: 4 }}>Try a different search term</div>
-              <button className="btn btn-primary" style={{ marginTop: 20 }} onClick={() => router.push('/screening/register')}>
+              <Button variant="primary" className="mt-5" onClick={() => router.push('/screening/register')}>
                 Register New Patient
-              </button>
+              </Button>
             </div>
           )}
 
@@ -115,14 +114,14 @@ export default function PatientSearch() {
             title="Scan Patient QR Code"
             subtitle="Place the patient's QR code in front of the camera"
             actions={
-              <button className="btn btn-outline" onClick={() => setQrOpen(false)} disabled={qrScanning || !!successMsg}>Cancel</button>
+              <Button variant="outline" onClick={() => setQrOpen(false)} disabled={qrScanning || !!successMsg}>Cancel</Button>
             }
           >
             {successMsg ? (
               <SuccessBanner message={successMsg} />
             ) : qrScanning ? (
               <div style={{ textAlign: 'center', padding: '24px 0' }}>
-                <div className="spinner" style={{ margin: '0 auto 16px' }} />
+                <div className="size-8 animate-spin rounded-full border-2 border-grey-200 border-t-primary" style={{ margin: '0 auto 16px' }} />
                 <div style={{ fontSize: 14, fontWeight: 700, color: '#1A3A6B' }}>Reading QR Code...</div>
               </div>
             ) : (
@@ -147,15 +146,16 @@ export default function PatientSearch() {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
                   {patients.slice(0, 3).map(p => (
-                    <button
+                    <Button
                       key={p.id}
-                      className="btn btn-sm btn-outline"
+                      variant="outline"
+                      size="sm"
                       onClick={() => handleSimulateScan(p.id)}
-                      style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 14px' }}
+                      className="flex justify-between px-3.5 py-2.5"
                     >
                       <span>🪪 {p.name}</span>
                       <span style={{ opacity: 0.7 }}>{p.id}</span>
-                    </button>
+                    </Button>
                   ))}
                 </div>
               </div>
@@ -169,18 +169,15 @@ export default function PatientSearch() {
               100% { top: 0%; }
             }
           `}</style>
-        </main>
-      </div>
-    </div>
+        </AppShell>
   );
 }
 
 function PatientCard({ patient: p, index: i, router }: { patient: typeof patients[0]; index: number; router: ReturnType<typeof useRouter> }) {
   return (
-    <div className={`card animate-fade-up d${i + 1}`} style={{ marginBottom: 12, cursor: 'pointer' }}
-      onClick={() => router.push('/admin/emr')}>
-      <div className="card-body">
-        <div className="flex items-center gap-12">
+    <Card className={`mb-3 animate-fade-up cursor-pointer ${fadeDelay(i + 1)}`} onClick={() => router.push('/admin/emr')}>
+      <CardBody>
+        <div className="flex items-center gap-2">
           <div style={{
             width: 44, height: 44, borderRadius: '50%',
             background: '#1A3A6B20', color: '#1A3A6B',
@@ -203,12 +200,12 @@ function PatientCard({ patient: p, index: i, router }: { patient: typeof patient
             </div>
           </div>
           <div style={{ display: 'flex', gap: 6 }}>
-            <button className="btn btn-sm btn-primary" onClick={e => { e.stopPropagation(); router.push('/admin/emr'); }}>View EMR</button>
-            <button className="btn btn-sm btn-outline" onClick={e => { e.stopPropagation(); router.push('/screening/register'); }}>Register</button>
+            <Button size="sm" variant="primary" onClick={e => { e.stopPropagation(); router.push('/admin/emr'); }}>View EMR</Button>
+            <Button size="sm" variant="outline" onClick={e => { e.stopPropagation(); router.push('/screening/register'); }}>Register</Button>
           </div>
         </div>
-      </div>
-    </div>
+      </CardBody>
+    </Card>
   );
 }
 

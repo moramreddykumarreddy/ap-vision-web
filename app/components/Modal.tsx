@@ -1,5 +1,5 @@
-'use client';
-import { useEffect } from 'react';
+"use client";
+import { useEffect } from "react";
 
 interface ModalProps {
   open: boolean;
@@ -11,78 +11,62 @@ interface ModalProps {
   width?: number;
 }
 
-export default function Modal({ open, onClose, title, subtitle, children, actions, width = 580 }: ModalProps) {
+export default function Modal({
+  open,
+  onClose,
+  title,
+  subtitle,
+  children,
+  actions,
+  width = 580,
+}: ModalProps) {
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    if (open) document.addEventListener('keydown', handler);
-    return () => document.removeEventListener('keydown', handler);
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    if (open) document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
   }, [open, onClose]);
 
   if (!open) return null;
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
       onClick={onClose}
-      style={{
-        position: 'fixed', inset: 0, zIndex: 9999,
-        background: 'rgba(13,35,71,0.55)',
-        backdropFilter: 'blur(4px)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: 20,
-        animation: 'fadeIn .15s ease both',
-      }}
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-primary-dark/55 p-5 backdrop-blur-sm animate-fade-in"
     >
       <div
-        onClick={e => e.stopPropagation()}
-        style={{
-          background: 'white',
-          borderRadius: 18,
-          width: '100%', maxWidth: width,
-          maxHeight: '90vh',
-          display: 'flex', flexDirection: 'column',
-          boxShadow: '0 24px 80px rgba(13,35,71,0.25)',
-          animation: 'fadeUp .2s ease both',
-          overflow: 'hidden',
-        }}
+        onClick={(e) => e.stopPropagation()}
+        style={{ maxWidth: width }}
+        className="flex max-h-[90vh] w-full flex-col overflow-hidden rounded-[18px] bg-white shadow-[0_24px_80px_rgba(13,35,71,0.25)] animate-fade-up"
       >
-        {/* Header */}
-        <div style={{
-          padding: '18px 22px 14px',
-          borderBottom: '1px solid #EEEEEE',
-          display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
-          flexShrink: 0,
-        }}>
+        <div className="flex shrink-0 items-start justify-between border-b border-grey-200 px-[22px] pb-3.5 pt-[18px]">
           <div>
-            <div style={{ fontSize: 16, fontWeight: 800, color: '#0D2347', fontFamily: "'Space Grotesk', sans-serif" }}>{title}</div>
-            {subtitle && <div style={{ fontSize: 11, color: '#9E9E9E', marginTop: 2 }}>{subtitle}</div>}
+            <div className="font-heading text-base font-extrabold text-primary-dark">
+              {title}
+            </div>
+            {subtitle && (
+              <div className="mt-0.5 text-[11px] text-grey-500">{subtitle}</div>
+            )}
           </div>
           <button
+            type="button"
             onClick={onClose}
-            style={{
-              background: '#F5F5F5', border: 'none', borderRadius: '50%',
-              width: 30, height: 30, cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 16, color: '#616161', flexShrink: 0,
-              transition: 'background .15s',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.background = '#E0E0E0')}
-            onMouseLeave={e => (e.currentTarget.style.background = '#F5F5F5')}
-          >✕</button>
+            aria-label="Close dialog"
+            className="flex size-[30px] shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-grey-100 text-base text-grey-700 transition-colors hover:bg-grey-200"
+          >
+            ✕
+          </button>
         </div>
 
-        {/* Body */}
-        <div style={{ overflowY: 'auto', flex: 1, padding: '18px 22px' }}>
+        <div className="flex-1 overflow-y-auto px-[22px] py-[18px]">
           {children}
         </div>
 
-        {/* Footer */}
         {actions && (
-          <div style={{
-            padding: '14px 22px',
-            borderTop: '1px solid #EEEEEE',
-            display: 'flex', gap: 10, justifyContent: 'flex-end',
-            flexShrink: 0,
-          }}>
+          <div className="flex shrink-0 justify-end gap-2.5 border-t border-grey-200 px-[22px] py-3.5">
             {actions}
           </div>
         )}
@@ -94,30 +78,48 @@ export default function Modal({ open, onClose, title, subtitle, children, action
 /* ── Reusable detail row ───────────────────────────── */
 export function DetailRow({ label, value }: { label: string; value: string }) {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #F5F5F5' }}>
-      <span style={{ fontSize: 12, color: '#9E9E9E' }}>{label}</span>
-      <span style={{ fontSize: 13, fontWeight: 700, color: '#212121', textAlign: 'right', maxWidth: '60%' }}>{value}</span>
+    <div className="flex justify-between border-b border-grey-100 py-2">
+      <span className="text-xs text-grey-500">{label}</span>
+      <span className="max-w-[60%] text-right text-[13px] font-bold text-grey-900">
+        {value}
+      </span>
     </div>
   );
 }
 
 /* ── Roster table ──────────────────────────────────── */
-export function RosterTable({ columns, rows }: { columns: string[]; rows: string[][] }) {
+export function RosterTable({
+  columns,
+  rows,
+}: {
+  columns: string[];
+  rows: string[][];
+}) {
   return (
-    <div style={{ overflowX: 'auto' }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse text-xs">
         <thead>
           <tr>
-            {columns.map(c => (
-              <th key={c} style={{ background: '#F5F7FA', padding: '8px 12px', textAlign: 'left', fontWeight: 700, fontSize: 10, color: '#757575', textTransform: 'uppercase', letterSpacing: 0.5, borderBottom: '2px solid #E0E0E0' }}>{c}</th>
+            {columns.map((c) => (
+              <th
+                key={c}
+                className="border-b-2 border-grey-200 bg-[#F5F7FA] px-3 py-2 text-left text-[10px] font-bold uppercase tracking-wide text-grey-600"
+              >
+                {c}
+              </th>
             ))}
           </tr>
         </thead>
         <tbody>
           {rows.map((row, i) => (
-            <tr key={i} style={{ background: i % 2 === 0 ? 'white' : '#FAFAFA' }}>
+            <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-grey-50"}>
               {row.map((cell, j) => (
-                <td key={j} style={{ padding: '9px 12px', borderBottom: '1px solid #F0F0F0', fontWeight: j === 0 ? 700 : 400, color: '#212121' }}>{cell}</td>
+                <td
+                  key={j}
+                  className={`border-b border-grey-100 px-3 py-2.5 text-grey-900 ${j === 0 ? "font-bold" : "font-normal"}`}
+                >
+                  {cell}
+                </td>
               ))}
             </tr>
           ))}
@@ -130,18 +132,24 @@ export function RosterTable({ columns, rows }: { columns: string[]; rows: string
 /* ── Success banner ────────────────────────────────── */
 export function SuccessBanner({ message }: { message: string }) {
   return (
-    <div style={{ background: 'rgba(46,125,50,0.08)', border: '1.5px solid rgba(46,125,50,0.25)', borderRadius: 12, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12 }}>
-      <span style={{ fontSize: 24 }}>✅</span>
-      <span style={{ fontSize: 14, fontWeight: 700, color: '#2E7D32' }}>{message}</span>
+    <div className="flex items-center gap-3 rounded-xl border-[1.5px] border-success/25 bg-success/10 px-5 py-4">
+      <span className="text-2xl">✅</span>
+      <span className="text-sm font-bold text-success">{message}</span>
     </div>
   );
 }
 
 /* ── Download helper ───────────────────────────────── */
-export function downloadFile(filename: string, content: string, type = 'text/plain') {
+export function downloadFile(
+  filename: string,
+  content: string,
+  type = "text/plain",
+) {
   const blob = new Blob([content], { type });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = filename; a.click();
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
   URL.revokeObjectURL(url);
 }

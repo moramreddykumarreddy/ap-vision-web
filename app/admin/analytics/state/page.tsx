@@ -1,7 +1,8 @@
 'use client';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { StatCard, SectionHeader, ProgressBar } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { StatCard, SectionHeader, ProgressBar, StatsGrid, Card, CardBody, CardHeader, CardTitle, TableWrap, DataTable, ChartBarWrap, ChartBarCol } from '@/app/components/ui';
 
 const districtData = [
   { name: 'Visakhapatnam', target: 65000, achieved: 52400, pct: 80, referrals: 1840 },
@@ -25,74 +26,71 @@ const maxVal = Math.max(...screenedData);
 
 export default function StateAnalytics() {
   return (
-    <div className="app-layout">
-      <Sidebar role="admin" userName="Venkat Rao" userSub="Super Admin" />
-      <div className="main-content">
-        <Topbar title="State Analytics" subtitle="Andhra Pradesh • Programme Year 2024–25" />
-        <main className="page-body">
-          <div className="stats-grid stats-grid-4 mb-24">
-            <StatCard title="Total Patients" value="1.24M" icon="👥" color="#1A3A6B" delay={0.05} />
-            <StatCard title="Screened" value="1.14M" icon="👁️" color="#00897B" delay={0.10} subtitle="91.9%" />
-            <StatCard title="Prescriptions" value="186K" icon="💊" color="#D4A017" delay={0.15} />
-            <StatCard title="Delivered" value="142K" icon="✅" color="#2E7D32" delay={0.20} subtitle="76%" />
-          </div>
+    <AppShell
+      sidebar={<Sidebar role="admin" userName="Venkat Rao" userSub="Super Admin" />}
+      topbar={<Topbar title="State Analytics" subtitle="Andhra Pradesh • Programme Year 2024–25" />}
+    >
+      <StatsGrid cols={4} className="mb-3.5">
+        <StatCard title="Total Patients" value="1.24M" icon="👥" color="#1A3A6B" delay={0.05} />
+        <StatCard title="Screened" value="1.14M" icon="👁️" color="#00897B" delay={0.10} subtitle="91.9%" />
+        <StatCard title="Prescriptions" value="186K" icon="💊" color="#D4A017" delay={0.15} />
+        <StatCard title="Delivered" value="142K" icon="✅" color="#2E7D32" delay={0.20} subtitle="76%" />
+      </StatsGrid>
 
-          {/* Trend Chart */}
-          <div className="card mb-24">
-            <div className="card-header"><h3>Monthly Screening Trend (2024–25)</h3></div>
-            <div className="card-body">
-              <div className="chart-bar-wrap">
-                {months.map((m, i) => (
-                  <div key={m} className="chart-bar-col">
-                    <div className="chart-bar" style={{ height: `${(screenedData[i] / maxVal) * 100}%`, background: i === months.length - 1 ? '#1A3A6B' : '#1A3A6B80' }} />
-                    <span className="chart-bar-label">{m}</span>
-                  </div>
+      <Card className="mb-3.5">
+        <CardHeader><CardTitle>Monthly Screening Trend (2024–25)</CardTitle></CardHeader>
+        <CardBody>
+          <ChartBarWrap>
+            {months.map((m, i) => (
+              <ChartBarCol
+                key={m}
+                label={m}
+                height={`${(screenedData[i] / maxVal) * 100}%`}
+                color={i === months.length - 1 ? '#1A3A6B' : '#1A3A6B80'}
+              />
+            ))}
+          </ChartBarWrap>
+        </CardBody>
+      </Card>
+
+      <SectionHeader title="District-wise Performance" />
+      <Card className="mt-2">
+        <CardBody className="p-0">
+          <TableWrap>
+            <DataTable>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>District</th>
+                  <th>Target</th>
+                  <th>Achieved</th>
+                  <th>Coverage</th>
+                  <th>Referrals</th>
+                </tr>
+              </thead>
+              <tbody>
+                {districtData.map((d, i) => (
+                  <tr key={d.name}>
+                    <td>{i + 1}</td>
+                    <td className="font-bold">{d.name}</td>
+                    <td>{d.target.toLocaleString()}</td>
+                    <td>{d.achieved.toLocaleString()}</td>
+                    <td>
+                      <div className="flex items-center gap-2">
+                        <div className="max-w-20 flex-1">
+                          <ProgressBar value={d.pct} color={d.pct >= 85 ? '#2E7D32' : d.pct >= 75 ? '#D4A017' : '#E65100'} />
+                        </div>
+                        <span className="text-xs font-bold" style={{ color: d.pct >= 85 ? '#2E7D32' : d.pct >= 75 ? '#D4A017' : '#E65100' }}>{d.pct}%</span>
+                      </div>
+                    </td>
+                    <td>{d.referrals.toLocaleString()}</td>
+                  </tr>
                 ))}
-              </div>
-            </div>
-          </div>
-
-          {/* District Table */}
-          <SectionHeader title="District-wise Performance" />
-          <div className="card mt-12">
-            <div className="card-body" style={{ padding: 0 }}>
-              <div className="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>District</th>
-                      <th>Target</th>
-                      <th>Achieved</th>
-                      <th>Coverage</th>
-                      <th>Referrals</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {districtData.map((d, i) => (
-                      <tr key={d.name}>
-                        <td>{i + 1}</td>
-                        <td style={{ fontWeight: 700 }}>{d.name}</td>
-                        <td>{d.target.toLocaleString()}</td>
-                        <td>{d.achieved.toLocaleString()}</td>
-                        <td>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <div style={{ flex: 1, maxWidth: 80 }}>
-                              <ProgressBar value={d.pct} color={d.pct >= 85 ? '#2E7D32' : d.pct >= 75 ? '#D4A017' : '#E65100'} />
-                            </div>
-                            <span style={{ fontWeight: 700, color: d.pct >= 85 ? '#2E7D32' : d.pct >= 75 ? '#D4A017' : '#E65100', fontSize: 12 }}>{d.pct}%</span>
-                          </div>
-                        </td>
-                        <td>{d.referrals.toLocaleString()}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
+              </tbody>
+            </DataTable>
+          </TableWrap>
+        </CardBody>
+      </Card>
+    </AppShell>
   );
 }

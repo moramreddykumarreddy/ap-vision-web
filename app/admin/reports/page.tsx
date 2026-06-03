@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { SectionHeader } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { SectionHeader, Card, CardBody, Button, Input, Select, FormGroup, ListItem, fadeDelay } from '@/app/components/ui';
 import Modal, { downloadFile, SuccessBanner } from '@/app/components/Modal';
 
 const reports = [
@@ -62,98 +63,96 @@ export default function ReportsScreen() {
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar role="admin" userName="Venkat Rao" userSub="Super Admin" />
-      <div className="main-content">
-        <Topbar title="Reports" subtitle="Download and generate reports" />
-        <main className="page-body">
-          <SectionHeader title="Generate Report" />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginTop: 10, marginBottom: 20 }}>
-            {reportTypes.map((r, i) => (
-              <div key={r.label} className={`card animate-fade-up d${i + 1}`} style={{ cursor: 'pointer', transition: 'all .2s' }}
-                onMouseOver={e => (e.currentTarget.style.transform = 'translateY(-2px)')}
-                onMouseOut={e => (e.currentTarget.style.transform = '')}
-                onClick={() => handleGenerate(r.label)}>
-                <div className="card-body" style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 10, background: '#1A3A6B10', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>{r.icon}</div>
-                  <div><div style={{ fontSize: 13, fontWeight: 700 }}>{r.label}</div><div style={{ fontSize: 11, color: '#9E9E9E' }}>{r.desc}</div></div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="card mb-20">
-            <div className="card-body">
-              <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 10 }}>Custom Report Generator</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, alignItems: 'end' }}>
-                <div className="form-group" style={{ margin: 0 }}><label className="form-label">From Date</label><input type="date" className="form-input" value={fromDate} onChange={e => setFromDate(e.target.value)} /></div>
-                <div className="form-group" style={{ margin: 0 }}><label className="form-label">To Date</label><input type="date" className="form-input" value={toDate} onChange={e => setToDate(e.target.value)} /></div>
-                <div className="form-group" style={{ margin: 0 }}><label className="form-label">District</label>
-                  <select className="form-input form-select" value={district} onChange={e => setDistrict(e.target.value)}>
-                    {['All Districts', 'Krishna', 'Guntur', 'Kurnool', 'Visakhapatnam', 'Nellore'].map(d => <option key={d}>{d}</option>)}
-                  </select></div>
-                <button className="btn btn-primary" onClick={() => handleGenerate()}>📊 Generate</button>
-              </div>
-            </div>
-          </div>
-
-          <SectionHeader title="Recent Reports" />
-          <div className="card mt-10">
-            <div className="card-body" style={{ padding: 0 }}>
-              {reports.map((r, i) => (
-                <div key={r.id} className={`list-item animate-fade-up d${i + 1}`} style={{ padding: '12px 16px' }}>
-                  <div style={{ width: 36, height: 36, borderRadius: 10, background: '#1A3A6B10', color: '#1A3A6B', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>📄</div>
-                  <div style={{ flex: 1, marginLeft: 10 }}>
-                    <div style={{ fontSize: 13, fontWeight: 700 }}>{r.title}</div>
-                    <div style={{ fontSize: 11, color: '#9E9E9E' }}>{r.district} • {r.date} • {r.size}</div>
-                  </div>
-                  <div style={{ display: 'flex', gap: 6 }}>
-                    <button className="btn btn-sm btn-outline" onClick={() => handleDownload(r)}>📥 Download</button>
-                    <button className="btn btn-sm btn-outline" onClick={() => handleShare(r)}>🔗 Share</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </main>
+    <AppShell
+      sidebar={<Sidebar role="admin" userName="Venkat Rao" userSub="Super Admin" />}
+      topbar={<Topbar title="Reports" subtitle="Download and generate reports" />}
+    >
+      <SectionHeader title="Generate Report" />
+      <div className="mt-2.5 mb-3 grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+        {reportTypes.map((r, i) => (
+          <Card key={r.label} className={`animate-fade-up cursor-pointer transition-all duration-200 hover:-translate-y-0.5 ${fadeDelay(i + 1)}`} onClick={() => handleGenerate(r.label)}>
+            <CardBody className="flex items-center gap-3.5">
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-[10px] bg-primary/10 text-xl">{r.icon}</div>
+              <div><div className="text-[13px] font-bold">{r.label}</div><div className="text-[11px] text-grey-400">{r.desc}</div></div>
+            </CardBody>
+          </Card>
+        ))}
       </div>
 
-      {/* Generating Modal */}
+      <Card className="mb-3">
+        <CardBody>
+          <div className="mb-2.5 text-[13px] font-bold">Custom Report Generator</div>
+          <div className="grid grid-cols-1 items-end gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <FormGroup label="From Date" className="mb-0"><Input type="date" value={fromDate} onChange={e => setFromDate(e.target.value)} /></FormGroup>
+            <FormGroup label="To Date" className="mb-0"><Input type="date" value={toDate} onChange={e => setToDate(e.target.value)} /></FormGroup>
+            <FormGroup label="District" className="mb-0">
+              <Select value={district} onChange={e => setDistrict(e.target.value)}>
+                {['All Districts', 'Krishna', 'Guntur', 'Kurnool', 'Visakhapatnam', 'Nellore'].map(d => <option key={d}>{d}</option>)}
+              </Select>
+            </FormGroup>
+            <Button variant="primary" onClick={() => handleGenerate()}>📊 Generate</Button>
+          </div>
+        </CardBody>
+      </Card>
+
+      <SectionHeader title="Recent Reports" />
+      <Card className="mt-2.5">
+        <CardBody className="p-0">
+          {reports.map((r, i) => (
+            <ListItem
+              key={r.id}
+              avatar="📄"
+              avatarBg="#1A3A6B10"
+              avatarColor="#1A3A6B"
+              title={r.title}
+              subtitle={`${r.district} • ${r.date} • ${r.size}`}
+              delay={i * 0.05}
+              className="px-4 py-3"
+              trailing={
+                <div className="flex gap-1.5">
+                  <Button size="sm" variant="outline" onClick={() => handleDownload(r)}>📥 Download</Button>
+                  <Button size="sm" variant="outline" onClick={() => handleShare(r)}>🔗 Share</Button>
+                </div>
+              }
+            />
+          ))}
+        </CardBody>
+      </Card>
+
       <Modal open={!!generating || !!generated} onClose={() => { setGenerating(null); setGenerated(null); }} title="Report Generator"
-        actions={generated ? <><button className="btn btn-outline btn-sm" onClick={() => downloadFile('generated_report.csv', CSV_DATA, 'text/csv')}>📥 Download CSV</button><button className="btn btn-primary btn-sm" onClick={() => setGenerated(null)}>Done</button></> : undefined}>
+        actions={generated ? <><Button variant="outline" size="sm" onClick={() => downloadFile('generated_report.csv', CSV_DATA, 'text/csv')}>📥 Download CSV</Button><Button variant="primary" size="sm" onClick={() => setGenerated(null)}>Done</Button></> : undefined}>
         {generating ? (
-          <div style={{ textAlign: 'center', padding: '24px 0' }}>
-            <div style={{ fontSize: 36, marginBottom: 12, animation: 'pulse 1s infinite' }}>⏳</div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: '#1A3A6B' }}>Generating: {generating}</div>
-            <div style={{ fontSize: 12, color: '#9E9E9E', marginTop: 6 }}>Processing data from all districts...</div>
+          <div className="py-6 text-center">
+            <div className="mb-3 animate-pulse text-4xl">⏳</div>
+            <div className="text-sm font-bold text-primary">Generating: {generating}</div>
+            <div className="mt-1.5 text-xs text-grey-400">Processing data from all districts...</div>
           </div>
         ) : generated ? (
           <div>
             <SuccessBanner message={`Report generated: ${generated}`} />
-            <div style={{ marginTop: 16, background: '#F8F9FA', borderRadius: 10, padding: 14 }}>
-              <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 10, color: '#0D2347' }}>Report Preview</div>
-              <pre style={{ fontSize: 11, color: '#424242', whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>{CSV_DATA.slice(0, 400)}...</pre>
+            <div className="mt-4 rounded-[10px] bg-grey-50 p-3.5">
+              <div className="mb-2.5 text-xs font-bold text-primary">Report Preview</div>
+              <pre className="whitespace-pre-wrap text-[11px] leading-relaxed text-grey-800">{CSV_DATA.slice(0, 400)}...</pre>
             </div>
           </div>
         ) : null}
       </Modal>
 
-      {/* Share Modal */}
       <Modal open={!!shareReport} onClose={() => { setShareReport(null); setShareCopied(false); }} title="Share Report" subtitle={shareReport?.title}
-        actions={<button className="btn btn-primary btn-sm" onClick={() => setShareReport(null)}>Done</button>}>
+        actions={<Button variant="primary" size="sm" onClick={() => setShareReport(null)}>Done</Button>}>
         {shareReport && (
           <div>
-            <div style={{ background: '#F5F7FF', borderRadius: 10, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-              <code style={{ flex: 1, fontSize: 11, color: '#1A3A6B', wordBreak: 'break-all' }}>https://apvision.gov.in/reports/{shareReport.id}</code>
-              <button className="btn btn-sm btn-primary" onClick={() => setShareCopied(true)}>{shareCopied ? '✅ Copied' : '📋 Copy'}</button>
+            <div className="mb-4 flex items-center gap-2.5 rounded-[10px] bg-[#F5F7FF] px-4 py-3">
+              <code className="flex-1 break-all text-[11px] text-primary">https://apvision.gov.in/reports/{shareReport.id}</code>
+              <Button size="sm" variant="primary" onClick={() => setShareCopied(true)}>{shareCopied ? '✅ Copied' : '📋 Copy'}</Button>
             </div>
             {shareCopied && <SuccessBanner message="Link copied to clipboard!" />}
-            <div style={{ marginTop: 14, display: 'flex', gap: 10 }}>
-              {['📧 Email', '📱 WhatsApp', '📨 SMS'].map(m => <button key={m} className="btn btn-outline btn-sm" style={{ flex: 1 }}>{m}</button>)}
+            <div className="mt-3.5 flex gap-2.5">
+              {['📧 Email', '📱 WhatsApp', '📨 SMS'].map(m => <Button key={m} variant="outline" size="sm" className="flex-1">{m}</Button>)}
             </div>
           </div>
         )}
       </Modal>
-    </div>
+    </AppShell>
   );
 }

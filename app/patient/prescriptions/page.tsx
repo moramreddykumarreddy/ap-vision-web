@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { StatusBadge } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { StatusBadge, Card, CardBody, CardHeader, Button, Input, fadeDelay } from '@/app/components/ui';
 import Modal, { SuccessBanner, downloadFile } from '@/app/components/Modal';
 
 const prescriptions = [
@@ -42,97 +43,71 @@ Add Power: ${rx.add}
 
   const handleCopyLink = () => {
     setCopySuccess(true);
-    setTimeout(() => {
-      setCopySuccess(false);
-    }, 1500);
+    setTimeout(() => setCopySuccess(false), 1500);
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar role="patient" userName="Ramaiah Venkata" userSub="Patient" />
-      <div className="main-content">
-        <Topbar title="My Prescriptions" subtitle="All vision prescriptions" />
-        <main className="page-body">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            {prescriptions.map((rx, i) => (
-              <div key={rx.id} className={`card animate-fade-up d${i + 1}`}>
-                <div className="card-header">
-                  <div>
-                    <div style={{ fontWeight: 800, fontSize: 15 }}>{rx.diagnosis}</div>
-                    <div style={{ fontSize: 11, color: '#9E9E9E' }}>{rx.id} • {rx.date} • {rx.doctor}</div>
-                  </div>
-                  <StatusBadge label={rx.status} />
-                </div>
-                <div className="card-body">
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
-                    {['Right Eye (OD)', 'Left Eye (OS)'].map(eye => (
-                      <div key={eye} style={{ border: '1px solid #E0E0E0', borderRadius: 10, padding: 14 }}>
-                        <div style={{ fontSize: 11, fontWeight: 800, color: '#1A3A6B', marginBottom: 10 }}>{eye}</div>
-                        {[
-                          ['Sphere', eye.includes('OD') ? rx.odSphere : rx.osSphere],
-                          ['Cylinder', eye.includes('OD') ? rx.odCyl : rx.osCyl],
-                          ['Axis', eye.includes('OD') ? rx.odAxis : rx.osAxis],
-                          ['Add', rx.add],
-                        ].map(([l, v]) => (
-                          <div key={l} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 4 }}>
-                            <span style={{ color: '#9E9E9E' }}>{l}</span>
-                            <span style={{ fontWeight: 700 }}>{v}</span>
-                          </div>
-                        ))}
+    <AppShell
+      sidebar={<Sidebar role="patient" userName="Ramaiah Venkata" userSub="Patient" />}
+      topbar={<Topbar title="My Prescriptions" subtitle="All vision prescriptions" />}
+    >
+      <div className="flex flex-col gap-3.5">
+        {prescriptions.map((rx, i) => (
+          <Card key={rx.id} className={`animate-fade-up ${fadeDelay(i + 1)}`}>
+            <CardHeader>
+              <div>
+                <div className="text-[15px] font-extrabold">{rx.diagnosis}</div>
+                <div className="text-[11px] text-grey-400">{rx.id} • {rx.date} • {rx.doctor}</div>
+              </div>
+              <StatusBadge label={rx.status} />
+            </CardHeader>
+            <CardBody>
+              <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {['Right Eye (OD)', 'Left Eye (OS)'].map(eye => (
+                  <div key={eye} className="rounded-[10px] border border-grey-300 p-3.5">
+                    <div className="mb-2.5 text-[11px] font-extrabold text-primary">{eye}</div>
+                    {[
+                      ['Sphere', eye.includes('OD') ? rx.odSphere : rx.osSphere],
+                      ['Cylinder', eye.includes('OD') ? rx.odCyl : rx.osCyl],
+                      ['Axis', eye.includes('OD') ? rx.odAxis : rx.osAxis],
+                      ['Add', rx.add],
+                    ].map(([l, v]) => (
+                      <div key={l as string} className="mb-1 flex justify-between text-xs">
+                        <span className="text-grey-400">{l}</span>
+                        <span className="font-bold">{v}</span>
                       </div>
                     ))}
                   </div>
-                  <div style={{ fontSize: 12, color: '#757575', marginBottom: 14 }}>Lens Type: <strong>{rx.type}</strong></div>
-                  <div style={{ display: 'flex', gap: 8 }}>
-                    <button className="btn btn-primary btn-sm" onClick={() => handlePrint(rx)}>🖨️ Print</button>
-                    <button className="btn btn-outline btn-sm" onClick={() => setShareRx(rx)}>📱 Share</button>
-                    <button className="btn btn-outline btn-sm" onClick={() => handleDownload(rx)}>💾 Download PDF</button>
-                  </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-
-          {/* Share Modal */}
-          {shareRx && (
-            <Modal
-              open={!!shareRx}
-              onClose={() => setShareRx(null)}
-              title="Share Prescription"
-              subtitle={`Prescription ID: ${shareRx.id}`}
-              actions={
-                <button className="btn btn-primary" onClick={() => setShareRx(null)}>Close</button>
-              }
-            >
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                <div style={{ fontSize: 13, color: '#424242' }}>
-                  Share the digital prescription link with a pharmacy or clinic:
-                </div>
-                <div style={{ display: 'flex', gap: 8 }}>
-                  <input
-                    type="text"
-                    readOnly
-                    value={`https://apvision.ap.gov.in/rx/share/${shareRx.id}`}
-                    style={{ flex: 1, padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 12, background: '#F5F5F5', color: '#616161' }}
-                  />
-                  <button className="btn btn-sm btn-primary" onClick={handleCopyLink}>Copy</button>
-                </div>
-                {copySuccess && <SuccessBanner message="Prescription link copied to clipboard!" />}
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 10 }}>
-                  <button className="btn btn-sm btn-outline" style={{ display: 'flex', gap: 10, justifyContent: 'center' }} onClick={handleCopyLink}>
-                    💬 Share via WhatsApp
-                  </button>
-                  <button className="btn btn-sm btn-outline" style={{ display: 'flex', gap: 10, justifyContent: 'center' }} onClick={handleCopyLink}>
-                    ✉️ Share via Email
-                  </button>
-                </div>
+              <div className="mb-3.5 text-xs text-grey-600">Lens Type: <strong>{rx.type}</strong></div>
+              <div className="flex gap-2">
+                <Button size="sm" variant="primary" onClick={() => handlePrint(rx)}>🖨️ Print</Button>
+                <Button size="sm" variant="outline" onClick={() => setShareRx(rx)}>📱 Share</Button>
+                <Button size="sm" variant="outline" onClick={() => handleDownload(rx)}>💾 Download PDF</Button>
               </div>
-            </Modal>
-          )}
-        </main>
+            </CardBody>
+          </Card>
+        ))}
       </div>
-    </div>
+
+      {shareRx && (
+        <Modal open={!!shareRx} onClose={() => setShareRx(null)} title="Share Prescription" subtitle={`Prescription ID: ${shareRx.id}`}
+          actions={<Button variant="primary" onClick={() => setShareRx(null)}>Close</Button>}>
+          <div className="flex flex-col gap-3.5">
+            <div className="text-[13px] text-grey-800">Share the digital prescription link with a pharmacy or clinic:</div>
+            <div className="flex gap-2">
+              <Input readOnly value={`https://apvision.ap.gov.in/rx/share/${shareRx.id}`} className="bg-grey-50 text-grey-600" />
+              <Button size="sm" variant="primary" onClick={handleCopyLink}>Copy</Button>
+            </div>
+            {copySuccess && <SuccessBanner message="Prescription link copied to clipboard!" />}
+            <div className="mt-2.5 flex flex-col gap-2">
+              <Button size="sm" variant="outline" full onClick={handleCopyLink}>💬 Share via WhatsApp</Button>
+              <Button size="sm" variant="outline" full onClick={handleCopyLink}>✉️ Share via Email</Button>
+            </div>
+          </div>
+        </Modal>
+      )}
+    </AppShell>
   );
 }
-

@@ -2,8 +2,10 @@
 import { useState } from 'react';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { StatusBadge } from '@/app/components/ui';
-import Modal, { DetailRow, RosterTable, downloadFile, SuccessBanner } from '@/app/components/Modal';
+import { AppShell } from '@/app/components/app-shell';
+import { StatusBadge, Button, Card, CardBody, fadeDelay } from '@/app/components/ui';
+import { cn } from '@/app/lib/cn';
+import Modal, { DetailRow, downloadFile, SuccessBanner } from '@/app/components/Modal';
 
 type Rx = { id: string; patientName: string; age: number; village: string; diagnosis: string; power: string; date: string; doctor: string; status: string };
 
@@ -32,66 +34,59 @@ export default function ApprovalScreen() {
   };
 
   const handlePrint = (rx: Rx) => {
-    const content = `PRESCRIPTION\n${'='.repeat(40)}\nPatient: ${rx.patientName} (${rx.age} yrs)\nVillage: ${rx.village}\nDate: ${rx.date}\nDoctor: ${rx.doctor}\nDiagnosis: ${rx.diagnosis}\nPower: ${rx.power}\nStatus: ${rx.status}\n${'='.repeat(40)}\nAP Vision Care — Govt. of Andhra Pradesh`;
-    downloadFile(`${rx.id}_Prescription.txt`, content);
+    downloadFile(`${rx.id}_Prescription.txt`, `PRESCRIPTION\nPatient: ${rx.patientName}\n...`);
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar role="nodal" userName="Ravi Shankar" userSub="Nodal Officer, Krishna" />
-      <div className="main-content">
-        <Topbar title="Prescription Approvals" subtitle="Review and approve prescriptions" />
-        <main className="page-body">
-          <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-            {['Pending', 'Approved', 'All'].map(s => (
-              <button key={s} onClick={() => setFilter(s)} className="btn btn-sm"
-                style={{ background: filter === s ? '#1A3A6B' : 'white', color: filter === s ? 'white' : '#616161', border: '1.5px solid', borderColor: filter === s ? '#1A3A6B' : '#E0E0E0' }}>
-                {s} ({rxList.filter(p => s === 'All' || p.status === s).length})
-              </button>
-            ))}
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {filtered.map((rx, i) => (
-              <div key={rx.id} className={`card animate-fade-up d${i + 1}`}>
-                <div className="card-body">
-                  <div className="flex items-center justify-between mb-12">
-                    <div className="flex items-center gap-12">
-                      <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#1A3A6B18', color: '#1A3A6B', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 16 }}>{rx.patientName[0]}</div>
-                      <div><div style={{ fontSize: 14, fontWeight: 800 }}>{rx.patientName}</div><div style={{ fontSize: 11, color: '#9E9E9E' }}>{rx.age}y • {rx.village} • {rx.date}</div></div>
-                    </div>
-                    <StatusBadge label={rx.status} />
-                  </div>
-                  <div style={{ background: '#F5F5F5', borderRadius: 10, padding: 12, marginBottom: 12 }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-                      <div><div style={{ fontSize: 10, color: '#9E9E9E', fontWeight: 700 }}>DIAGNOSIS</div><div style={{ fontSize: 13, fontWeight: 700 }}>{rx.diagnosis}</div></div>
-                      <div><div style={{ fontSize: 10, color: '#9E9E9E', fontWeight: 700 }}>DOCTOR</div><div style={{ fontSize: 13, fontWeight: 700 }}>{rx.doctor}</div></div>
-                      <div style={{ gridColumn: '1/-1' }}><div style={{ fontSize: 10, color: '#9E9E9E', fontWeight: 700 }}>POWER</div><div style={{ fontSize: 12, color: '#424242' }}>{rx.power}</div></div>
-                    </div>
-                  </div>
-                  {rx.status === 'Pending' && (
-                    <div style={{ display: 'flex', gap: 8 }}>
-                      <button className="btn btn-primary btn-sm" style={{ flex: 1 }} onClick={() => { setActionRx(rx); setActionType('approve'); setDone(false); }}>✅ Approve</button>
-                      <button className="btn btn-sm" style={{ flex: 1, background: '#C62828', color: 'white' }} onClick={() => { setActionRx(rx); setActionType('reject'); setDone(false); }}>❌ Reject</button>
-                      <button className="btn btn-outline btn-sm" onClick={() => setViewRx(rx)}>📋 View Full</button>
-                    </div>
-                  )}
-                  {rx.status !== 'Pending' && (
-                    <div style={{ display: 'flex', gap: 8 }}>
-                      <button className="btn btn-sm btn-outline" onClick={() => setViewRx(rx)}>📋 View Full</button>
-                      <button className="btn btn-sm btn-outline" onClick={() => handlePrint(rx)}>🖨️ Print</button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </main>
+    <AppShell
+      sidebar={<Sidebar role="nodal" userName="Ravi Shankar" userSub="Nodal Officer, Krishna" />}
+      topbar={<Topbar title="Prescription Approvals" subtitle="Review and approve prescriptions" />}
+    >
+      <div className="mb-4 flex gap-2">
+        {['Pending', 'Approved', 'All'].map(s => (
+          <Button key={s} size="sm" variant={filter === s ? 'primary' : 'outline'} className={cn(filter !== s && 'border-grey-300 bg-white text-grey-600')} onClick={() => setFilter(s)}>
+            {s} ({rxList.filter(p => s === 'All' || p.status === s).length})
+          </Button>
+        ))}
       </div>
 
-      {/* View Full Modal */}
+      <div className="flex flex-col gap-3">
+        {filtered.map((rx, i) => (
+          <Card key={rx.id} className={`animate-fade-up ${fadeDelay(i + 1)}`}>
+            <CardBody>
+              <div className="mb-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="flex size-10 items-center justify-center rounded-full bg-primary/10 text-base font-extrabold text-primary">{rx.patientName[0]}</div>
+                  <div><div className="text-sm font-extrabold">{rx.patientName}</div><div className="text-[11px] text-grey-400">{rx.age}y • {rx.village} • {rx.date}</div></div>
+                </div>
+                <StatusBadge label={rx.status} />
+              </div>
+              <div className="mb-3 rounded-[10px] bg-grey-50 p-3">
+                <div className="grid grid-cols-2 gap-2">
+                  <div><div className="text-[10px] font-bold text-grey-400">DIAGNOSIS</div><div className="text-[13px] font-bold">{rx.diagnosis}</div></div>
+                  <div><div className="text-[10px] font-bold text-grey-400">DOCTOR</div><div className="text-[13px] font-bold">{rx.doctor}</div></div>
+                  <div className="col-span-2"><div className="text-[10px] font-bold text-grey-400">POWER</div><div className="text-xs text-grey-800">{rx.power}</div></div>
+                </div>
+              </div>
+              {rx.status === 'Pending' ? (
+                <div className="flex gap-2">
+                  <Button size="sm" variant="primary" className="flex-1" onClick={() => { setActionRx(rx); setActionType('approve'); setDone(false); }}>✅ Approve</Button>
+                  <Button size="sm" variant="danger" className="flex-1" onClick={() => { setActionRx(rx); setActionType('reject'); setDone(false); }}>❌ Reject</Button>
+                  <Button size="sm" variant="outline" onClick={() => setViewRx(rx)}>📋 View Full</Button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <Button size="sm" variant="outline" onClick={() => setViewRx(rx)}>📋 View Full</Button>
+                  <Button size="sm" variant="outline" onClick={() => handlePrint(rx)}>🖨️ Print</Button>
+                </div>
+              )}
+            </CardBody>
+          </Card>
+        ))}
+      </div>
+
       <Modal open={!!viewRx} onClose={() => setViewRx(null)} title="Prescription Detail" subtitle={viewRx?.id}
-        actions={<><button className="btn btn-outline btn-sm" onClick={() => { viewRx && handlePrint(viewRx); }}>🖨️ Print</button><button className="btn btn-primary btn-sm" onClick={() => setViewRx(null)}>Close</button></>}>
+        actions={<><Button variant="outline" size="sm" onClick={() => { viewRx && handlePrint(viewRx); }}>🖨️ Print</Button><Button variant="primary" size="sm" onClick={() => setViewRx(null)}>Close</Button></>}>
         {viewRx && <>
           <DetailRow label="Patient" value={`${viewRx.patientName}, ${viewRx.age} yrs`} />
           <DetailRow label="Village" value={viewRx.village} />
@@ -103,17 +98,16 @@ export default function ApprovalScreen() {
         </>}
       </Modal>
 
-      {/* Approve/Reject Confirm Modal */}
       <Modal open={!!actionRx} onClose={() => { setActionRx(null); setDone(false); }} title={actionType === 'approve' ? 'Approve Prescription' : 'Reject Prescription'} subtitle={actionRx?.id}
-        actions={!done ? <><button className="btn btn-outline btn-sm" onClick={() => setActionRx(null)}>Cancel</button><button className="btn btn-sm" style={{ background: actionType === 'approve' ? '#2E7D32' : '#C62828', color: 'white' }} onClick={doAction}>{actionType === 'approve' ? '✅ Confirm Approve' : '❌ Confirm Reject'}</button></> : undefined}>
+        actions={!done ? <><Button variant="outline" size="sm" onClick={() => setActionRx(null)}>Cancel</Button><Button size="sm" variant={actionType === 'approve' ? 'primary' : 'danger'} onClick={doAction}>{actionType === 'approve' ? '✅ Confirm Approve' : '❌ Confirm Reject'}</Button></> : undefined}>
         {done ? <SuccessBanner message={`Prescription ${actionType === 'approve' ? 'approved' : 'rejected'} successfully!`} /> : actionRx && (
-          <div style={{ textAlign: 'center', padding: '12px 0' }}>
-            <div style={{ fontSize: 36, marginBottom: 10 }}>{actionType === 'approve' ? '✅' : '❌'}</div>
-            <div style={{ fontSize: 14, fontWeight: 700 }}>{actionType === 'approve' ? 'Approve' : 'Reject'} prescription for {actionRx.patientName}?</div>
-            <div style={{ fontSize: 12, color: '#9E9E9E', marginTop: 6 }}>{actionRx.diagnosis} • {actionRx.doctor}</div>
+          <div className="py-3 text-center">
+            <div className="mb-2.5 text-4xl">{actionType === 'approve' ? '✅' : '❌'}</div>
+            <div className="text-sm font-bold">{actionType === 'approve' ? 'Approve' : 'Reject'} prescription for {actionRx.patientName}?</div>
+            <div className="mt-1.5 text-xs text-grey-400">{actionRx.diagnosis} • {actionRx.doctor}</div>
           </div>
         )}
       </Modal>
-    </div>
+    </AppShell>
   );
 }

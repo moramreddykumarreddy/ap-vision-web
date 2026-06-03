@@ -2,7 +2,9 @@
 import { useState } from 'react';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { SectionHeader, StatusBadge } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { SectionHeader, StatusBadge, Button, Input, Select, FormGroup, Card, CardBody, TableWrap, DataTable, fadeDelay } from '@/app/components/ui';
+import { cn } from '@/app/lib/cn';
 import Modal, { RosterTable, SuccessBanner } from '@/app/components/Modal';
 
 const initialTeams = [
@@ -88,20 +90,19 @@ export default function TeamManagement() {
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar role="nodal" userName="Ravi Shankar" userSub="Nodal Officer, Krishna" />
-      <div className="main-content">
-        <Topbar title="Team Management" subtitle="Screening teams in Krishna district" />
-        <main className="page-body">
+    <AppShell
+      sidebar={<Sidebar role="nodal" userName="Ravi Shankar" userSub="Nodal Officer, Krishna" />}
+      topbar={<Topbar title="Team Management" subtitle="Screening teams in Krishna district" />}
+    >
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
-            <button className="btn btn-primary" onClick={() => setAddMemberOpen(true)}>+ Add Team Member</button>
+            <Button variant="primary" onClick={() => setAddMemberOpen(true)}>+ Add Team Member</Button>
           </div>
 
           <SectionHeader title="Screening Teams" />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 12, marginBottom: 24 }}>
             {teams.map((t, i) => (
-              <div key={t.id} className={`card animate-fade-up d${i + 1}`}>
-                <div className="card-body">
+              <Card key={t.id} className={`animate-fade-up ${fadeDelay(i + 1)}`}>
+                <CardBody>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
                     <div>
                       <div style={{ fontSize: 15, fontWeight: 800 }}>{t.name}</div>
@@ -124,19 +125,19 @@ export default function TeamManagement() {
                     </div>
                   </div>
                   <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-                    <button className="btn btn-outline btn-sm" onClick={() => { setSelectedTeam(t); setViewMembersOpen(true); }}>View Members</button>
-                    <button className="btn btn-outline btn-sm" onClick={() => { setSelectedTeam(t); setViewCampsOpen(true); }}>View Camps</button>
+                    <Button size="sm" variant="outline" onClick={() => { setSelectedTeam(t); setViewMembersOpen(true); }}>View Members</Button>
+                    <Button size="sm" variant="outline" onClick={() => { setSelectedTeam(t); setViewCampsOpen(true); }}>View Camps</Button>
                   </div>
-                </div>
-              </div>
+                </CardBody>
+              </Card>
             ))}
           </div>
 
           <SectionHeader title="All Members" />
-          <div className="card mt-12">
-            <div className="card-body" style={{ padding: 0 }}>
-              <div className="table-wrap">
-                <table>
+          <Card className="mt-2">
+            <CardBody className="p-0">
+              <TableWrap>
+                <DataTable>
                   <thead>
                     <tr>
                       <th>Name</th>
@@ -157,10 +158,10 @@ export default function TeamManagement() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+                </DataTable>
+              </TableWrap>
+            </CardBody>
+          </Card>
 
           {/* Add Team Member Modal */}
           <Modal
@@ -170,8 +171,8 @@ export default function TeamManagement() {
             subtitle="Register new personnel to screening teams"
             actions={
               <>
-                <button className="btn btn-outline" onClick={() => setAddMemberOpen(false)} disabled={success}>Cancel</button>
-                <button className="btn btn-primary" onClick={handleAddMember} disabled={success}>Add Member</button>
+                <Button variant="outline" onClick={() => setAddMemberOpen(false)} disabled={success}>Cancel</Button>
+                <Button variant="primary" onClick={handleAddMember} disabled={success}>Add Member</Button>
               </>
             }
           >
@@ -238,7 +239,7 @@ export default function TeamManagement() {
               title={`${selectedTeam.name} Members`}
               subtitle={`Detailed team registry for ${selectedTeam.name}`}
               actions={
-                <button className="btn btn-primary" onClick={() => setViewMembersOpen(false)}>Close</button>
+                <Button variant="primary" onClick={() => setViewMembersOpen(false)}>Close</Button>
               }
             >
               <RosterTable
@@ -256,7 +257,7 @@ export default function TeamManagement() {
               title={`${selectedTeam.name} Camps`}
               subtitle={`Activity log for screening camps conducted by ${selectedTeam.name}`}
               actions={
-                <button className="btn btn-primary" onClick={() => setViewCampsOpen(false)}>Close</button>
+                <Button variant="primary" onClick={() => setViewCampsOpen(false)}>Close</Button>
               }
             >
               <RosterTable
@@ -265,9 +266,7 @@ export default function TeamManagement() {
               />
             </Modal>
           )}
-        </main>
-      </div>
-    </div>
+        </AppShell>
   );
 }
 

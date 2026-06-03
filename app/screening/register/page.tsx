@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
+import { AppShell } from '@/app/components/app-shell';
+import { Button, Input, Select as UiSelect, Textarea, FormGroup, Card, CardBody, CardHeader, CardTitle } from '@/app/components/ui';
 import Modal, { SuccessBanner, downloadFile } from '@/app/components/Modal';
 
 const steps = [
@@ -30,11 +32,10 @@ export default function RegistrationFlow() {
   const prev = () => { if (step > 0) setStep(s => s - 1); };
 
   return (
-    <div className="app-layout">
-      <Sidebar role="screening" userName="Dr. Srinivasa Rao" userSub="Team Lead" />
-      <div className="main-content">
-        <Topbar title="Patient Registration" subtitle={`Step ${step + 1} of ${steps.length}: ${steps[step]}`} />
-        <main className="page-body">
+    <AppShell
+      sidebar={<Sidebar role="screening" userName="Dr. Srinivasa Rao" userSub="Team Lead" />}
+      topbar={<Topbar title="Patient Registration" subtitle={`Step ${step + 1} of ${steps.length}: ${steps[step]}`} />}
+    >
           {/* Progress */}
           <div style={{ display: 'flex', gap: 4, marginBottom: 24, flexWrap: 'wrap' }}>
             {steps.map((s, i) => (
@@ -46,12 +47,12 @@ export default function RegistrationFlow() {
             ))}
           </div>
 
-          <div className="card animate-fade-up" style={{ maxWidth: 720 }}>
-            <div className="card-header">
-              <h3>{steps[step]}</h3>
+          <Card className="max-w-[720px] animate-fade-up">
+            <CardHeader>
+              <CardTitle>{steps[step]}</CardTitle>
               <span style={{ fontSize: 12, color: '#9E9E9E' }}>Step {step + 1} / {steps.length}</span>
-            </div>
-            <div className="card-body">
+            </CardHeader>
+            <CardBody>
               {step === 0 && <BasicInfoStep form={form} update={update} />}
               {step === 1 && <DemographicStep form={form} update={update} />}
               {step === 2 && <MedicalHistoryStep form={form} update={update} />}
@@ -65,19 +66,17 @@ export default function RegistrationFlow() {
               {step === 10 && <DecisionEngineStep form={form} />}
               {step === 11 && <PrescriptionStep form={form} />}
 
-              <div className="flex gap-12 mt-24">
+              <div className="mt-3.5 flex gap-2">
                 {step > 0 && (
-                  <button className="btn btn-outline" onClick={prev}>← Previous</button>
+                  <Button variant="outline" onClick={prev}>← Previous</Button>
                 )}
-                <button className="btn btn-primary" style={{ marginLeft: 'auto' }} onClick={next}>
+                <Button variant="primary" className="ml-auto" onClick={next}>
                   {step === steps.length - 1 ? '✅ Complete Registration' : 'Next →'}
-                </button>
+                </Button>
               </div>
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
+            </CardBody>
+          </Card>
+        </AppShell>
   );
 }
 
@@ -87,22 +86,20 @@ function Field({ label, id, placeholder, value, onChange, type = 'text', require
   value: string; onChange: (v: string) => void; type?: string; required?: boolean;
 }) {
   return (
-    <div className="form-group">
-      <label className="form-label">{label}{required && ' *'}</label>
-      <input id={id} className="form-input" type={type} placeholder={placeholder} value={value} onChange={e => onChange(e.target.value)} />
-    </div>
+    <FormGroup label={`${label}${required ? ' *' : ''}`}>
+      <Input id={id} type={type} placeholder={placeholder} value={value} onChange={e => onChange(e.target.value)} />
+    </FormGroup>
   );
 }
 
-function Select({ label, id, options, value, onChange }: { label: string; id: string; options: string[]; value: string; onChange: (v: string) => void }) {
+function SelectField({ label, id, options, value, onChange }: { label: string; id: string; options: string[]; value: string; onChange: (v: string) => void }) {
   return (
-    <div className="form-group">
-      <label className="form-label">{label}</label>
-      <select id={id} className="form-input form-select" value={value} onChange={e => onChange(e.target.value)}>
+    <FormGroup label={label}>
+      <UiSelect id={id} value={value} onChange={e => onChange(e.target.value)}>
         <option value="">Select...</option>
         {options.map(o => <option key={o} value={o}>{o}</option>)}
-      </select>
-    </div>
+      </UiSelect>
+    </FormGroup>
   );
 }
 
@@ -130,7 +127,7 @@ function BasicInfoStep({ form, update }: { form: Record<string, string>; update:
         <Field label="Mobile Number" id="mobile" placeholder="9876543210" value={form.mobile ?? ''} onChange={v => update('mobile', v)} type="tel" />
         <Field label="Date of Birth" id="dob" value={form.dob ?? ''} onChange={v => update('dob', v)} type="date" />
       </Grid2>
-      <Select label="Gender" id="gender" options={['Male', 'Female', 'Other']} value={form.gender ?? ''} onChange={v => update('gender', v)} />
+      <SelectField label="Gender" id="gender" options={['Male', 'Female', 'Other']} value={form.gender ?? ''} onChange={v => update('gender', v)} />
     </>
   );
 }
@@ -138,14 +135,14 @@ function BasicInfoStep({ form, update }: { form: Record<string, string>; update:
 function DemographicStep({ form, update }: { form: Record<string, string>; update: (k: string, v: string) => void }) {
   return (
     <>
-      <Select label="District" id="district" options={['Krishna', 'Guntur', 'Kurnool', 'Nellore', 'East Godavari', 'West Godavari', 'Visakhapatnam', 'Vizianagaram']} value={form.district ?? ''} onChange={v => update('district', v)} />
+      <SelectField label="District" id="district" options={['Krishna', 'Guntur', 'Kurnool', 'Nellore', 'East Godavari', 'West Godavari', 'Visakhapatnam', 'Vizianagaram']} value={form.district ?? ''} onChange={v => update('district', v)} />
       <Grid2>
         <Field label="Mandal" id="mandal" placeholder="Vijayawada" value={form.mandal ?? ''} onChange={v => update('mandal', v)} />
         <Field label="Village / Ward" id="village" placeholder="Patamata" value={form.village ?? ''} onChange={v => update('village', v)} />
       </Grid2>
       <Field label="Habitation" id="habitation" placeholder="Main Colony" value={form.habitation ?? ''} onChange={v => update('habitation', v)} />
-      <Select label="Category" id="category" options={['BPL', 'APL', 'PMAY', 'General']} value={form.category ?? ''} onChange={v => update('category', v)} />
-      <Select label="Occupation" id="occupation" options={['Farmer', 'Student', 'Daily Laborer', 'Business', 'Govt. Employee', 'Housewife', 'Other']} value={form.occupation ?? ''} onChange={v => update('occupation', v)} />
+      <SelectField label="Category" id="category" options={['BPL', 'APL', 'PMAY', 'General']} value={form.category ?? ''} onChange={v => update('category', v)} />
+      <SelectField label="Occupation" id="occupation" options={['Farmer', 'Student', 'Daily Laborer', 'Business', 'Govt. Employee', 'Housewife', 'Other']} value={form.occupation ?? ''} onChange={v => update('occupation', v)} />
     </>
   );
 }
@@ -155,16 +152,15 @@ function MedicalHistoryStep({ form, update }: { form: Record<string, string>; up
   return (
     <>
       <div style={{ marginBottom: 16 }}>
-        <div className="form-label mb-8">Systemic Conditions</div>
+        <div className="mb-1.5 block text-xs font-bold text-grey-700">Systemic Conditions</div>
         {conditions.map(c => (
           <CheckRow key={c} id={`cond-${c}`} label={c} checked={form[`cond-${c}`] === '1'} onChange={v => update(`cond-${c}`, v ? '1' : '0')} />
         ))}
       </div>
-      <Select label="Previous Eye Surgery" id="eye-surgery" options={['None', 'Cataract Surgery', 'LASIK', 'Retinal Surgery', 'Glaucoma Surgery']} value={form.eyeSurgery ?? ''} onChange={v => update('eyeSurgery', v)} />
-      <div className="form-group">
-        <label className="form-label">Current Medications</label>
-        <textarea id="medications" className="form-input" style={{ height: 80, resize: 'vertical' }} placeholder="List any ongoing medications..." value={form.medications ?? ''} onChange={e => update('medications', e.target.value)} />
-      </div>
+      <SelectField label="Previous Eye Surgery" id="eye-surgery" options={['None', 'Cataract Surgery', 'LASIK', 'Retinal Surgery', 'Glaucoma Surgery']} value={form.eyeSurgery ?? ''} onChange={v => update('eyeSurgery', v)} />
+      <FormGroup label="Current Medications">
+        <Textarea id="medications" className="h-20 resize-y" placeholder="List any ongoing medications..." value={form.medications ?? ''} onChange={e => update('medications', e.target.value)} />
+      </FormGroup>
     </>
   );
 }
@@ -174,12 +170,12 @@ function FamilyHistoryStep({ form, update }: { form: Record<string, string>; upd
   return (
     <>
       <div style={{ marginBottom: 8 }}>
-        <div className="form-label mb-8">Family Eye Conditions</div>
+        <div className="mb-1.5 block text-xs font-bold text-grey-700">Family Eye Conditions</div>
         {conditions.map(c => (
           <CheckRow key={c} id={`fam-${c}`} label={c} checked={form[`fam-${c}`] === '1'} onChange={v => update(`fam-${c}`, v ? '1' : '0')} />
         ))}
       </div>
-      <Select label="Family History of Diabetes" id="fam-diabetes" options={['None', 'Father', 'Mother', 'Both Parents', 'Siblings']} value={form.famDiabetes ?? ''} onChange={v => update('famDiabetes', v)} />
+      <SelectField label="Family History of Diabetes" id="fam-diabetes" options={['None', 'Father', 'Mother', 'Both Parents', 'Siblings']} value={form.famDiabetes ?? ''} onChange={v => update('famDiabetes', v)} />
     </>
   );
 }
@@ -189,12 +185,12 @@ function SymptomsStep({ form, update }: { form: Record<string, string>; update: 
   return (
     <>
       <div>
-        <div className="form-label mb-8">Current Symptoms</div>
+        <div className="mb-1.5 block text-xs font-bold text-grey-700">Current Symptoms</div>
         {symptoms.map(s => (
           <CheckRow key={s} id={`sym-${s}`} label={s} checked={form[`sym-${s}`] === '1'} onChange={v => update(`sym-${s}`, v ? '1' : '0')} />
         ))}
       </div>
-      <Select label="Duration of Symptoms" id="sym-duration" options={['< 1 Week', '1–4 Weeks', '1–3 Months', '3–6 Months', '> 6 Months']} value={form.symDuration ?? ''} onChange={v => update('symDuration', v)} />
+      <SelectField label="Duration of Symptoms" id="sym-duration" options={['< 1 Week', '1–4 Weeks', '1–3 Months', '3–6 Months', '> 6 Months']} value={form.symDuration ?? ''} onChange={v => update('symDuration', v)} />
     </>
   );
 }
@@ -211,10 +207,10 @@ function VisionExamStep({ form, update }: { form: Record<string, string>; update
           { label: 'Right Eye (OD) – Aided', id: 'va-od-ai' },
           { label: 'Left Eye (OS) – Aided', id: 'va-os-ai' },
         ].map(f => (
-          <Select key={f.id} label={f.label} id={f.id} options={vaOptions} value={form[f.id] ?? ''} onChange={v => update(f.id, v)} />
+          <SelectField key={f.id} label={f.label} id={f.id} options={vaOptions} value={form[f.id] ?? ''} onChange={v => update(f.id, v)} />
         ))}
       </div>
-      <Select label="Colour Vision" id="colour-vision" options={['Normal', 'Deuteranopia', 'Protanopia', 'Tritanopia', 'Achromatopsia']} value={form.colourVision ?? ''} onChange={v => update('colourVision', v)} />
+      <SelectField label="Colour Vision" id="colour-vision" options={['Normal', 'Deuteranopia', 'Protanopia', 'Tritanopia', 'Achromatopsia']} value={form.colourVision ?? ''} onChange={v => update('colourVision', v)} />
     </>
   );
 }
@@ -225,7 +221,7 @@ function RefractionStep({ form, update }: { form: Record<string, string>; update
       <p style={{ fontSize: 12, color: '#757575', marginBottom: 16 }}>Subjective Refraction</p>
       {['Right Eye (OD)', 'Left Eye (OS)'].map(eye => (
         <div key={eye} style={{ marginBottom: 16 }}>
-          <div className="form-label mb-8">{eye}</div>
+          <div className="mb-1.5 block text-xs font-bold text-grey-700">{eye}</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
             {['Sphere (D)', 'Cylinder (D)', 'Axis (°)', 'Add (D)'].map(f => (
               <Field key={f} label={f} id={`${eye}-${f}`} placeholder="0.00" value={form[`${eye}-${f}`] ?? ''} onChange={v => update(`${eye}-${f}`, v)} type="number" />
@@ -233,7 +229,7 @@ function RefractionStep({ form, update }: { form: Record<string, string>; update
           </div>
         </div>
       ))}
-      <Select label="Binocular Vision" id="bino-vision" options={['Normal', 'Exophoria', 'Esophoria', 'Amblyopia']} value={form.binoVision ?? ''} onChange={v => update('binoVision', v)} />
+      <SelectField label="Binocular Vision" id="bino-vision" options={['Normal', 'Exophoria', 'Esophoria', 'Amblyopia']} value={form.binoVision ?? ''} onChange={v => update('binoVision', v)} />
     </>
   );
 }
@@ -241,13 +237,13 @@ function RefractionStep({ form, update }: { form: Record<string, string>; update
 function ExistingSpecsStep({ form, update }: { form: Record<string, string>; update: (k: string, v: string) => void }) {
   return (
     <>
-      <Select label="Does patient have existing spectacles?" id="has-specs" options={['Yes', 'No']} value={form.hasSpecs ?? ''} onChange={v => update('hasSpecs', v)} />
+      <SelectField label="Does patient have existing spectacles?" id="has-specs" options={['Yes', 'No']} value={form.hasSpecs ?? ''} onChange={v => update('hasSpecs', v)} />
       {form.hasSpecs === 'Yes' && (
         <>
-          <Select label="Type" id="specs-type" options={['Single Vision', 'Bifocal', 'Progressive', 'Tinted', 'Anti-reflection']} value={form.specsType ?? ''} onChange={v => update('specsType', v)} />
+          <SelectField label="Type" id="specs-type" options={['Single Vision', 'Bifocal', 'Progressive', 'Tinted', 'Anti-reflection']} value={form.specsType ?? ''} onChange={v => update('specsType', v)} />
           <Grid2>
             <Field label="Purchased Year" id="specs-year" value={form.specsYear ?? ''} onChange={v => update('specsYear', v)} type="number" />
-            <Select label="Condition" id="specs-condition" options={['Good', 'Fair', 'Poor', 'Broken']} value={form.specsCondition ?? ''} onChange={v => update('specsCondition', v)} />
+            <SelectField label="Condition" id="specs-condition" options={['Good', 'Fair', 'Poor', 'Broken']} value={form.specsCondition ?? ''} onChange={v => update('specsCondition', v)} />
           </Grid2>
         </>
       )}
@@ -264,7 +260,7 @@ function ClinicalAssessmentStep({ form, update }: { form: Record<string, string>
         { label: 'Pupil Reaction', id: 'pupil', options: ['Normal', 'RAPD Positive', 'Fixed Dilated', 'Sluggish'] },
         { label: 'Extraocular Movements', id: 'eom', options: ['Full', 'Restricted', 'Nystagmus', 'Strabismus'] },
       ].map(f => (
-        <Select key={f.id} label={f.label} id={f.id} options={f.options} value={form[f.id] ?? ''} onChange={v => update(f.id, v)} />
+        <SelectField key={f.id} label={f.label} id={f.id} options={f.options} value={form[f.id] ?? ''} onChange={v => update(f.id, v)} />
       ))}
     </>
   );
@@ -278,10 +274,9 @@ function FundusExamStep({ form, update }: { form: Record<string, string>; update
       {findings.map(f => (
         <CheckRow key={f} id={`fundus-${f}`} label={f} checked={form[`fundus-${f}`] === '1'} onChange={v => update(`fundus-${f}`, v ? '1' : '0')} />
       ))}
-      <div className="form-group mt-12">
-        <label className="form-label">Additional Fundus Notes</label>
-        <textarea className="form-input" id="fundus-notes" style={{ height: 80, resize: 'vertical' }} placeholder="Additional observations..." value={form.fundusNotes ?? ''} onChange={e => update('fundusNotes', e.target.value)} />
-      </div>
+      <FormGroup label="Additional Fundus Notes" className="mt-2">
+        <Textarea id="fundus-notes" className="h-20 resize-y" placeholder="Additional observations..." value={form.fundusNotes ?? ''} onChange={e => update('fundusNotes', e.target.value)} />
+      </FormGroup>
     </>
   );
 }
@@ -386,9 +381,9 @@ Report generated on: ${new Date().toLocaleDateString('en-IN')}
         ))}
       </div>
       <div style={{ display: 'flex', gap: 10 }}>
-        <button className="btn btn-primary btn-sm" onClick={handlePrint}>🖨️ Print Prescription</button>
-        <button className="btn btn-accent btn-sm" onClick={() => setSmsOpen(true)}>📱 Send via SMS</button>
-        <button className="btn btn-outline btn-sm" onClick={handleSavePdf}>💾 Save as PDF</button>
+        <Button variant="primary" size="sm" onClick={handlePrint}>🖨️ Print Prescription</Button>
+        <Button variant="accent" size="sm" onClick={() => setSmsOpen(true)}>📱 Send via SMS</Button>
+        <Button variant="outline" size="sm" onClick={handleSavePdf}>💾 Save as PDF</Button>
       </div>
 
       {/* SMS Modal */}
@@ -399,8 +394,8 @@ Report generated on: ${new Date().toLocaleDateString('en-IN')}
         subtitle={`To: ${patientName}`}
         actions={
           <>
-            <button className="btn btn-outline" onClick={() => setSmsOpen(false)} disabled={smsSuccess}>Cancel</button>
-            <button className="btn btn-accent" onClick={handleSendSms} disabled={smsSuccess}>Send SMS</button>
+            <Button variant="outline" onClick={() => setSmsOpen(false)} disabled={smsSuccess}>Cancel</Button>
+            <Button variant="accent" onClick={handleSendSms} disabled={smsSuccess}>Send SMS</Button>
           </>
         }
       >

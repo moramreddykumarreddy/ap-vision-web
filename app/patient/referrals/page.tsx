@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { StatusBadge } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { StatusBadge, Button, Input, Select, FormGroup, Card, CardBody, fadeDelay } from '@/app/components/ui';
 import Modal, { DetailRow, SuccessBanner } from '@/app/components/Modal';
 
 const initialReferrals = [
@@ -35,21 +36,20 @@ export default function PatientReferralScreen() {
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar role="patient" userName="Ramaiah Venkata" userSub="Patient" />
-      <div className="main-content">
-        <Topbar title="My Referrals" subtitle="Hospital and specialist referrals" />
-        <main className="page-body">
+    <AppShell
+      sidebar={<Sidebar role="patient" userName="Ramaiah Venkata" userSub="Patient" />}
+      topbar={<Topbar title="My Referrals" subtitle="Hospital and specialist referrals" />}
+    >
           {referrals.map((r, i) => (
-            <div key={r.id} className={`card animate-fade-up d${i + 1} mb-16`}>
-              <div className="card-body">
+            <Card key={r.id} className={`animate-fade-up mb-2.5 ${fadeDelay(i + 1)}`}>
+              <CardBody>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
                   <div>
                     <div style={{ fontSize: 15, fontWeight: 800 }}>{r.reason}</div>
                     <div style={{ fontSize: 11, color: '#9E9E9E' }}>{r.id} • {r.date}</div>
                   </div>
                   <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-                    {r.urgent && <span className="badge badge-error">URGENT</span>}
+                    {r.urgent && <span className="inline-flex rounded-full bg-error/10 px-2.5 py-0.5 text-[11px] font-semibold text-error">URGENT</span>}
                     <StatusBadge label={r.status} />
                   </div>
                 </div>
@@ -65,14 +65,14 @@ export default function PatientReferralScreen() {
                   ))}
                 </div>
                 <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
-                  <button className="btn btn-outline btn-sm" onClick={() => setViewLetterTarget(r)}>📄 View Letter</button>
-                  <button className="btn btn-outline btn-sm" onClick={() => setViewDirectionsTarget(r)}>🗺️ Get Directions</button>
+                  <Button size="sm" variant="outline" onClick={() => setViewLetterTarget(r)}>📄 View Letter</Button>
+                  <Button size="sm" variant="outline" onClick={() => setViewDirectionsTarget(r)}>🗺️ Get Directions</Button>
                   {r.status !== 'Scheduled' && (
-                    <button className="btn btn-primary btn-sm" onClick={() => setBookingTarget(r)}>📅 Book Appointment</button>
+                    <Button size="sm" variant="primary" onClick={() => setBookingTarget(r)}>📅 Book Appointment</Button>
                   )}
                 </div>
-              </div>
-            </div>
+              </CardBody>
+            </Card>
           ))}
           {referrals.length === 0 && (
             <div style={{ textAlign: 'center', padding: '60px 0', color: '#9E9E9E' }}>
@@ -89,7 +89,7 @@ export default function PatientReferralScreen() {
               title="Official Referral Letter"
               subtitle={`Referral ID: ${viewLetterTarget.id}`}
               actions={
-                <button className="btn btn-primary" onClick={() => setViewLetterTarget(null)}>Close</button>
+                <Button variant="primary" onClick={() => setViewLetterTarget(null)}>Close</Button>
               }
             >
               <div style={{ border: '2px solid #EEEEEE', padding: 20, borderRadius: 12, fontFamily: 'serif' }}>
@@ -134,7 +134,7 @@ export default function PatientReferralScreen() {
               title="Hospital Map & Directions"
               subtitle={viewDirectionsTarget.hospital}
               actions={
-                <button className="btn btn-primary" onClick={() => setViewDirectionsTarget(null)}>Close</button>
+                <Button variant="primary" onClick={() => setViewDirectionsTarget(null)}>Close</Button>
               }
             >
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -169,45 +169,32 @@ export default function PatientReferralScreen() {
               subtitle={bookingTarget.hospital}
               actions={
                 <>
-                  <button className="btn btn-outline" onClick={() => setBookingTarget(null)} disabled={success}>Cancel</button>
-                  <button className="btn btn-primary" onClick={handleBookAppointment} disabled={success}>Confirm Booking</button>
+                  <Button variant="outline" onClick={() => setBookingTarget(null)} disabled={success}>Cancel</Button>
+                  <Button variant="primary" onClick={handleBookAppointment} disabled={success}>Confirm Booking</Button>
                 </>
               }
             >
               {success ? (
                 <SuccessBanner message="Appointment booked! Confirmation SMS sent." />
               ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#0D2347' }}>Select Date</label>
-                    <input
-                      type="date"
-                      value={bookingDate}
-                      onChange={e => setBookingDate(e.target.value)}
-                      style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13 }}
-                    />
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#0D2347' }}>Select Time Slot</label>
-                    <select
-                      value={bookingTime}
-                      onChange={e => setBookingTime(e.target.value)}
-                      style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13, background: 'white' }}
-                    >
+                <div className="flex flex-col gap-3.5">
+                  <FormGroup label="Select Date">
+                    <Input type="date" value={bookingDate} onChange={e => setBookingDate(e.target.value)} />
+                  </FormGroup>
+                  <FormGroup label="Select Time Slot">
+                    <Select value={bookingTime} onChange={e => setBookingTime(e.target.value)}>
                       <option value="09:00 AM">09:00 AM - 10:00 AM</option>
                       <option value="10:00 AM">10:00 AM - 11:00 AM</option>
                       <option value="11:00 AM">11:00 AM - 12:00 PM</option>
                       <option value="02:00 PM">02:00 PM - 03:00 PM</option>
                       <option value="03:00 PM">03:00 PM - 04:00 PM</option>
-                    </select>
-                  </div>
+                    </Select>
+                  </FormGroup>
                 </div>
               )}
             </Modal>
           )}
-        </main>
-      </div>
-    </div>
+        </AppShell>
   );
 }
 

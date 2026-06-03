@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { StatusBadge } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { StatusBadge, Card, CardBody, Button, FormGroup, Select, Input, Textarea, fadeDelay } from '@/app/components/ui';
 import Modal, { DetailRow, downloadFile, SuccessBanner } from '@/app/components/Modal';
 
 const events = [
@@ -58,89 +59,82 @@ export default function EmrTimeline() {
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar role="admin" userName="Venkat Rao" userSub="Super Admin" />
-      <div className="main-content">
-        <Topbar title="EMR Timeline" subtitle="Ramaiah Venkata • APV-001234" />
-        <main className="page-body">
-          <div className="card mb-16">
-            <div className="card-body">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                <div style={{ width: 50, height: 50, borderRadius: '50%', background: '#1A3A6B', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, fontWeight: 900 }}>R</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 16, fontWeight: 900 }}>Ramaiah Venkata</div>
-                  <div style={{ fontSize: 12, color: '#9E9E9E' }}>58 years • Male • APV-001234 • Patamata, Krishna</div>
-                  <div style={{ display: 'flex', gap: 8, marginTop: 6 }}>
-                    <StatusBadge label="Active" />
-                    <span className="badge badge-info">BPL</span>
-                    <span className="badge badge-warning">Diabetic</span>
-                  </div>
-                </div>
-                <div style={{ display: 'flex', gap: 8 }}>
-                  <button className="btn btn-outline btn-sm" onClick={() => downloadFile('EMR_Ramaiah_Venkata_APV001234.txt', EMR_TEXT)}>📄 Download EMR</button>
-                  <button className="btn btn-primary btn-sm" onClick={() => setShowAdd(true)}>+ Add Entry</button>
-                </div>
+    <AppShell
+      sidebar={<Sidebar role="admin" userName="Venkat Rao" userSub="Super Admin" />}
+      topbar={<Topbar title="EMR Timeline" subtitle="Ramaiah Venkata • APV-001234" />}
+    >
+      <Card className="mb-2.5">
+        <CardBody>
+          <div className="flex items-center gap-3.5">
+            <div className="flex size-[50px] shrink-0 items-center justify-center rounded-full bg-primary text-xl font-black text-white">R</div>
+            <div className="min-w-0 flex-1">
+              <div className="text-base font-black">Ramaiah Venkata</div>
+              <div className="text-xs text-grey-400">58 years • Male • APV-001234 • Patamata, Krishna</div>
+              <div className="mt-1.5 flex flex-wrap gap-2">
+                <StatusBadge label="Active" />
+                <span className="inline-flex rounded-full bg-info/10 px-2.5 py-0.5 text-[11px] font-semibold text-info">BPL</span>
+                <span className="inline-flex rounded-full bg-warning/10 px-2.5 py-0.5 text-[11px] font-semibold text-warning">Diabetic</span>
               </div>
             </div>
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm" onClick={() => downloadFile('EMR_Ramaiah_Venkata_APV001234.txt', EMR_TEXT)}>📄 Download EMR</Button>
+              <Button variant="primary" size="sm" onClick={() => setShowAdd(true)}>+ Add Entry</Button>
+            </div>
           </div>
+        </CardBody>
+      </Card>
 
-          <div className="order-timeline" style={{ paddingLeft: 28 }}>
-            {allEvents.map((e, i) => (
-              <div key={i} className={`order-timeline-item animate-fade-up d${i + 1}`} style={{ paddingBottom: 18, paddingLeft: 20 }}>
-                <div className="order-timeline-dot active" style={{ background: e.color, boxShadow: `0 0 0 3px ${e.color}30`, width: 16, height: 16, left: -29 }} />
-                <div className="card">
-                  <div className="card-body">
-                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
-                      <div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                          <span style={{ fontSize: 16 }}>{e.icon}</span>
-                          <span className="badge" style={{ background: e.color + '15', color: e.color }}>{e.type}</span>
-                          <span style={{ fontSize: 11, color: '#9E9E9E' }}>{e.date}</span>
-                        </div>
-                        <div style={{ fontSize: 14, fontWeight: 800 }}>{e.title}</div>
-                        <div style={{ fontSize: 12, color: '#757575', marginTop: 2 }}>👨‍⚕️ {e.doctor}</div>
-                      </div>
-                    </div>
-                    <div style={{ background: '#F8F9FA', borderRadius: 8, padding: '10px 14px', fontSize: 12, color: '#424242' }}>{e.summary}</div>
-                    <button className="btn btn-ghost btn-sm" style={{ marginTop: 8, fontSize: 11 }} onClick={() => setViewEvent(e)}>View Details →</button>
+      <div className="pl-7">
+        {allEvents.map((e, i) => (
+          <div key={i} className={`relative animate-fade-up pb-4 pl-5 ${fadeDelay(i + 1)}`}>
+            <div className="absolute -left-[7px] top-1 size-4 rounded-full" style={{ background: e.color, boxShadow: `0 0 0 3px ${e.color}30` }} />
+            {i < allEvents.length - 1 && <div className="absolute -left-px top-5 h-[calc(100%-12px)] w-0.5 bg-grey-200" />}
+            <Card>
+              <CardBody>
+                <div className="mb-2">
+                  <div className="mb-1 flex flex-wrap items-center gap-2">
+                    <span className="text-base">{e.icon}</span>
+                    <span className="inline-flex rounded-full px-2 py-0.5 text-[11px] font-semibold" style={{ background: e.color + '15', color: e.color }}>{e.type}</span>
+                    <span className="text-[11px] text-grey-400">{e.date}</span>
                   </div>
+                  <div className="text-sm font-extrabold">{e.title}</div>
+                  <div className="mt-0.5 text-xs text-grey-600">👨‍⚕️ {e.doctor}</div>
                 </div>
-              </div>
-            ))}
+                <div className="rounded-lg bg-grey-50 px-3.5 py-2.5 text-xs text-grey-800">{e.summary}</div>
+                <Button variant="ghost" size="sm" className="mt-2 text-[11px]" onClick={() => setViewEvent(e)}>View Details →</Button>
+              </CardBody>
+            </Card>
           </div>
-        </main>
+        ))}
       </div>
 
-      {/* View Detail Modal */}
       <Modal open={!!viewEvent} onClose={() => setViewEvent(null)} title={viewEvent?.title ?? ''} subtitle={`${viewEvent?.type} • ${viewEvent?.date}`}
-        actions={<button className="btn btn-primary btn-sm" onClick={() => setViewEvent(null)}>Close</button>}>
+        actions={<Button variant="primary" size="sm" onClick={() => setViewEvent(null)}>Close</Button>}>
         {viewEvent && (
           <div>
             <DetailRow label="Type" value={viewEvent.type} />
             <DetailRow label="Date" value={viewEvent.date} />
             <DetailRow label="Doctor" value={viewEvent.doctor} />
-            <div style={{ marginTop: 14, background: '#F8F9FA', borderRadius: 10, padding: 14, fontSize: 12, color: '#424242', whiteSpace: 'pre-wrap', lineHeight: 1.7 }}>
-              {viewEvent.details}
-            </div>
+            <div className="mt-3.5 whitespace-pre-wrap rounded-[10px] bg-grey-50 p-3.5 text-xs leading-relaxed text-grey-800">{viewEvent.details}</div>
           </div>
         )}
       </Modal>
 
-      {/* Add Entry Modal */}
       <Modal open={showAdd} onClose={() => { setShowAdd(false); setAdded(false); }} title="Add EMR Entry"
-        actions={!added ? <><button className="btn btn-outline btn-sm" onClick={() => setShowAdd(false)}>Cancel</button><button className="btn btn-primary btn-sm" onClick={handleAdd}>+ Add Entry</button></> : undefined}>
+        actions={!added ? <><Button variant="outline" size="sm" onClick={() => setShowAdd(false)}>Cancel</Button><Button variant="primary" size="sm" onClick={handleAdd}>+ Add Entry</Button></> : undefined}>
         {added ? <SuccessBanner message="EMR entry added successfully!" /> : (
           <div>
-            <div className="form-group"><label className="form-label">Entry Type</label>
-              <select className="form-input form-select" value={addType} onChange={e => setAddType(e.target.value)}>
+            <FormGroup label="Entry Type">
+              <Select value={addType} onChange={e => setAddType(e.target.value)}>
                 {['Screening', 'Prescription', 'Teleconsultation', 'Referral'].map(t => <option key={t}>{t}</option>)}
-              </select></div>
-            <div className="form-group"><label className="form-label">Title</label><input className="form-input" placeholder="e.g. Follow-up Screening" value={addTitle} onChange={e => setAddTitle(e.target.value)} /></div>
-            <div className="form-group"><label className="form-label">Doctor</label><input className="form-input" placeholder="Doctor name" value={addDoctor} onChange={e => setAddDoctor(e.target.value)} /></div>
-            <div className="form-group"><label className="form-label">Summary / Notes</label><textarea className="form-input" style={{ height: 80, resize: 'none' }} placeholder="Clinical findings and notes..." value={addSummary} onChange={e => setAddSummary(e.target.value)} /></div>
+              </Select>
+            </FormGroup>
+            <FormGroup label="Title"><Input placeholder="e.g. Follow-up Screening" value={addTitle} onChange={e => setAddTitle(e.target.value)} /></FormGroup>
+            <FormGroup label="Doctor"><Input placeholder="Doctor name" value={addDoctor} onChange={e => setAddDoctor(e.target.value)} /></FormGroup>
+            <FormGroup label="Summary / Notes"><Textarea className="h-20 resize-none" placeholder="Clinical findings and notes..." value={addSummary} onChange={e => setAddSummary(e.target.value)} /></FormGroup>
           </div>
         )}
       </Modal>
-    </div>
+    </AppShell>
   );
 }

@@ -2,7 +2,8 @@
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { StatCard, SectionHeader, BannerCard, AlertBanner, StatusBadge, ListItem } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { StatCard, SectionHeader, StatusBadge, StatsGrid, Card, CardBody, QuickActionBtn, fadeDelay } from '@/app/components/ui';
 
 const camps = [
   { id: 'C001', name: 'Vijayawada Urban Camp', mandal: 'Vijayawada', district: 'Krishna', date: '02 Jun 2025', status: 'Active', registered: 145, screened: 132, prescriptions: 48, referrals: 12 },
@@ -15,97 +16,72 @@ export default function ScreeningDashboard() {
   const activeCamp = camps.find(c => c.status === 'Active');
 
   return (
-    <div className="app-layout">
-      <Sidebar role="screening" userName="Dr. Srinivasa Rao" userSub="Team Lead" />
-      <div className="main-content">
-        <Topbar title="Screening Team" subtitle="Dr. Srinivasa Rao • Team Lead" />
-        <main className="page-body">
-          {/* Active Camp Banner */}
-          {activeCamp && (
-            <div className="animate-fade-up" style={{
-              background: 'linear-gradient(135deg, #1A3A6B, #00897B)',
-              borderRadius: 20, padding: '20px 24px', color: 'white',
-              display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20,
-            }}>
-              <div style={{
-                width: 52, height: 52, borderRadius: '50%',
-                background: 'rgba(255,255,255,.2)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24,
-              }}>⛺</div>
-              <div style={{ flex: 1 }}>
-                <span style={{
-                  background: 'rgba(255,255,255,.2)', borderRadius: 20, padding: '2px 10px',
-                  fontSize: 9, fontWeight: 700, letterSpacing: 1,
-                }}>● ACTIVE CAMP</span>
-                <div style={{ fontSize: 16, fontWeight: 800, marginTop: 4 }}>{activeCamp.name}</div>
-                <div style={{ fontSize: 12, opacity: 0.8 }}>{activeCamp.mandal}, {activeCamp.district} • {activeCamp.date}</div>
-              </div>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: 26, fontWeight: 900 }}>{activeCamp.registered}</div>
-                <div style={{ fontSize: 11, opacity: 0.8 }}>Patients</div>
-              </div>
-            </div>
-          )}
-
-          <SectionHeader title="Today's Summary" />
-          <div className="stats-grid stats-grid-4 mt-12 mb-24">
-            <StatCard title="Patients Registered" value={`${activeCamp?.registered ?? 145}`} icon="📋" color="#1A3A6B" delay={0.05} />
-            <StatCard title="Patients Screened" value={`${activeCamp?.screened ?? 132}`} icon="👁️" color="#1A3A6B" delay={0.10} subtitle="91%" />
-            <StatCard title="Prescriptions" value={`${activeCamp?.prescriptions ?? 48}`} icon="💊" color="#00897B" delay={0.15} />
-            <StatCard title="Referrals" value={`${activeCamp?.referrals ?? 12}`} icon="🏥" color="#E65100" delay={0.20} />
+    <AppShell
+      sidebar={<Sidebar role="screening" userName="Dr. Srinivasa Rao" userSub="Team Lead" />}
+      topbar={<Topbar title="Screening Team" subtitle="Dr. Srinivasa Rao • Team Lead" />}
+    >
+      {activeCamp && (
+        <div className="animate-fade-up mb-5 flex items-center gap-4 rounded-[20px] bg-gradient-to-br from-primary to-[#00897B] px-6 py-5 text-white">
+          <div className="flex size-[52px] shrink-0 items-center justify-center rounded-full bg-white/20 text-2xl">⛺</div>
+          <div className="min-w-0 flex-1">
+            <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-[9px] font-bold tracking-wide">● ACTIVE CAMP</span>
+            <div className="mt-1 text-base font-extrabold">{activeCamp.name}</div>
+            <div className="text-xs opacity-80">{activeCamp.mandal}, {activeCamp.district} • {activeCamp.date}</div>
           </div>
-
-          {/* Quick Actions */}
-          <SectionHeader title="Quick Actions" />
-          <div className="quick-actions mt-12 mb-24">
-            {[
-              { icon: '👤', label: 'Register Patient', color: '#1A3A6B', href: '/screening/register' },
-              { icon: '📷', label: 'Scan QR', color: '#2952A3', href: '/screening/search' },
-              { icon: '🔍', label: 'Search Patient', color: '#00897B', href: '/screening/search' },
-              { icon: '⛺', label: 'Manage Camp', color: '#D4A017', href: '/screening/camps' },
-            ].map(a => (
-              <button
-                key={a.label}
-                className="quick-action-btn"
-                onClick={() => router.push(a.href)}
-                style={{ background: a.color + '10', borderColor: a.color + '25', border: '1.5px solid' }}
-              >
-                <span style={{ fontSize: 22 }}>{a.icon}</span>
-                <span style={{ fontSize: 11, fontWeight: 600, color: a.color, textAlign: 'center' }}>{a.label}</span>
-              </button>
-            ))}
+          <div className="text-right">
+            <div className="text-[26px] font-black">{activeCamp.registered}</div>
+            <div className="text-[11px] opacity-80">Patients</div>
           </div>
+        </div>
+      )}
 
-          {/* Camp List */}
-          <SectionHeader title="Camps" actionLabel="View All" onAction={() => router.push('/screening/camps')} />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {camps.map((c, i) => (
-              <div key={c.id} className={`card animate-fade-up d${i + 1}`}>
-                <div className="card-body">
-                  <div className="flex items-center justify-between mb-8">
-                    <div style={{ fontSize: 14, fontWeight: 700 }}>{c.name}</div>
-                    <StatusBadge label={c.status} />
-                  </div>
-                  <div style={{ fontSize: 12, color: '#9E9E9E', marginBottom: 12 }}>{c.mandal}, {c.district} • {c.date}</div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
-                    {[
-                      { l: 'Registered', v: c.registered },
-                      { l: 'Screened', v: c.screened },
-                      { l: 'Prescriptions', v: c.prescriptions },
-                      { l: 'Referrals', v: c.referrals },
-                    ].map(m => (
-                      <div key={m.l} style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: 18, fontWeight: 800 }}>{m.v}</div>
-                        <div style={{ fontSize: 10, color: '#9E9E9E' }}>{m.l}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </main>
+      <SectionHeader title="Today's Summary" />
+      <StatsGrid cols={4} className="mt-2 mb-3.5">
+        <StatCard title="Patients Registered" value={`${activeCamp?.registered ?? 145}`} icon="📋" color="#1A3A6B" delay={0.05} />
+        <StatCard title="Patients Screened" value={`${activeCamp?.screened ?? 132}`} icon="👁️" color="#1A3A6B" delay={0.10} subtitle="91%" />
+        <StatCard title="Prescriptions" value={`${activeCamp?.prescriptions ?? 48}`} icon="💊" color="#00897B" delay={0.15} />
+        <StatCard title="Referrals" value={`${activeCamp?.referrals ?? 12}`} icon="🏥" color="#E65100" delay={0.20} />
+      </StatsGrid>
+
+      <SectionHeader title="Quick Actions" />
+      <div className="mt-2 mb-3.5 flex flex-wrap gap-2.5">
+        {[
+          { icon: '👤', label: 'Register Patient', color: '#1A3A6B', href: '/screening/register' },
+          { icon: '📷', label: 'Scan QR', color: '#2952A3', href: '/screening/search' },
+          { icon: '🔍', label: 'Search Patient', color: '#00897B', href: '/screening/search' },
+          { icon: '⛺', label: 'Manage Camp', color: '#D4A017', href: '/screening/camps' },
+        ].map(a => (
+          <QuickActionBtn key={a.label} icon={a.icon} label={a.label} color={a.color} onClick={() => router.push(a.href)} />
+        ))}
       </div>
-    </div>
+
+      <SectionHeader title="Camps" actionLabel="View All" onAction={() => router.push('/screening/camps')} />
+      <div className="flex flex-col gap-3">
+        {camps.map((c, i) => (
+          <Card key={c.id} className={`animate-fade-up ${fadeDelay(i + 1)}`}>
+            <CardBody>
+              <div className="mb-1.5 flex items-center justify-between">
+                <div className="text-sm font-bold">{c.name}</div>
+                <StatusBadge label={c.status} />
+              </div>
+              <div className="mb-2 text-xs text-grey-400">{c.mandal}, {c.district} • {c.date}</div>
+              <div className="grid grid-cols-4 gap-2">
+                {[
+                  { l: 'Registered', v: c.registered },
+                  { l: 'Screened', v: c.screened },
+                  { l: 'Prescriptions', v: c.prescriptions },
+                  { l: 'Referrals', v: c.referrals },
+                ].map(m => (
+                  <div key={m.l} className="text-center">
+                    <div className="text-lg font-extrabold">{m.v}</div>
+                    <div className="text-[10px] text-grey-400">{m.l}</div>
+                  </div>
+                ))}
+              </div>
+            </CardBody>
+          </Card>
+        ))}
+      </div>
+    </AppShell>
   );
 }

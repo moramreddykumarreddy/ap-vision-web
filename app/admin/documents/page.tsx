@@ -2,7 +2,9 @@
 import { useState } from 'react';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { SectionHeader, StatusBadge } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { SectionHeader, StatusBadge, Card, CardBody, TableWrap, DataTable, Button, Input, Select, FormGroup, fadeDelay } from '@/app/components/ui';
+import { cn } from '@/app/lib/cn';
 import Modal, { DetailRow, downloadFile } from '@/app/components/Modal';
 
 const DOCS_INIT = [
@@ -59,56 +61,52 @@ export default function DocumentManagement() {
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar role="admin" userName="Venkat Rao" userSub="Super Admin" />
-      <div className="main-content">
-        <Topbar title="Document Management" subtitle="Patient documents and records" />
-        <main className="page-body">
-          <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
-            <input className="form-input" style={{ flex: 1 }} placeholder="Search documents..." value={search} onChange={e => setSearch(e.target.value)} />
-            <button className="btn btn-primary" onClick={() => setShowUpload(true)}>📤 Upload Document</button>
-          </div>
-
-          <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
-            {['All', 'Prescription', 'Referral', 'Clinical Image', 'Report', 'Identity'].map(t => (
-              <button key={t} onClick={() => setFilterType(t)} className="btn btn-sm" style={{ background: filterType === t ? '#1A3A6B' : 'white', color: filterType === t ? 'white' : '#616161', border: '1.5px solid', borderColor: filterType === t ? '#1A3A6B' : '#E0E0E0' }}>{t}</button>
-            ))}
-          </div>
-
-          <div className="card">
-            <div className="card-body" style={{ padding: 0 }}>
-              <div className="table-wrap">
-                <table>
-                  <thead><tr><th>Document</th><th>Type</th><th>Patient</th><th>Date</th><th>Size</th><th>Status</th><th>Actions</th></tr></thead>
-                  <tbody>
-                    {filtered.map((d, i) => (
-                      <tr key={d.id} className={`animate-fade-up d${i + 1}`}>
-                        <td><div style={{ display: 'flex', alignItems: 'center', gap: 10 }}><span style={{ fontSize: 20 }}>{d.icon}</span><div><div style={{ fontWeight: 700, fontSize: 13 }}>{d.name}</div><div style={{ fontSize: 10, color: '#9E9E9E' }}>{d.id}</div></div></div></td>
-                        <td><span className="badge badge-info">{d.type}</span></td>
-                        <td>{d.patient}</td>
-                        <td>{d.date}</td>
-                        <td>{d.size}</td>
-                        <td><StatusBadge label={d.status} /></td>
-                        <td>
-                          <div style={{ display: 'flex', gap: 4 }}>
-                            <button className="btn btn-sm btn-outline" style={{ padding: '4px 10px' }} title="View" onClick={() => setViewDoc(d)}>👁️</button>
-                            <button className="btn btn-sm btn-outline" style={{ padding: '4px 10px' }} title="Download" onClick={() => handleDownload(d)}>📥</button>
-                            <button className="btn btn-sm btn-outline" style={{ padding: '4px 10px', color: '#C62828' }} title="Delete" onClick={() => setDeleteDoc(d)}>🗑️</button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </main>
+    <AppShell
+      sidebar={<Sidebar role="admin" userName="Venkat Rao" userSub="Super Admin" />}
+      topbar={<Topbar title="Document Management" subtitle="Patient documents and records" />}
+    >
+      <div className="mb-4 flex gap-2.5">
+        <Input className="flex-1" placeholder="Search documents..." value={search} onChange={e => setSearch(e.target.value)} />
+        <Button variant="primary" onClick={() => setShowUpload(true)}>📤 Upload Document</Button>
       </div>
 
-      {/* View Modal */}
+      <div className="mb-4 flex flex-wrap gap-2">
+        {['All', 'Prescription', 'Referral', 'Clinical Image', 'Report', 'Identity'].map(t => (
+          <Button key={t} size="sm" variant={filterType === t ? 'primary' : 'outline'} className={cn(filterType !== t && 'border-grey-300 bg-white text-grey-600')} onClick={() => setFilterType(t)}>{t}</Button>
+        ))}
+      </div>
+
+      <Card>
+        <CardBody className="p-0">
+          <TableWrap>
+            <DataTable>
+              <thead><tr><th>Document</th><th>Type</th><th>Patient</th><th>Date</th><th>Size</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody>
+                {filtered.map((d, i) => (
+                  <tr key={d.id} className={`animate-fade-up ${fadeDelay(i + 1)}`}>
+                    <td><div className="flex items-center gap-2.5"><span className="text-xl">{d.icon}</span><div><div className="text-[13px] font-bold">{d.name}</div><div className="text-[10px] text-grey-400">{d.id}</div></div></div></td>
+                    <td><span className="inline-flex rounded-full bg-info/10 px-2.5 py-0.5 text-[11px] font-semibold text-info">{d.type}</span></td>
+                    <td>{d.patient}</td>
+                    <td>{d.date}</td>
+                    <td>{d.size}</td>
+                    <td><StatusBadge label={d.status} /></td>
+                    <td>
+                      <div className="flex gap-1">
+                        <Button size="sm" variant="outline" className="px-2.5 py-1" title="View" onClick={() => setViewDoc(d)}>👁️</Button>
+                        <Button size="sm" variant="outline" className="px-2.5 py-1" title="Download" onClick={() => handleDownload(d)}>📥</Button>
+                        <Button size="sm" variant="outline" className="px-2.5 py-1 text-error" title="Delete" onClick={() => setDeleteDoc(d)}>🗑️</Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </DataTable>
+          </TableWrap>
+        </CardBody>
+      </Card>
+
       <Modal open={!!viewDoc} onClose={() => setViewDoc(null)} title={viewDoc?.name ?? ''} subtitle={`${viewDoc?.id} • ${viewDoc?.type}`}
-        actions={<><button className="btn btn-outline btn-sm" onClick={() => { viewDoc && handleDownload(viewDoc); setViewDoc(null); }}>📥 Download</button><button className="btn btn-primary btn-sm" onClick={() => setViewDoc(null)}>Close</button></>}>
+        actions={<><Button variant="outline" size="sm" onClick={() => { viewDoc && handleDownload(viewDoc); setViewDoc(null); }}>📥 Download</Button><Button variant="primary" size="sm" onClick={() => setViewDoc(null)}>Close</Button></>}>
         {viewDoc && (
           <div>
             <DetailRow label="Document ID" value={viewDoc.id} />
@@ -117,53 +115,47 @@ export default function DocumentManagement() {
             <DetailRow label="Date" value={viewDoc.date} />
             <DetailRow label="File Size" value={viewDoc.size} />
             <DetailRow label="Status" value={viewDoc.status} />
-            <div style={{ marginTop: 16, background: '#F8F9FA', borderRadius: 10, padding: 14, fontSize: 12, color: '#424242', lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>
-              {viewDoc.content}
-            </div>
+            <div className="mt-4 whitespace-pre-wrap rounded-[10px] bg-grey-50 p-3.5 text-xs leading-relaxed text-grey-800">{viewDoc.content}</div>
           </div>
         )}
       </Modal>
 
-      {/* Delete Confirm Modal */}
       <Modal open={!!deleteDoc} onClose={() => setDeleteDoc(null)} title="Delete Document" subtitle="This action cannot be undone"
-        actions={<><button className="btn btn-outline btn-sm" onClick={() => setDeleteDoc(null)}>Cancel</button><button className="btn btn-sm" style={{ background: '#C62828', color: 'white' }} onClick={() => deleteDoc && handleDelete(deleteDoc.id)}>🗑️ Delete</button></>}>
+        actions={<><Button variant="outline" size="sm" onClick={() => setDeleteDoc(null)}>Cancel</Button><Button size="sm" variant="danger" onClick={() => deleteDoc && handleDelete(deleteDoc.id)}>🗑️ Delete</Button></>}>
         {deleteDoc && (
-          <div style={{ textAlign: 'center', padding: '16px 0' }}>
-            <div style={{ fontSize: 40, marginBottom: 12 }}>⚠️</div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: '#0D2347' }}>Delete "{deleteDoc.name}"?</div>
-            <div style={{ fontSize: 12, color: '#9E9E9E', marginTop: 6 }}>This will permanently remove the document from the system.</div>
+          <div className="py-4 text-center">
+            <div className="mb-3 text-[40px]">⚠️</div>
+            <div className="text-sm font-bold text-primary">Delete &quot;{deleteDoc.name}&quot;?</div>
+            <div className="mt-1.5 text-xs text-grey-400">This will permanently remove the document from the system.</div>
           </div>
         )}
       </Modal>
 
-      {/* Upload Modal */}
       <Modal open={showUpload} onClose={() => { setShowUpload(false); setUploaded(false); }} title="Upload Document" subtitle="Add a new document to the patient record"
-        actions={<><button className="btn btn-outline btn-sm" onClick={() => setShowUpload(false)}>Cancel</button><button className="btn btn-primary btn-sm" onClick={handleUpload}>📤 Upload</button></>}>
+        actions={<><Button variant="outline" size="sm" onClick={() => setShowUpload(false)}>Cancel</Button><Button variant="primary" size="sm" onClick={handleUpload}>📤 Upload</Button></>}>
         {uploaded ? (
-          <div style={{ textAlign: 'center', padding: '20px 0' }}>
-            <div style={{ fontSize: 40, marginBottom: 10 }}>✅</div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: '#2E7D32' }}>Document uploaded successfully!</div>
+          <div className="py-5 text-center">
+            <div className="mb-2.5 text-[40px]">✅</div>
+            <div className="text-sm font-bold text-success">Document uploaded successfully!</div>
           </div>
         ) : (
           <div>
-            <div className="form-group">
-              <label className="form-label">Document Name</label>
-              <input className="form-input" placeholder="e.g. Post-operative Report" value={uploadName} onChange={e => setUploadName(e.target.value)} />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Document Type</label>
-              <select className="form-input form-select" value={uploadType} onChange={e => setUploadType(e.target.value)}>
+            <FormGroup label="Document Name">
+              <Input placeholder="e.g. Post-operative Report" value={uploadName} onChange={e => setUploadName(e.target.value)} />
+            </FormGroup>
+            <FormGroup label="Document Type">
+              <Select value={uploadType} onChange={e => setUploadType(e.target.value)}>
                 {['Prescription', 'Referral', 'Clinical Image', 'Report', 'Identity'].map(t => <option key={t}>{t}</option>)}
-              </select>
-            </div>
-            <div style={{ border: '2px dashed #E0E0E0', borderRadius: 12, padding: '30px 20px', textAlign: 'center', color: '#9E9E9E', marginTop: 8 }}>
-              <div style={{ fontSize: 32, marginBottom: 8 }}>📁</div>
-              <div style={{ fontSize: 13, fontWeight: 600 }}>Drop file here or click to browse</div>
-              <div style={{ fontSize: 11, marginTop: 4 }}>PDF, JPG, PNG up to 10 MB</div>
+              </Select>
+            </FormGroup>
+            <div className="mt-2 rounded-xl border-2 border-dashed border-grey-300 px-5 py-8 text-center text-grey-400">
+              <div className="mb-2 text-[32px]">📁</div>
+              <div className="text-[13px] font-semibold">Drop file here or click to browse</div>
+              <div className="mt-1 text-[11px]">PDF, JPG, PNG up to 10 MB</div>
             </div>
           </div>
         )}
       </Modal>
-    </div>
+    </AppShell>
   );
 }

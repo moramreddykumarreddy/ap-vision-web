@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
-import { StatusBadge } from '@/app/components/ui';
+import { AppShell } from '@/app/components/app-shell';
+import { StatusBadge, Card, CardBody, TableWrap, DataTable, Button, Input, FormGroup, Select, fadeDelay } from '@/app/components/ui';
 import Modal, { DetailRow, SuccessBanner } from '@/app/components/Modal';
 
 type Ref = { id: string; patient: string; age: number; condition: string; hospital: string; date: string; priority: string; status: string };
@@ -15,6 +16,12 @@ const REFS_INIT: Ref[] = [
 ];
 
 const NEW_REF_INIT = { patient: '', age: '', condition: '', hospital: '', priority: 'Medium' };
+
+function priorityBadgeClass(priority: string) {
+  if (priority === 'Urgent') return 'bg-error/10 text-error';
+  if (priority === 'High') return 'bg-warning/10 text-warning';
+  return 'bg-grey-100 text-grey-600';
+}
 
 export default function ReferralManagement() {
   const [refs, setRefs] = useState(REFS_INIT);
@@ -47,61 +54,57 @@ export default function ReferralManagement() {
   ];
 
   return (
-    <div className="app-layout">
-      <Sidebar role="admin" userName="Venkat Rao" userSub="Super Admin" />
-      <div className="main-content">
-        <Topbar title="Referral Management" subtitle="Hospital and specialist referrals" />
-        <main className="page-body">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 16 }}>
-            {stats.map(s => (
-              <div key={s.label} className="card animate-fade-up">
-                <div className="card-body">
-                  <div style={{ fontSize: 24, fontWeight: 900, color: s.color, fontFamily: "'Space Grotesk', sans-serif" }}>{s.v}</div>
-                  <div style={{ fontSize: 12, color: '#9E9E9E' }}>{s.label}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
-            <input className="form-input" style={{ flex: 1 }} placeholder="Search by patient or condition..." />
-            <button className="btn btn-primary" onClick={() => setShowNew(true)}>+ New Referral</button>
-          </div>
-
-          <div className="card">
-            <div className="card-body" style={{ padding: 0 }}>
-              <div className="table-wrap">
-                <table>
-                  <thead><tr><th>Ref ID</th><th>Patient</th><th>Condition</th><th>Hospital</th><th>Date</th><th>Priority</th><th>Status</th><th>Action</th></tr></thead>
-                  <tbody>
-                    {refs.map((r, i) => (
-                      <tr key={r.id} className={`animate-fade-up d${i + 1}`}>
-                        <td style={{ fontWeight: 700 }}>{r.id}</td>
-                        <td><div style={{ fontWeight: 700 }}>{r.patient}</div><div style={{ fontSize: 11, color: '#9E9E9E' }}>{r.age}y</div></td>
-                        <td>{r.condition}</td>
-                        <td style={{ fontSize: 12 }}>{r.hospital}</td>
-                        <td>{r.date}</td>
-                        <td><span className={`badge ${r.priority === 'Urgent' ? 'badge-error' : r.priority === 'High' ? 'badge-warning' : 'badge-grey'}`}>{r.priority}</span></td>
-                        <td><StatusBadge label={r.status} /></td>
-                        <td>
-                          <div style={{ display: 'flex', gap: 4 }}>
-                            <button className="btn btn-sm btn-outline" style={{ padding: '4px 10px', fontSize: 11 }} onClick={() => setViewRef(r)}>View</button>
-                            {r.status === 'Pending' && <button className="btn btn-sm btn-primary" style={{ padding: '4px 10px', fontSize: 11 }} onClick={() => setApproveRef(r)}>Approve</button>}
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </main>
+    <AppShell
+      sidebar={<Sidebar role="admin" userName="Venkat Rao" userSub="Super Admin" />}
+      topbar={<Topbar title="Referral Management" subtitle="Hospital and specialist referrals" />}
+    >
+      <div className="mb-4 grid grid-cols-2 gap-3.5 lg:grid-cols-4">
+        {stats.map(s => (
+          <Card key={s.label} className="animate-fade-up">
+            <CardBody>
+              <div className="font-heading text-2xl font-black" style={{ color: s.color }}>{s.v}</div>
+              <div className="text-xs text-grey-400">{s.label}</div>
+            </CardBody>
+          </Card>
+        ))}
       </div>
 
-      {/* View Modal */}
+      <div className="mb-3.5 flex gap-2.5">
+        <Input className="flex-1" placeholder="Search by patient or condition..." />
+        <Button variant="primary" onClick={() => setShowNew(true)}>+ New Referral</Button>
+      </div>
+
+      <Card>
+        <CardBody className="p-0">
+          <TableWrap>
+            <DataTable>
+              <thead><tr><th>Ref ID</th><th>Patient</th><th>Condition</th><th>Hospital</th><th>Date</th><th>Priority</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody>
+                {refs.map((r, i) => (
+                  <tr key={r.id} className={`animate-fade-up ${fadeDelay(i + 1)}`}>
+                    <td className="font-bold">{r.id}</td>
+                    <td><div className="font-bold">{r.patient}</div><div className="text-[11px] text-grey-400">{r.age}y</div></td>
+                    <td>{r.condition}</td>
+                    <td className="text-xs">{r.hospital}</td>
+                    <td>{r.date}</td>
+                    <td><span className={`inline-flex rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${priorityBadgeClass(r.priority)}`}>{r.priority}</span></td>
+                    <td><StatusBadge label={r.status} /></td>
+                    <td>
+                      <div className="flex gap-1">
+                        <Button size="sm" variant="outline" className="px-2.5 py-1 text-[11px]" onClick={() => setViewRef(r)}>View</Button>
+                        {r.status === 'Pending' && <Button size="sm" variant="primary" className="px-2.5 py-1 text-[11px]" onClick={() => setApproveRef(r)}>Approve</Button>}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </DataTable>
+          </TableWrap>
+        </CardBody>
+      </Card>
+
       <Modal open={!!viewRef} onClose={() => setViewRef(null)} title="Referral Details" subtitle={viewRef?.id}
-        actions={<button className="btn btn-primary btn-sm" onClick={() => setViewRef(null)}>Close</button>}>
+        actions={<Button variant="primary" size="sm" onClick={() => setViewRef(null)}>Close</Button>}>
         {viewRef && <>
           <DetailRow label="Referral ID" value={viewRef.id} />
           <DetailRow label="Patient" value={`${viewRef.patient}, ${viewRef.age} yrs`} />
@@ -110,48 +113,44 @@ export default function ReferralManagement() {
           <DetailRow label="Date" value={viewRef.date} />
           <DetailRow label="Priority" value={viewRef.priority} />
           <DetailRow label="Status" value={viewRef.status} />
-          <div style={{ marginTop: 14, background: '#FFF8E1', border: '1px solid #FFD54F40', borderRadius: 10, padding: 14, fontSize: 12, color: '#5D4037' }}>
+          <div className="mt-3.5 rounded-[10px] border border-[#FFD54F40] bg-[#FFF8E1] p-3.5 text-xs text-[#5D4037]">
             <strong>Clinical Note:</strong> Patient requires specialized evaluation. All relevant reports and fundus photographs have been attached. Appointment to be scheduled within 7 days of this referral.
           </div>
         </>}
       </Modal>
 
-      {/* Approve Modal */}
       <Modal open={!!approveRef} onClose={() => setApproveRef(null)} title="Approve Referral" subtitle={`${approveRef?.patient} — ${approveRef?.condition}`}
-        actions={!approvedId ? <><button className="btn btn-outline btn-sm" onClick={() => setApproveRef(null)}>Cancel</button><button className="btn btn-primary btn-sm" onClick={() => approveRef && doApprove(approveRef.id)}>✅ Confirm Approve</button></> : undefined}>
+        actions={!approvedId ? <><Button variant="outline" size="sm" onClick={() => setApproveRef(null)}>Cancel</Button><Button variant="primary" size="sm" onClick={() => approveRef && doApprove(approveRef.id)}>✅ Confirm Approve</Button></> : undefined}>
         {approvedId ? <SuccessBanner message={`Referral ${approvedId} approved successfully!`} /> : (
           approveRef && <>
             <DetailRow label="Patient" value={`${approveRef.patient}, ${approveRef.age} yrs`} />
             <DetailRow label="Condition" value={approveRef.condition} />
             <DetailRow label="Hospital" value={approveRef.hospital} />
             <DetailRow label="Priority" value={approveRef.priority} />
-            <div style={{ marginTop: 14, background: 'rgba(26,58,107,0.05)', borderRadius: 10, padding: 14, fontSize: 12, color: '#424242' }}>
+            <div className="mt-3.5 rounded-[10px] bg-primary/5 p-3.5 text-xs text-grey-800">
               Approving this referral will notify the hospital and send appointment details to the patient via SMS.
             </div>
           </>
         )}
       </Modal>
 
-      {/* New Referral Modal */}
       <Modal open={showNew} onClose={() => { setShowNew(false); setSubmitted(false); }} title="Create New Referral"
-        actions={!submitted ? <><button className="btn btn-outline btn-sm" onClick={() => setShowNew(false)}>Cancel</button><button className="btn btn-primary btn-sm" onClick={doSubmitNew}>Submit Referral</button></> : undefined}>
+        actions={!submitted ? <><Button variant="outline" size="sm" onClick={() => setShowNew(false)}>Cancel</Button><Button variant="primary" size="sm" onClick={doSubmitNew}>Submit Referral</Button></> : undefined}>
         {submitted ? <SuccessBanner message="Referral submitted successfully!" /> : (
           <div>
             {[{ label: 'Patient Name', key: 'patient', type: 'text', placeholder: 'Full name' }, { label: 'Age', key: 'age', type: 'number', placeholder: 'Age in years' }, { label: 'Condition / Diagnosis', key: 'condition', type: 'text', placeholder: 'e.g. Cataract' }, { label: 'Referred Hospital', key: 'hospital', type: 'text', placeholder: 'Hospital name' }].map(f => (
-              <div className="form-group" key={f.key}>
-                <label className="form-label">{f.label}</label>
-                <input className="form-input" type={f.type} placeholder={f.placeholder} value={(newRef as any)[f.key]} onChange={e => setNewRef(p => ({ ...p, [f.key]: e.target.value }))} />
-              </div>
+              <FormGroup key={f.key} label={f.label}>
+                <Input type={f.type} placeholder={f.placeholder} value={(newRef as Record<string, string>)[f.key]} onChange={e => setNewRef(p => ({ ...p, [f.key]: e.target.value }))} />
+              </FormGroup>
             ))}
-            <div className="form-group">
-              <label className="form-label">Priority</label>
-              <select className="form-input form-select" value={newRef.priority} onChange={e => setNewRef(p => ({ ...p, priority: e.target.value }))}>
+            <FormGroup label="Priority">
+              <Select value={newRef.priority} onChange={e => setNewRef(p => ({ ...p, priority: e.target.value }))}>
                 {['Urgent', 'High', 'Medium', 'Low'].map(p => <option key={p}>{p}</option>)}
-              </select>
-            </div>
+              </Select>
+            </FormGroup>
           </div>
         )}
       </Modal>
-    </div>
+    </AppShell>
   );
 }

@@ -1,6 +1,8 @@
 'use client';
 import { useState, useRef, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Button } from '@/app/components/ui';
+import { cn } from '@/app/lib/cn';
 
 function OtpContent() {
   const router = useRouter();
@@ -37,62 +39,64 @@ function OtpContent() {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card animate-fade-up" style={{ maxWidth: 400 }}>
-        <div className="auth-logo">
-          <img src="/apvision.png" alt="AP Vision Care" style={{ width: 72, height: 72, borderRadius: 18, objectFit: 'contain', background: '#f0f4ff', padding: 6, margin: '0 auto 12px', display: 'block', boxShadow: '0 4px 20px rgba(26,58,107,0.15)' }} />
-          <h1>OTP Verification</h1>
-          <p>Code sent to +91 {mobile}</p>
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary-dark to-primary p-6">
+      <div className="w-full max-w-[400px] animate-fade-up rounded-xl bg-white p-10 shadow-xl">
+        <div className="mb-6 text-center">
+          <img src="/apvision.png" alt="AP Vision Care" className="mx-auto mb-3 block size-[72px] rounded-[18px] bg-[#f0f4ff] object-contain p-1.5 shadow-[0_4px_20px_rgba(26,58,107,0.15)]" />
+          <h1 className="font-heading text-xl font-black text-primary">OTP Verification</h1>
+          <p className="text-xs text-grey-500">Code sent to +91 {mobile}</p>
         </div>
 
-        <p style={{ textAlign: 'center', fontSize: 13, color: '#757575', marginBottom: 28 }}>
+        <p className="mb-7 text-center text-[13px] text-grey-600">
           Enter the 6-digit OTP sent to your mobile
         </p>
 
-        <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginBottom: 24 }}>
+        <div className="mb-6 flex justify-center gap-2.5">
           {otp.map((v, i) => (
             <input
               key={i}
               ref={el => { if (el) inputs.current[i] = el; }}
-              className="form-input"
               id={`otp-${i}`}
-              style={{ width: 48, height: 56, textAlign: 'center', fontSize: 22, fontWeight: 800, padding: 0 }}
+              className={cn(
+                'size-12 w-12 rounded-md border-[1.5px] border-grey-300 bg-white p-0 text-center text-[22px] font-extrabold text-grey-900 transition-[border-color,box-shadow] focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/10',
+              )}
               value={v}
               onChange={e => handleKey(i, e.target.value)}
               onKeyDown={e => handleBackspace(i, e)}
               maxLength={1}
+              inputMode="numeric"
             />
           ))}
         </div>
 
-        {/* Demo hint */}
-        <div style={{ background: '#F5F5F5', borderRadius: 8, padding: '8px 12px', fontSize: 12, color: '#757575', textAlign: 'center', marginBottom: 16 }}>
+        <div className="mb-4 rounded-lg bg-grey-50 px-3 py-2 text-center text-xs text-grey-600">
           💡 Demo: Enter any 6 digits to proceed
         </div>
 
-        <button
+        <Button
           id="verify-otp-btn"
-          className="btn btn-primary btn-full btn-lg"
+          variant="primary"
+          size="lg"
+          full
           onClick={handleVerify}
           disabled={loading || otp.join('').length < 6}
         >
           {loading ? '⏳ Verifying...' : '✅ Verify OTP'}
-        </button>
+        </Button>
 
-        <div style={{ textAlign: 'center', marginTop: 16 }}>
+        <div className="mt-4 text-center">
           {timer > 0 ? (
-            <p style={{ fontSize: 12, color: '#9E9E9E' }}>Resend OTP in {timer}s</p>
+            <p className="text-xs text-grey-400">Resend OTP in {timer}s</p>
           ) : (
-            <button className="btn btn-ghost" style={{ fontSize: 12 }} onClick={() => setTimer(30)}>
+            <Button variant="ghost" className="text-xs" onClick={() => setTimer(30)}>
               🔄 Resend OTP
-            </button>
+            </Button>
           )}
         </div>
 
-        <button className="btn btn-ghost btn-full" style={{ marginTop: 8, fontSize: 12 }}
-          onClick={() => router.push('/login')}>
+        <Button variant="ghost" full className="mt-2 text-xs" onClick={() => router.push('/login')}>
           ← Change Number
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -100,7 +104,11 @@ function OtpContent() {
 
 export default function OtpPage() {
   return (
-    <Suspense fallback={<div className="auth-page"><div className="auth-card">Loading...</div></div>}>
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary-dark to-primary p-6">
+        <div className="w-full max-w-[440px] rounded-xl bg-white p-10 shadow-xl">Loading...</div>
+      </div>
+    }>
       <OtpContent />
     </Suspense>
   );

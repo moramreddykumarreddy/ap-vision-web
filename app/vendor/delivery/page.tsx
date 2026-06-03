@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
+import { AppShell } from '@/app/components/app-shell';
+import { Button, Input, FormGroup, Card, CardBody, CardHeader, CardTitle, StatusBadge } from '@/app/components/ui';
 import Modal, { SuccessBanner } from '@/app/components/Modal';
 
 export default function DeliveryVerification() {
@@ -62,38 +64,37 @@ export default function DeliveryVerification() {
   };
 
   return (
-    <div className="app-layout">
-      <Sidebar role="vendor" userName="Vision Plus Ltd" userSub="Spectacle Vendor" />
-      <div className="main-content">
-        <Topbar title="Delivery Verification" subtitle="Confirm spectacle delivery to patients" />
-        <main className="page-body">
+    <AppShell
+      sidebar={<Sidebar role="vendor" userName="Vision Plus Ltd" userSub="Spectacle Vendor" />}
+      topbar={<Topbar title="Delivery Verification" subtitle="Confirm spectacle delivery to patients" />}
+    >
           <div style={{ maxWidth: 600 }}>
             {successMsg ? (
-              <div className="card animate-fade-up">
-                <div className="card-body">
+              <Card className="animate-fade-up">
+                <CardBody>
                   <SuccessBanner message={successMsg} />
-                </div>
-              </div>
+                </CardBody>
+              </Card>
             ) : (
               <>
-                <div className="card mb-20">
-                  <div className="card-header"><h3>Scan / Enter Order ID</h3></div>
-                  <div className="card-body">
-                    <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
-                      <input className="form-input" style={{ flex: 1 }} id="order-id-input" placeholder="Enter Order ID (e.g. ORD-001)" value={orderId} onChange={e => setOrderId(e.target.value)} />
-                      <button className="btn btn-outline" onClick={() => setQrOpen(true)}>📷 Scan QR</button>
+                <Card className="mb-3">
+                  <CardHeader><CardTitle>Scan / Enter Order ID</CardTitle></CardHeader>
+                  <CardBody>
+                    <div className="mb-4 flex gap-2.5">
+                      <Input className="flex-1" id="order-id-input" placeholder="Enter Order ID (e.g. ORD-001)" value={orderId} onChange={e => setOrderId(e.target.value)} />
+                      <Button variant="outline" onClick={() => setQrOpen(true)}>📷 Scan QR</Button>
                     </div>
-                    <button className="btn btn-primary btn-full" onClick={() => { if (orderId.trim()) setVerified(true); }}>🔍 Verify Order</button>
-                  </div>
-                </div>
+                    <Button variant="primary" full onClick={() => { if (orderId.trim()) setVerified(true); }}>🔍 Verify Order</Button>
+                  </CardBody>
+                </Card>
 
                 {verified && (
-                  <div className="card animate-fade-up">
-                    <div className="card-header">
-                      <h3>Order Verification</h3>
-                      <span className="badge badge-success">✅ Found</span>
-                    </div>
-                    <div className="card-body">
+                  <Card className="animate-fade-up">
+                    <CardHeader>
+                      <CardTitle>Order Verification</CardTitle>
+                      <span className="inline-flex rounded-full bg-success/10 px-2.5 py-0.5 text-[11px] font-semibold text-success">✅ Found</span>
+                    </CardHeader>
+                    <CardBody>
                       <div style={{ background: '#F5F5F5', borderRadius: 10, padding: 16, marginBottom: 16 }}>
                         {[
                           { l: 'Order ID', v: 'ORD-001' },
@@ -111,12 +112,10 @@ export default function DeliveryVerification() {
                         ))}
                       </div>
 
-                      <div className="form-group">
-                        <label className="form-label">Recipient Name (Person Collecting)</label>
-                        <input id="recipient-name" className="form-input" placeholder="Enter recipient name" value={recipientName} onChange={e => setRecipientName(e.target.value)} />
-                      </div>
-                      <div className="form-group">
-                        <label className="form-label">Signature / Thumb Impression</label>
+                      <FormGroup label="Recipient Name (Person Collecting)">
+                        <Input id="recipient-name" placeholder="Enter recipient name" value={recipientName} onChange={e => setRecipientName(e.target.value)} />
+                      </FormGroup>
+                      <FormGroup label="Signature / Thumb Impression">
                         <div
                           onClick={() => setSignatureOpen(true)}
                           style={{
@@ -129,7 +128,7 @@ export default function DeliveryVerification() {
                         >
                           {signatureData || '✍️ Tap to capture signature'}
                         </div>
-                      </div>
+                      </FormGroup>
 
                       {photoData && (
                         <div style={{ padding: '8px 12px', background: 'rgba(46,125,50,0.05)', border: '1px solid rgba(46,125,50,0.2)', borderRadius: 8, color: '#2E7D32', fontSize: 12, fontWeight: 700, marginBottom: 16, display: 'flex', gap: 6 }}>
@@ -138,11 +137,11 @@ export default function DeliveryVerification() {
                       )}
 
                       <div style={{ display: 'flex', gap: 10 }}>
-                        <button className="btn btn-accent btn-full" onClick={() => setCameraOpen(true)}>📷 Capture Photo</button>
-                        <button className="btn btn-primary btn-full" onClick={handleConfirmDelivery}>✅ Confirm Delivery</button>
+                        <Button variant="accent" full onClick={() => setCameraOpen(true)}>📷 Capture Photo</Button>
+                        <Button variant="primary" full onClick={handleConfirmDelivery}>✅ Confirm Delivery</Button>
                       </div>
-                    </div>
-                  </div>
+                    </CardBody>
+                  </Card>
                 )}
               </>
             )}
@@ -155,12 +154,12 @@ export default function DeliveryVerification() {
             title="Scan Order QR Code"
             subtitle="Position the spectacle packet barcode or QR in the scan view"
             actions={
-              <button className="btn btn-outline" onClick={() => setQrOpen(false)} disabled={qrScanning}>Cancel</button>
+              <Button variant="outline" onClick={() => setQrOpen(false)} disabled={qrScanning}>Cancel</Button>
             }
           >
             {qrScanning ? (
               <div style={{ textAlign: 'center', padding: '24px 0' }}>
-                <div className="spinner" style={{ margin: '0 auto 16px' }} />
+                <div className="size-8 animate-spin rounded-full border-2 border-grey-200 border-t-primary" style={{ margin: '0 auto 16px' }} />
                 <div style={{ fontSize: 14, fontWeight: 700, color: '#1A3A6B' }}>Reading barcode...</div>
               </div>
             ) : (
@@ -171,7 +170,7 @@ export default function DeliveryVerification() {
                 <div style={{ fontSize: 12, color: '#757575', textAlign: 'center' }}>
                   Place code inside the frame to scan. Click below to simulate.
                 </div>
-                <button className="btn btn-sm btn-outline" onClick={handleSimulateScan}>Simulate Scan (ORD-001)</button>
+                <Button size="sm" variant="outline" onClick={handleSimulateScan}>Simulate Scan (ORD-001)</Button>
               </div>
             )}
           </Modal>
@@ -184,8 +183,8 @@ export default function DeliveryVerification() {
             subtitle="Draw signature or thumb impression on the screen pad"
             actions={
               <>
-                <button className="btn btn-outline" onClick={() => setSignatureOpen(false)}>Cancel</button>
-                <button className="btn btn-primary" onClick={handleCaptureSignature}>Save Signature</button>
+                <Button variant="outline" onClick={() => setSignatureOpen(false)}>Cancel</Button>
+                <Button variant="primary" onClick={handleCaptureSignature}>Save Signature</Button>
               </>
             }
           >
@@ -208,12 +207,12 @@ export default function DeliveryVerification() {
             title="Verify Delivery Handover Photo"
             subtitle="Take a photo of patient receiving the spectacles"
             actions={
-              <button className="btn btn-outline" onClick={() => setCameraOpen(false)} disabled={cameraCapturing}>Cancel</button>
+              <Button variant="outline" onClick={() => setCameraOpen(false)} disabled={cameraCapturing}>Cancel</Button>
             }
           >
             {cameraCapturing ? (
               <div style={{ textAlign: 'center', padding: '24px 0' }}>
-                <div className="spinner" style={{ margin: '0 auto 16px' }} />
+                <div className="size-8 animate-spin rounded-full border-2 border-grey-200 border-t-primary" style={{ margin: '0 auto 16px' }} />
                 <div style={{ fontSize: 14, fontWeight: 700, color: '#1A3A6B' }}>Saving photo...</div>
               </div>
             ) : (
@@ -222,15 +221,13 @@ export default function DeliveryVerification() {
                   <span style={{ fontSize: 48 }}>👨‍🦳🕶️</span>
                   <div style={{ position: 'absolute', bottom: 10, left: 0, right: 0, textAlign: 'center', fontSize: 11, color: '#455A64', fontWeight: 600 }}>Camera Preview (Handover spectacles)</div>
                 </div>
-                <button className="btn btn-primary" onClick={handleCapturePhoto} style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <Button variant="primary" className="flex items-center gap-2" onClick={handleCapturePhoto}>
                   📸 Click Shutter
-                </button>
+                </Button>
               </div>
             )}
           </Modal>
-        </main>
-      </div>
-    </div>
+        </AppShell>
   );
 }
 
