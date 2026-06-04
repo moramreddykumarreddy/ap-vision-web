@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { BrandLogo } from "@/app/components/BrandLogo";
 import { getRoleById } from "@/app/lib/auth-roles";
 import { LOCATION_REQUIRED_ROLES } from "@/app/components/registration/constants";
 import { persistDemoLogin } from "@/app/lib/demo-session";
@@ -63,11 +64,7 @@ function OtpContent() {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary-dark to-primary p-4 sm:p-6">
       <div className="w-full max-w-[400px] animate-fade-up rounded-xl bg-white p-6 shadow-xl sm:p-10">
         <div className="mb-6 text-center">
-          <img
-            src="/apvision.png"
-            alt="AP Vision Care"
-            className="mx-auto mb-3 block size-[72px] rounded-[18px] bg-primary-container object-contain p-1.5 shadow-md"
-          />
+          <BrandLogo size="lg" className="mx-auto mb-3 object-center" />
           <h1 className="text-xl font-black text-primary">OTP Verification</h1>
           <p className="text-xs text-grey-500">
             Code sent to +91 {mobile}

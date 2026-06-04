@@ -489,7 +489,10 @@ export default function LandingPage() {
       </section>
 
       {/* Platform components */}
-      <section id="components" className="bg-bg-app px-6 py-[92px] lg:px-[46px]">
+      <section
+        id="components"
+        className="bg-bg-app px-6 py-[92px] lg:px-[46px]"
+      >
         <div className="mx-auto max-w-[1200px]">
           <SectionHead
             tag="Solution Overview"
@@ -654,7 +657,11 @@ export default function LandingPage() {
               </div>
             ))}
             <div className="mt-[18px] flex gap-2 border-t border-white/10 pt-[18px] text-[12.5px] text-white/60">
-              <Icon name="alert" className="shrink-0 text-accent-light" size={17} />
+              <Icon
+                name="alert"
+                className="shrink-0 text-accent-light"
+                size={17}
+              />
               <span>
                 <strong className="text-white">Recommendation:</strong>{" "}
                 Prioritize cataract camps &amp; diabetes screening in Anantapur
@@ -706,7 +713,7 @@ export default function LandingPage() {
         <div className="mx-auto grid max-w-[1200px] gap-10 border-b border-white/8 pb-[34px] md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
-              <BrandLogo />
+              <BrandLogo size="xl" onDark />
               <div className="text-[16.5px] font-extrabold text-white">
                 AP Vision Care
               </div>

@@ -1,6 +1,7 @@
 "use client";
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { BrandLogo } from "@/app/components/BrandLogo";
 import { Button } from "@/app/components/ui";
 
 const DISTRICTS = [
@@ -40,6 +41,7 @@ function LocationContent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary-dark to-primary p-6">
       <div className="w-full max-w-md animate-fade-up rounded-xl bg-white p-8 shadow-xl">
+        <BrandLogo size="lg" className="mx-auto mb-5 object-center" />
         <h1 className="text-xl font-black text-primary">
           {role === "nodal"
             ? "Select District Location"

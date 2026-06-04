@@ -1,6 +1,7 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { BrandLogo } from "@/app/components/BrandLogo";
 import { useAppShell } from "@/app/components/app-shell-context";
 import { cn } from "@/app/lib/cn";
 
@@ -107,11 +108,7 @@ function SidebarPanel({
   return (
     <>
       <div className="flex items-center gap-2.5 border-b border-white/10 px-3.5 py-3">
-        <img
-          src="/apvision.png"
-          alt="AP Vision Care"
-          className="size-8 shrink-0 rounded-lg bg-white object-contain p-0.5"
-        />
+        <BrandLogo size="xs" onDark />
         <div className="min-w-0 flex-1">
           <h2 className="truncate text-xs font-extrabold leading-tight text-white">
             AP Vision Care
