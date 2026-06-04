@@ -10,7 +10,7 @@ interface NavItem {
 }
 
 interface SidebarProps {
-  role: "admin" | "screening" | "nodal" | "tele" | "vendor" | "patient";
+  role: "admin" | "screening" | "nodal" | "tele" | "patient";
   userName: string;
   userSub: string;
 }
@@ -20,6 +20,12 @@ const navConfig: Record<string, NavItem[]> = {
     { icon: "📊", label: "Dashboard", href: "/admin/dashboard" },
     { icon: "🗺️", label: "State Analytics", href: "/admin/analytics/state" },
     { icon: "📍", label: "District View", href: "/admin/analytics/district" },
+    { icon: "🏘️", label: "Mandal View", href: "/admin/analytics/mandal" },
+    {
+      icon: "👥",
+      label: "Demographics",
+      href: "/admin/analytics/demographics",
+    },
     { icon: "🤖", label: "AI Risk Analytics", href: "/admin/analytics/ai" },
     { icon: "🥗", label: "Nutrition Risk", href: "/admin/analytics/nutrition" },
     { icon: "🏫", label: "School Vision", href: "/admin/analytics/school" },
@@ -32,6 +38,9 @@ const navConfig: Record<string, NavItem[]> = {
     { icon: "📋", label: "EMR Timeline", href: "/admin/emr" },
     { icon: "📁", label: "Documents", href: "/admin/documents" },
     { icon: "🏥", label: "Referrals", href: "/admin/referrals" },
+    { icon: "🗄️", label: "Master Data", href: "/admin/master-data" },
+    { icon: "📜", label: "Audit Logs", href: "/admin/audit" },
+    { icon: "🧠", label: "AI Config", href: "/admin/ai-config" },
     { icon: "📄", label: "Reports", href: "/admin/reports" },
   ],
   screening: [
@@ -44,17 +53,12 @@ const navConfig: Record<string, NavItem[]> = {
     { icon: "🏠", label: "Dashboard", href: "/nodal/dashboard" },
     { icon: "👥", label: "Team Management", href: "/nodal/teams" },
     { icon: "✅", label: "Approvals", href: "/nodal/approvals", badge: 3 },
-    { icon: "🛒", label: "Vendor Monitor", href: "/nodal/vendors" },
+    { icon: "🏥", label: "Referral Verify", href: "/nodal/referrals" },
   ],
   tele: [
     { icon: "🏠", label: "Dashboard", href: "/tele/dashboard" },
     { icon: "📅", label: "Consultation List", href: "/tele/consultations" },
     { icon: "📹", label: "Video Consultation", href: "/tele/video" },
-  ],
-  vendor: [
-    { icon: "🏠", label: "Dashboard", href: "/vendor/dashboard" },
-    { icon: "📦", label: "Order Details", href: "/vendor/order/ORD-001" },
-    { icon: "✅", label: "Delivery Verify", href: "/vendor/delivery" },
   ],
   patient: [
     { icon: "🏠", label: "Dashboard", href: "/patient/dashboard" },
@@ -75,7 +79,6 @@ const roleLabels: Record<string, string> = {
   screening: "Screening Team",
   nodal: "Nodal Officer",
   tele: "Tele-Ophthalmologist",
-  vendor: "Vendor",
   patient: "Patient",
 };
 

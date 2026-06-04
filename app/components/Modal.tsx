@@ -1,4 +1,5 @@
 "use client";
+import { colorAlpha, colors } from '@/app/lib/theme';
 import { useEffect } from "react";
 
 interface ModalProps {
@@ -103,7 +104,7 @@ export function RosterTable({
             {columns.map((c) => (
               <th
                 key={c}
-                className="border-b-2 border-grey-200 bg-[#F5F7FA] px-3 py-2 text-left text-[10px] font-bold uppercase tracking-wide text-grey-600"
+                className="border-b-2 border-grey-200 bg-surface-clinical px-3 py-2 text-left text-[10px] font-bold uppercase tracking-wide text-grey-600"
               >
                 {c}
               </th>

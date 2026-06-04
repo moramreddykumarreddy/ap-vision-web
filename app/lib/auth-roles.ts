@@ -28,13 +28,6 @@ export const AUTH_ROLES = [
     href: "/tele/dashboard",
   },
   {
-    id: "vendor",
-    icon: "🏭",
-    title: "Vendor",
-    desc: "Spectacle supply & delivery",
-    href: "/vendor/dashboard",
-  },
-  {
     id: "patient",
     icon: "🧑‍⚕️",
     title: "Patient",

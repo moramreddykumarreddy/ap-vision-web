@@ -1,4 +1,5 @@
 'use client';
+import { colorAlpha, colors } from '@/app/lib/theme';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
@@ -24,7 +25,7 @@ export default function TeleDashboard() {
       topbar={<Topbar title="Tele-Ophthalmologist" subtitle="Dr. Anita Rao • SVIMS, Tirupati" />}
     >
       {nextConsult && (
-        <div className="animate-fade-up mb-5 rounded-[20px] bg-gradient-to-br from-primary to-[#01579B] p-6 text-white">
+        <div className="animate-fade-up mb-5 rounded-[20px] bg-gradient-to-br from-primary to-info p-6 text-white">
           <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-[9px] font-extrabold tracking-wide">NEXT UP</span>
           <div className="mt-3.5 flex items-center gap-4">
             <div className="flex size-[52px] items-center justify-center rounded-full bg-white/20 text-[22px]">👤</div>
@@ -34,7 +35,7 @@ export default function TeleDashboard() {
               <div className="text-[11px] opacity-70">{nextConsult.scheduledTime}</div>
             </div>
           </div>
-          <Button full className="mt-4 bg-white font-extrabold text-primary hover:bg-white/90" onClick={() => router.push('/tele/video')}>
+          <Button variant="inverse" full className="mt-4 font-extrabold" onClick={() => router.push('/tele/video')}>
             📹 Join Consultation
           </Button>
         </div>
@@ -42,9 +43,9 @@ export default function TeleDashboard() {
 
       <SectionHeader title="Today's Summary" />
       <StatsGrid cols={3} className="mt-2 mb-3.5">
-        <StatCard title="Pending" value={`${pending}`} icon="⏳" color="#E65100" delay={0.05} />
-        <StatCard title="Completed" value={`${completed}`} icon="✅" color="#2E7D32" delay={0.10} />
-        <StatCard title="Referrals" value="2" icon="🏥" color="#C62828" delay={0.15} />
+        <StatCard title="Pending" value={`${pending}`} icon="⏳" color={colors.warning} delay={0.05} />
+        <StatCard title="Completed" value={`${completed}`} icon="✅" color={colors.success} delay={0.10} />
+        <StatCard title="Referrals" value="2" icon="🏥" color={colors.error} delay={0.15} />
       </StatsGrid>
 
       <SectionHeader title="Consultation Queue" actionLabel="View All" onAction={() => router.push('/tele/consultations')} />

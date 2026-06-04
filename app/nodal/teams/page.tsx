@@ -1,4 +1,5 @@
 'use client';
+import { colorAlpha, colors } from '@/app/lib/theme';
 import { useState } from 'react';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
@@ -106,22 +107,22 @@ export default function TeamManagement() {
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
                     <div>
                       <div style={{ fontSize: 15, fontWeight: 800 }}>{t.name}</div>
-                      <div style={{ fontSize: 12, color: '#9E9E9E' }}>Lead: {t.lead} • {t.location}</div>
+                      <div style={{ fontSize: 12, color: colors.grey500 }}>Lead: {t.lead} • {t.location}</div>
                     </div>
                     <StatusBadge label={t.status} />
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, background: '#F5F5F5', borderRadius: 10, padding: 14 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, background: colors.grey100, borderRadius: 10, padding: 14 }}>
                     <div style={{ textAlign: 'center' }}>
                       <div style={{ fontSize: 20, fontWeight: 900 }}>{t.members}</div>
-                      <div style={{ fontSize: 10, color: '#9E9E9E' }}>Members</div>
+                      <div style={{ fontSize: 10, color: colors.grey500 }}>Members</div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
                       <div style={{ fontSize: 20, fontWeight: 900 }}>{t.campsCompleted}</div>
-                      <div style={{ fontSize: 10, color: '#9E9E9E' }}>Camps</div>
+                      <div style={{ fontSize: 10, color: colors.grey500 }}>Camps</div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
                       <div style={{ fontSize: 20, fontWeight: 900 }}>{t.patientsScreened.toLocaleString()}</div>
-                      <div style={{ fontSize: 10, color: '#9E9E9E' }}>Screened</div>
+                      <div style={{ fontSize: 10, color: colors.grey500 }}>Screened</div>
                     </div>
                   </div>
                   <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
@@ -181,22 +182,22 @@ export default function TeamManagement() {
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: '#0D2347' }}>Full Name</label>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: colors.primaryDark }}>Full Name</label>
                   <input
                     type="text"
                     placeholder="Enter name"
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13 }}
+                    style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13 }}
                   />
                 </div>
                 <div style={{ display: 'flex', gap: 12 }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#0D2347' }}>Role</label>
+                    <label style={{ fontSize: 12, fontWeight: 700, color: colors.primaryDark }}>Role</label>
                     <select
                       value={role}
                       onChange={e => setRole(e.target.value)}
-                      style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13, background: 'white' }}
+                      style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13, background: 'white' }}
                     >
                       <option value="Ophthalmologist">Ophthalmologist</option>
                       <option value="Optometrist">Optometrist</option>
@@ -205,11 +206,11 @@ export default function TeamManagement() {
                     </select>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 1 }}>
-                    <label style={{ fontSize: 12, fontWeight: 700, color: '#0D2347' }}>Team</label>
+                    <label style={{ fontSize: 12, fontWeight: 700, color: colors.primaryDark }}>Team</label>
                     <select
                       value={teamSelect}
                       onChange={e => setTeamSelect(e.target.value)}
-                      style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13, background: 'white' }}
+                      style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13, background: 'white' }}
                     >
                       <option value="Alpha">Team Alpha</option>
                       <option value="Beta">Team Beta</option>
@@ -218,13 +219,13 @@ export default function TeamManagement() {
                   </div>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <label style={{ fontSize: 12, fontWeight: 700, color: '#0D2347' }}>Phone Number</label>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: colors.primaryDark }}>Phone Number</label>
                   <input
                     type="tel"
                     placeholder="10-digit mobile number"
                     value={phone}
                     onChange={e => setPhone(e.target.value)}
-                    style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13 }}
+                    style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13 }}
                   />
                 </div>
               </div>

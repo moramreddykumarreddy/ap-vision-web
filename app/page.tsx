@@ -4,7 +4,22 @@ import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import LandingNav from "@/app/components/landing/LandingNav";
 import { BrandLogo, Icon, type IconName } from "@/app/components/landing/Icon";
+import { Button } from "@/app/components/ui";
 import { cn } from "@/app/lib/cn";
+import { landingIconVariants } from "@/app/lib/theme";
+
+type LandingCardDef = {
+  icon: IconName;
+  title: string;
+  desc: string;
+};
+
+function withLandingVariants(items: LandingCardDef[]) {
+  return items.map((item, i) => ({
+    ...item,
+    ...landingIconVariants[i % landingIconVariants.length],
+  }));
+}
 
 const HERO_STATS = [
   { num: "26", suffix: "+", label: "Districts Covered" },
@@ -12,128 +27,81 @@ const HERO_STATS = [
   { num: "4", suffix: "", label: "User Roles" },
 ];
 
-const ABOUT_CARDS: {
-  icon: IconName;
-  bg: string;
-  color: string;
-  title: string;
-  desc: string;
-}[] = [
+const ABOUT_CARDS = withLandingVariants([
   {
     icon: "target",
-    bg: "bg-accent-soft",
-    color: "text-accent-dark",
     title: "Universal Screening",
     desc: "Universal vision screening across villages, tribal areas, urban slums, schools, and industrial zones — detecting refractive errors and eye disease early.",
   },
   {
     icon: "stetho",
-    bg: "bg-blue-soft",
-    color: "text-blue",
     title: "End-to-End Care",
     desc: "From ABHA-based registration to tele-ophthalmology, referral management, and affordable high-quality spectacle delivery to every eligible beneficiary.",
   },
   {
     icon: "cpu",
-    bg: "bg-amber-soft",
-    color: "text-amber",
     title: "AI-Driven Insights",
     desc: "Actionable public health intelligence — disease hotspots, demand forecasting, and resource allocation — supporting evidence-based government decisions.",
   },
-];
+]);
 
-const PLATFORM_CARDS: {
-  icon: IconName;
-  bg: string;
-  color: string;
-  title: string;
-  desc: string;
-}[] = [
+const PLATFORM_CARDS = withLandingVariants([
   {
     icon: "stetho",
-    bg: "bg-accent-soft",
-    color: "text-accent-dark",
     title: "Community Screening",
     desc: "Mobile camps across the state.",
   },
   {
     icon: "file-plus",
-    bg: "bg-blue-soft",
-    color: "text-blue",
     title: "Digital Registration",
     desc: "ABHA, mobile & QR-based capture.",
   },
   {
     icon: "book",
-    bg: "bg-amber-soft",
-    color: "text-amber",
     title: "Electronic Medical Records",
     desc: "Paperless, timestamped records.",
   },
   {
     icon: "eye",
-    bg: "bg-green-soft",
-    color: "text-green",
     title: "Vision & Refraction",
     desc: "UCDVA / BCDVA assessment.",
   },
   {
     icon: "video",
-    bg: "bg-blue-soft",
-    color: "text-blue",
     title: "Tele-Ophthalmology",
     desc: "Remote specialist consultations.",
   },
   {
     icon: "route",
-    bg: "bg-red-soft",
-    color: "text-red",
     title: "Referral Management",
     desc: "Priority-based hospital referrals.",
   },
   {
     icon: "glasses",
-    bg: "bg-accent-soft",
-    color: "text-accent-dark",
     title: "Spectacle Distribution",
     desc: "Order to last-mile delivery.",
   },
   {
-    icon: "factory",
-    bg: "bg-amber-soft",
-    color: "text-amber",
-    title: "Vendor Management",
-    desc: "Onboarding & SLA monitoring.",
-  },
-  {
     icon: "grid",
-    bg: "bg-blue-soft",
-    color: "text-blue",
     title: "Monitoring Dashboards",
     desc: "Daily, district & mandal views.",
   },
   {
     icon: "cpu",
-    bg: "bg-green-soft",
-    color: "text-green",
     title: "AI & Predictive Engine",
     desc: "Risk prediction & forecasting.",
   },
   {
     icon: "file-text",
-    bg: "bg-red-soft",
-    color: "text-red",
     title: "Automated Reporting",
     desc: "Government-accessible reports.",
   },
   {
     icon: "id",
-    bg: "bg-accent-soft",
-    color: "text-accent-dark",
     title: "ABHA Verification",
     desc: "Auto-fetch demographics.",
   },
-];
+]);
 
 const ROLES = [
   {
@@ -144,7 +112,7 @@ const ROLES = [
     scope: "State Program Mgmt Unit",
     items: [
       "Statewide administration",
-      "District & vendor onboarding",
+      "District & facility onboarding",
       "AI model configuration",
       "Audit & compliance",
     ],
@@ -214,7 +182,7 @@ const WORKFLOW = [
   {
     icon: "check-circle" as IconName,
     title: "Approval & Order",
-    desc: "Nodal officer approves; vendor order generated.",
+    desc: "Nodal officer approves; spectacle order generated.",
   },
   {
     icon: "truck" as IconName,
@@ -237,7 +205,7 @@ const AI_FEATURES = [
   {
     icon: "package" as IconName,
     title: "Demand Forecasting",
-    sub: "Spectacle & vendor planning",
+    sub: "Spectacle supply planning",
   },
   {
     icon: "route" as IconName,
@@ -247,11 +215,11 @@ const AI_FEATURES = [
 ];
 
 const HOTSPOTS = [
-  { name: "Anantapur", pct: 88, color: "bg-red" },
-  { name: "Kurnool", pct: 74, color: "bg-amber" },
-  { name: "Chittoor", pct: 61, color: "bg-[#F4B95A]" },
+  { name: "Anantapur", pct: 88, color: "bg-primary" },
+  { name: "Kurnool", pct: 74, color: "bg-primary-light" },
+  { name: "Chittoor", pct: 61, color: "bg-clinical" },
   { name: "Guntur", pct: 45, color: "bg-accent" },
-  { name: "Visakhapatnam", pct: 33, color: "bg-green" },
+  { name: "Visakhapatnam", pct: 33, color: "bg-accent-light" },
 ];
 
 const JOURNEY_STEPS = [
@@ -273,18 +241,18 @@ const JOURNEY_STEPS = [
   },
   {
     icon: "check-circle" as IconName,
-    bg: "bg-amber-soft",
-    color: "text-amber",
+    bg: "bg-primary-container",
+    color: "text-primary",
     title: "Prescription Approved",
     sub: "Nodal Officer · 10:02 AM",
     done: true,
   },
   {
     icon: "truck" as IconName,
-    bg: "bg-grey-200-2",
+    bg: "bg-grey-100",
     color: "text-grey-600",
     title: "Spectacles in Manufacturing",
-    sub: "Vendor: ClearView Optics",
+    sub: "Spectacle manufacturing in progress",
     done: false,
   },
 ];
@@ -365,7 +333,7 @@ export default function LandingPage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-grey-50 font-sans text-grey-900">
+    <div className="min-h-screen bg-bg-app font-sans text-grey-900">
       <LandingNav />
 
       {/* Hero */}
@@ -378,7 +346,7 @@ export default function LandingPage() {
       >
         <div className="mx-auto grid max-w-[1260px] items-center gap-14 lg:grid-cols-[1.04fr_0.96fr] lg:gap-14">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent-soft px-[15px] py-[7px] text-[12.5px] font-semibold text-accent-darkark">
+            <div className="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent-soft px-[15px] py-[7px] text-[12.5px] font-semibold text-accent-dark">
               <span className="size-[7px] animate-pulse-soft rounded-full bg-accent" />
               Government of Andhra Pradesh · Public Health Initiative
             </div>
@@ -394,21 +362,25 @@ export default function LandingPage() {
               care.
             </p>
             <div className="mb-[42px] flex flex-wrap gap-[13px]">
-              <button
+              <Button
                 type="button"
+                variant="primary"
+                size="lg"
+                className="gap-2 px-[22px] text-[14.5px]"
                 onClick={() => router.push("/register")}
-                className="inline-flex items-center gap-2 rounded-lg bg-accent px-[22px] py-3 text-[14.5px] font-semibold text-white shadow-md transition-all hover:-translate-y-px hover:bg-accent-dark"
               >
                 Register as Patient
                 <Icon name="arrow-right" size={17} />
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
+                variant="outline"
+                size="lg"
+                className="gap-2 px-[22px] text-[14.5px]"
                 onClick={() => router.push("/login")}
-                className="inline-flex items-center gap-2 rounded-lg border-[1.5px] border-grey-300 bg-white px-[22px] py-3 text-[14.5px] font-semibold text-primary transition-colors hover:border-primary hover:bg-primary/5"
               >
                 Staff / Admin Login
-              </button>
+              </Button>
             </div>
             <div className="flex flex-wrap gap-[38px]">
               {HERO_STATS.map((s) => (
@@ -429,8 +401,8 @@ export default function LandingPage() {
 
           <div className="relative">
             <div className="absolute -right-2 -top-[22px] z-[3] flex items-center gap-[11px] rounded-[13px] border border-grey-200 bg-white px-[17px] py-[13px] shadow-[0_6px_20px_rgba(16,40,70,0.07)]">
-              <div className="flex size-9 items-center justify-center rounded-[10px] bg-green-soft">
-                <Icon name="trend" className="text-green" size={18} />
+              <div className="flex size-9 items-center justify-center rounded-[10px] bg-accent-soft">
+                <Icon name="trend" className="text-accent-dark" size={18} />
               </div>
               <div>
                 <div className="text-base font-bold text-primary">12,480</div>
@@ -455,15 +427,15 @@ export default function LandingPage() {
                 <div className="text-[14.5px] font-bold text-primary">
                   Citizen Journey · Ramesh K.
                 </div>
-                <div className="flex items-center gap-1.5 rounded-full bg-green-soft px-2.5 py-1 text-[11px] font-bold text-green">
-                  <span className="size-1.5 animate-pulse-soft rounded-full bg-green" />
+                <div className="flex items-center gap-1.5 rounded-full bg-accent/15 px-2.5 py-1 text-[11px] font-bold text-accent-dark">
+                  <span className="size-1.5 animate-pulse-soft rounded-full bg-accent" />
                   LIVE
                 </div>
               </div>
               {JOURNEY_STEPS.map((step) => (
                 <div
                   key={step.title}
-                  className="flex items-center gap-[13px] border-b border-grey-200-2 py-[13px] last:border-b-0"
+                  className="flex items-center gap-[13px] border-b border-grey-100 py-[13px] last:border-b-0"
                 >
                   <div
                     className={cn(
@@ -485,8 +457,8 @@ export default function LandingPage() {
                     className={cn(
                       "flex size-6 items-center justify-center rounded-full",
                       step.done
-                        ? "bg-green text-white"
-                        : "bg-grey-200 text-grey-600-2",
+                        ? "bg-accent text-white"
+                        : "bg-grey-200 text-grey-500",
                     )}
                   >
                     {step.done && (
@@ -523,7 +495,7 @@ export default function LandingPage() {
       </section>
 
       {/* Platform components */}
-      <section id="components" className="px-6 py-[92px] lg:px-[46px]">
+      <section id="components" className="bg-bg-app px-6 py-[92px] lg:px-[46px]">
         <div className="mx-auto max-w-[1200px]">
           <SectionHead
             tag="Solution Overview"
@@ -562,7 +534,7 @@ export default function LandingPage() {
                 key={role.id}
                 type="button"
                 onClick={() => router.push(role.href)}
-                className="rounded-2xl border border-grey-200 bg-white p-6 text-left shadow-md transition-all hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg"
+                className="rounded-2xl border border-grey-200 bg-white p-6 text-left shadow-md transition-all hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-accent/30"
               >
                 <div className="mb-4 flex size-14 items-center justify-center rounded-2xl bg-primary/10">
                   <Icon name={role.icon} className="text-primary" size={28} />
@@ -585,7 +557,7 @@ export default function LandingPage() {
                     </li>
                   ))}
                 </ul>
-                <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-accent">
                   Open portal
                   <Icon name="arrow-right" size={14} />
                 </span>
@@ -664,7 +636,7 @@ export default function LandingPage() {
           <div className="rounded-[24px] border border-white/11 bg-white/5 p-7">
             <div className="mb-[22px] flex items-center justify-between">
               <h4 className="flex items-center gap-2 text-[15px] text-white">
-                <Icon name="fire" className="text-amber" size={18} />
+                <Icon name="fire" className="text-accent-light" size={18} />
                 District Disease-Burden Hotspots
               </h4>
               <span className="inline-flex rounded-full bg-blue-soft px-2.5 py-1 text-[11.5px] font-semibold text-blue">
@@ -688,7 +660,7 @@ export default function LandingPage() {
               </div>
             ))}
             <div className="mt-[18px] flex gap-2 border-t border-white/10 pt-[18px] text-[12.5px] text-white/60">
-              <Icon name="alert" className="shrink-0 text-amber" size={17} />
+              <Icon name="alert" className="shrink-0 text-accent-light" size={17} />
               <span>
                 <strong className="text-white">Recommendation:</strong>{" "}
                 Prioritize cataract camps &amp; diabetes screening in Anantapur
@@ -701,7 +673,7 @@ export default function LandingPage() {
 
       {/* CTA */}
       <section className="px-6 py-[90px] lg:px-[46px]">
-        <div className="relative mx-auto max-w-[980px] overflow-hidden rounded-2xl bg-gradient-to-br from-accent to-accent-dark px-[54px] py-[62px] text-center text-white">
+        <div className="relative mx-auto max-w-[980px] overflow-hidden rounded-2xl bg-gradient-to-br from-primary-dark via-primary to-accent px-[54px] py-[62px] text-center text-white">
           <div className="pointer-events-none absolute -right-[8%] -top-1/2 size-[380px] rounded-full bg-white/8" />
           <h2 className="relative mb-3.5 text-[clamp(26px,3vw,38px)] font-extrabold">
             Every citizen&apos;s journey,
@@ -713,20 +685,24 @@ export default function LandingPage() {
             manage screening, approvals, and statewide analytics.
           </p>
           <div className="relative flex flex-wrap justify-center gap-[13px]">
-            <button
+            <Button
               type="button"
+              variant="inverse"
+              size="lg"
+              className="rounded-[13px] px-[22px] text-[14.5px]"
               onClick={() => router.push("/register")}
-              className="inline-flex items-center justify-center rounded-[13px] bg-white px-[22px] py-3 text-[14.5px] font-semibold text-primary shadow-[0_1px_3px_rgba(16,40,70,0.06)] transition-all hover:-translate-y-px"
             >
               Patient Registration
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
+              variant="onDark"
+              size="lg"
+              className="rounded-[13px] px-[22px] text-[14.5px]"
               onClick={() => router.push("/login")}
-              className="inline-flex items-center justify-center rounded-[13px] bg-black/18 px-[22px] py-3 text-[14.5px] font-semibold text-white"
             >
               Staff Login
-            </button>
+            </Button>
           </div>
         </div>
       </section>

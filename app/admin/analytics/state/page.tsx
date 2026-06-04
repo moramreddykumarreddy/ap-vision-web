@@ -1,4 +1,5 @@
 'use client';
+import { colorAlpha, colors } from '@/app/lib/theme';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
 import { AppShell } from '@/app/components/app-shell';
@@ -31,10 +32,10 @@ export default function StateAnalytics() {
       topbar={<Topbar title="State Analytics" subtitle="Andhra Pradesh • Programme Year 2024–25" />}
     >
       <StatsGrid cols={4} className="mb-3.5">
-        <StatCard title="Total Patients" value="1.24M" icon="👥" color="#1A3A6B" delay={0.05} />
-        <StatCard title="Screened" value="1.14M" icon="👁️" color="#00897B" delay={0.10} subtitle="91.9%" />
-        <StatCard title="Prescriptions" value="186K" icon="💊" color="#D4A017" delay={0.15} />
-        <StatCard title="Delivered" value="142K" icon="✅" color="#2E7D32" delay={0.20} subtitle="76%" />
+        <StatCard title="Total Patients" value="1.24M" icon="👥" color={colors.primary} delay={0.05} />
+        <StatCard title="Screened" value="1.14M" icon="👁️" color={colors.accent} delay={0.10} subtitle="91.9%" />
+        <StatCard title="Prescriptions" value="186K" icon="💊" color={colors.gold} delay={0.15} />
+        <StatCard title="Delivered" value="142K" icon="✅" color={colors.success} delay={0.20} subtitle="76%" />
       </StatsGrid>
 
       <Card className="mb-3.5">
@@ -46,7 +47,7 @@ export default function StateAnalytics() {
                 key={m}
                 label={m}
                 height={`${(screenedData[i] / maxVal) * 100}%`}
-                color={i === months.length - 1 ? '#1A3A6B' : '#1A3A6B80'}
+                color={i === months.length - 1 ? colors.primary : colorAlpha(colors.primary, '80')}
               />
             ))}
           </ChartBarWrap>
@@ -78,9 +79,9 @@ export default function StateAnalytics() {
                     <td>
                       <div className="flex items-center gap-2">
                         <div className="max-w-20 flex-1">
-                          <ProgressBar value={d.pct} color={d.pct >= 85 ? '#2E7D32' : d.pct >= 75 ? '#D4A017' : '#E65100'} />
+                          <ProgressBar value={d.pct} color={d.pct >= 85 ? colors.success : d.pct >= 75 ? colors.gold : colors.warning} />
                         </div>
-                        <span className="text-xs font-bold" style={{ color: d.pct >= 85 ? '#2E7D32' : d.pct >= 75 ? '#D4A017' : '#E65100' }}>{d.pct}%</span>
+                        <span className="text-xs font-bold" style={{ color: d.pct >= 85 ? colors.success : d.pct >= 75 ? colors.gold : colors.warning }}>{d.pct}%</span>
                       </div>
                     </td>
                     <td>{d.referrals.toLocaleString()}</td>

@@ -4,7 +4,11 @@ import { useState } from "react";
 import { Button } from "@/app/components/ui";
 import Modal, { SuccessBanner, downloadFile } from "@/app/components/Modal";
 import { cn } from "@/app/lib/cn";
-import { MOBILE_SYMPTOMS } from "@/app/components/registration/constants";
+import {
+  MOBILE_SYMPTOMS,
+  DECISION_OUTCOMES,
+  OCULAR_HISTORY,
+} from "@/app/components/registration/constants";
 import {
   AreaTypeSelector,
   CheckRow,
@@ -144,6 +148,13 @@ export function DemographicStep({ form, update }: StepProps) {
         title="Demographic Information"
         subtitle="Socio-economic background details"
         emoji="📋"
+      />
+      <SelectField
+        label="Marital Status"
+        id="maritalStatus"
+        options={["Single", "Married", "Widowed", "Divorced", "Separated"]}
+        value={form.maritalStatus ?? ""}
+        onChange={(v) => update("maritalStatus", v)}
       />
       <SelectField
         label="Education Level"
@@ -330,6 +341,44 @@ export function MedicalHistoryStep({ form, update }: StepProps) {
         ))}
       </div>
       <SelectField
+        label="Duration of Disease"
+        id="diseaseDuration"
+        options={[
+          "Less than 1 year",
+          "1-5 years",
+          "More than 5 years",
+          "Not Applicable",
+        ]}
+        value={form.diseaseDuration ?? ""}
+        onChange={(v) => update("diseaseDuration", v)}
+      />
+      <SelectField
+        label="Current Treatment"
+        id="currentTreatment"
+        options={[
+          "Regular",
+          "Irregular",
+          "Not Taking Treatment",
+          "Not Applicable",
+        ]}
+        value={form.currentTreatment ?? ""}
+        onChange={(v) => update("currentTreatment", v)}
+      />
+      <div className="mb-4 mt-4">
+        <div className="mb-2 text-xs font-bold text-grey-700">
+          Ocular & Eye History
+        </div>
+        {OCULAR_HISTORY.map((c) => (
+          <CheckRow
+            key={c}
+            id={`ocular-${c}`}
+            label={c}
+            checked={form[`ocular-${c}`] === "1"}
+            onChange={(v) => update(`ocular-${c}`, v ? "1" : "0")}
+          />
+        ))}
+      </div>
+      <SelectField
         label="Previous Eye Surgery"
         id="eye-surgery"
         options={[
@@ -357,12 +406,12 @@ export function MedicalHistoryStep({ form, update }: StepProps) {
 
 export function FamilyHistoryStep({ form, update }: StepProps) {
   const conditions = [
+    "Diabetes",
+    "Hypertension",
+    "Blindness",
     "Glaucoma",
     "Cataract",
-    "Diabetic Retinopathy",
-    "Macular Degeneration",
-    "Retinitis Pigmentosa",
-    "Colour Blindness",
+    "Genetic Eye Disorders",
   ];
   return (
     <>
@@ -387,6 +436,272 @@ export function FamilyHistoryStep({ form, update }: StepProps) {
         value={form.famDiabetes ?? ""}
         onChange={(v) => update("famDiabetes", v)}
       />
+    </>
+  );
+}
+
+export function LifestyleStep({ form, update }: StepProps) {
+  return (
+    <>
+      <StepTitle
+        title="Lifestyle & Diet"
+        subtitle="Dietary pattern and nutrition habits"
+        emoji="🥗"
+      />
+      <SelectField
+        label="Dietary Pattern"
+        id="diet"
+        options={["Vegetarian", "Non-Vegetarian", "Mixed Diet"]}
+        value={form.diet ?? ""}
+        onChange={(v) => update("diet", v)}
+      />
+      <SelectField
+        label="Fruits Consumption"
+        id="fruits"
+        options={["Daily", "Weekly", "Rarely", "Never"]}
+        value={form.fruits ?? ""}
+        onChange={(v) => update("fruits", v)}
+      />
+      <SelectField
+        label="Green Leafy Vegetables"
+        id="vegetables"
+        options={["Daily", "Weekly", "Rarely", "Never"]}
+        value={form.vegetables ?? ""}
+        onChange={(v) => update("vegetables", v)}
+      />
+      <SelectField
+        label="Milk / Dairy Products"
+        id="dairy"
+        options={["Daily", "Weekly", "Rarely", "Never"]}
+        value={form.dairy ?? ""}
+        onChange={(v) => update("dairy", v)}
+      />
+      <SelectField
+        label="Eggs"
+        id="eggs"
+        options={["Daily", "Weekly", "Rarely", "Never"]}
+        value={form.eggs ?? ""}
+        onChange={(v) => update("eggs", v)}
+      />
+      <SelectField
+        label="Junk / Fast Food"
+        id="junk"
+        options={["Frequently", "Occasionally", "Rarely"]}
+        value={form.junk ?? ""}
+        onChange={(v) => update("junk", v)}
+      />
+      <SelectField
+        label="Sugary Drinks"
+        id="sugary"
+        options={["Frequently", "Occasionally", "Rarely"]}
+        value={form.sugary ?? ""}
+        onChange={(v) => update("sugary", v)}
+      />
+      <SelectField
+        label="Water Intake"
+        id="water"
+        options={[
+          "Less than 2 litres/day",
+          "2-4 litres/day",
+          "More than 4 litres/day",
+        ]}
+        value={form.water ?? ""}
+        onChange={(v) => update("water", v)}
+      />
+    </>
+  );
+}
+
+export function RiskProfileStep({ form, update }: StepProps) {
+  const exposures = [
+    "Sunlight Exposure >6 hours/day",
+    "Dust Exposure",
+    "Chemical Exposure",
+    "Welding Exposure",
+    "Screen Exposure >6 hours/day",
+  ];
+  return (
+    <>
+      <StepTitle
+        title="Risk Profile"
+        subtitle="Occupational, digital device & addiction habits"
+        emoji="⚠️"
+      />
+      <SelectField
+        label="Occupation Category"
+        id="occCategory"
+        options={[
+          "Farmer",
+          "Fisherman",
+          "Labourer",
+          "Factory Worker",
+          "Student",
+          "Driver",
+          "IT Employee",
+          "Homemaker",
+          "Government Employee",
+          "Retired",
+        ]}
+        value={form.occCategory ?? ""}
+        onChange={(v) => update("occCategory", v)}
+      />
+      <div className="mb-4">
+        <div className="mb-2 text-xs font-bold text-grey-700">
+          Occupational Exposure
+        </div>
+        {exposures.map((e) => (
+          <CheckRow
+            key={e}
+            id={`exp-${e}`}
+            label={e}
+            checked={form[`exp-${e}`] === "1"}
+            onChange={(v) => update(`exp-${e}`, v ? "1" : "0")}
+          />
+        ))}
+      </div>
+      <SelectField
+        label="Daily Screen Time"
+        id="screenTime"
+        options={["<2 hours", "2-4 hours", "4-8 hours", "8+ hours"]}
+        value={form.screenTime ?? ""}
+        onChange={(v) => update("screenTime", v)}
+      />
+      <SelectField
+        label="Tobacco"
+        id="tobacco"
+        options={["Never", "Current User", "Former User"]}
+        value={form.tobacco ?? ""}
+        onChange={(v) => update("tobacco", v)}
+      />
+      <SelectField
+        label="Alcohol"
+        id="alcohol"
+        options={["Never", "Occasional", "Regular"]}
+        value={form.alcohol ?? ""}
+        onChange={(v) => update("alcohol", v)}
+      />
+      <SelectField
+        label="Gutka / Pan Masala"
+        id="gutka"
+        options={["No", "Yes"]}
+        value={form.gutka ?? ""}
+        onChange={(v) => update("gutka", v)}
+      />
+    </>
+  );
+}
+
+export function PopulationHealthStep({ form, update }: StepProps) {
+  const qol = [
+    "Difficulty Reading",
+    "Difficulty Driving",
+    "Difficulty Working",
+    "Difficulty Recognizing Faces",
+    "Difficulty Walking at Night",
+  ];
+  return (
+    <>
+      <StepTitle
+        title="Population Health"
+        subtitle="Women's, elderly, child, access & quality of life"
+        emoji="🏥"
+      />
+      <SelectField
+        label="Pregnancy Status"
+        id="pregnancy"
+        options={["Pregnant", "Not Pregnant", "Not Applicable"]}
+        value={form.pregnancy ?? ""}
+        onChange={(v) => update("pregnancy", v)}
+      />
+      <SelectField
+        label="Lactating Mother"
+        id="lactating"
+        options={["Yes", "No", "Not Applicable"]}
+        value={form.lactating ?? ""}
+        onChange={(v) => update("lactating", v)}
+      />
+      <SelectField
+        label="Anaemia History"
+        id="anaemia"
+        options={["Yes", "No", "Not Applicable"]}
+        value={form.anaemia ?? ""}
+        onChange={(v) => update("anaemia", v)}
+      />
+      <SelectField
+        label="History of Falls (Age >60)"
+        id="falls"
+        options={["Yes", "No", "Not Applicable"]}
+        value={form.falls ?? ""}
+        onChange={(v) => update("falls", v)}
+      />
+      <SelectField
+        label="Mobility Issues (Age >60)"
+        id="mobility"
+        options={["Yes", "No", "Not Applicable"]}
+        value={form.mobility ?? ""}
+        onChange={(v) => update("mobility", v)}
+      />
+      <Field
+        label="School Name (Age <18)"
+        id="schoolName"
+        placeholder="ZP High School"
+        value={form.schoolName ?? ""}
+        onChange={(v) => update("schoolName", v)}
+      />
+      <SelectField
+        label="Class"
+        id="studentClass"
+        options={["1-5", "6-8", "9-10", "11-12", "Not Applicable"]}
+        value={form.studentClass ?? ""}
+        onChange={(v) => update("studentClass", v)}
+      />
+      <SelectField
+        label="Blackboard Visibility Issues"
+        id="blackboard"
+        options={["Yes", "No", "Not Applicable"]}
+        value={form.blackboard ?? ""}
+        onChange={(v) => update("blackboard", v)}
+      />
+      <SelectField
+        label="Last Eye Checkup"
+        id="lastCheckup"
+        options={["Never", "Within 1 Year", "1-3 Years", "More than 3 Years"]}
+        value={form.lastCheckup ?? ""}
+        onChange={(v) => update("lastCheckup", v)}
+      />
+      <SelectField
+        label="Distance to Nearest Hospital"
+        id="hospitalDist"
+        options={["<5 km", "5-10 km", ">10 km"]}
+        value={form.hospitalDist ?? ""}
+        onChange={(v) => update("hospitalDist", v)}
+      />
+      <SelectField
+        label="Health Insurance"
+        id="insurance"
+        options={[
+          "Ayushman Bharat",
+          "State Scheme",
+          "Private Insurance",
+          "None",
+        ]}
+        value={form.insurance ?? ""}
+        onChange={(v) => update("insurance", v)}
+      />
+      <div className="mb-4 mt-2">
+        <div className="mb-2 text-xs font-bold text-grey-700">
+          Quality of Life (due to vision issues)
+        </div>
+        {qol.map((q) => (
+          <CheckRow
+            key={q}
+            id={`qol-${q}`}
+            label={q}
+            checked={form[`qol-${q}`] === "1"}
+            onChange={(v) => update(`qol-${q}`, v ? "1" : "0")}
+          />
+        ))}
+      </div>
     </>
   );
 }
@@ -631,56 +946,39 @@ export function FundusExamStep({ form, update }: StepProps) {
   );
 }
 
-export function DecisionEngineStep() {
-  const conditions = [
-    {
-      label: "Refractive Error",
-      action: "Issue Spectacles",
-      color: "text-success",
-    },
-    {
-      label: "Presbyopia",
-      action: "Issue Reading Glasses",
-      color: "text-success",
-    },
-  ];
+export function DecisionEngineStep({ form, update }: StepProps) {
+  const selected = form.decisionCase ?? "C";
   return (
     <>
       <StepTitle
         title="Decision Engine"
-        subtitle="AI clinical decision engine"
+        subtitle="AI clinical decision engine (Cases A–E)"
         emoji="🤖"
       />
       <div className="mb-4 rounded-xl bg-primary-container p-5">
         <div className="mb-2 text-xs font-bold text-primary">
-          AI Clinical Decision Engine
+          Clinical Decision Engine
         </div>
         <p className="text-sm text-grey-700">
-          Based on examination data, the following conditions have been
-          detected:
+          Select the appropriate outcome based on examination.
         </p>
       </div>
-      {conditions.map((c) => (
-        <div
-          key={c.label}
-          className="mb-2.5 rounded-xl border border-success/30 bg-success/5 p-4"
+      {DECISION_OUTCOMES.map((o) => (
+        <button
+          key={o.id}
+          type="button"
+          className={cn(
+            "mb-2.5 w-full rounded-xl border p-4 text-left transition",
+            selected === o.id
+              ? "border-primary bg-primary/5 ring-2 ring-primary/20"
+              : "border-grey-200 bg-white",
+          )}
+          onClick={() => update("decisionCase", o.id)}
         >
-          <div className="flex items-center justify-between gap-2">
-            <div>
-              <div className="text-sm font-bold text-grey-900">{c.label}</div>
-              <div className={cn("mt-0.5 text-xs font-medium", c.color)}>
-                Recommended: {c.action}
-              </div>
-            </div>
-            <span className="rounded-full bg-success/15 px-2.5 py-0.5 text-[11px] font-bold text-success">
-              Low Risk
-            </span>
-          </div>
-        </div>
+          <div className="text-sm font-bold text-grey-900">{o.title}</div>
+          <div className="mt-0.5 text-xs text-grey-600">{o.desc}</div>
+        </button>
       ))}
-      <div className="rounded-xl bg-success/10 p-3.5 text-sm text-success">
-        Patient can be managed at camp level. No referral required.
-      </div>
     </>
   );
 }
@@ -690,6 +988,9 @@ export function PrescriptionStep({ form }: { form: FormState }) {
   const [smsSuccess, setSmsSuccess] = useState(false);
   const patientPhone = form.mobile || "9876543210";
   const patientName = form.nameEn || "Ravi Kumar Reddy";
+  const decision = DECISION_OUTCOMES.find(
+    (o) => o.id === (form.decisionCase ?? "C"),
+  );
 
   const getPrescriptionText = () =>
     `AP VISION CARE - PRESCRIPTION\nPatient: ${patientName}\nMobile: +91 ${patientPhone}\nDistrict: ${form.district || "Krishna"}\nGenerated: ${new Date().toLocaleDateString("en-IN")}`;
@@ -708,6 +1009,11 @@ export function PrescriptionStep({ form }: { form: FormState }) {
         <div className="mt-1 text-xs text-grey-500">
           Camp: Vijayawada Urban Camp • {new Date().toLocaleDateString("en-IN")}
         </div>
+        {decision && (
+          <div className="mt-3 rounded-lg bg-primary/5 px-3 py-2 text-xs font-semibold text-primary">
+            {decision.title} — will be submitted to nodal officer for approval
+          </div>
+        )}
       </div>
       <div className="mb-5 grid gap-4 sm:grid-cols-2">
         {["Right Eye (OD)", "Left Eye (OS)"].map((eye) => (
@@ -815,18 +1121,24 @@ export function renderRegistrationStep(
     case 4:
       return <FamilyHistoryStep form={form} update={update} />;
     case 5:
-      return <ExistingSpecsStep form={form} update={update} />;
+      return <LifestyleStep form={form} update={update} />;
     case 6:
-      return <VisionExamStep form={form} update={update} />;
+      return <RiskProfileStep form={form} update={update} />;
     case 7:
-      return <RefractionStep form={form} update={update} />;
+      return <PopulationHealthStep form={form} update={update} />;
     case 8:
-      return <ClinicalAssessmentStep form={form} update={update} />;
+      return <ExistingSpecsStep form={form} update={update} />;
     case 9:
-      return <FundusExamStep form={form} update={update} />;
+      return <VisionExamStep form={form} update={update} />;
     case 10:
-      return <DecisionEngineStep />;
+      return <RefractionStep form={form} update={update} />;
     case 11:
+      return <ClinicalAssessmentStep form={form} update={update} />;
+    case 12:
+      return <FundusExamStep form={form} update={update} />;
+    case 13:
+      return <DecisionEngineStep form={form} update={update} />;
+    case 14:
       return <PrescriptionStep form={form} />;
     default:
       return null;

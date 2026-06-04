@@ -26,8 +26,8 @@ export default function LoginPage() {
       setRoleError("Please select your role to continue");
       return;
     }
-    if (mobile.length !== 10) {
-      setMobileError("Enter a valid 10-digit mobile number");
+    if (mobile.replace(/\D/g, "").length < 6) {
+      setMobileError("Enter at least 6 digits (demo accepts any number)");
       return;
     }
 
@@ -42,7 +42,7 @@ export default function LoginPage() {
   return (
     <div className="grid h-full min-h-0 grid-rows-[1fr_auto] lg:grid-cols-2 lg:grid-rows-1">
       {/* Left — role selection */}
-      <section className="relative flex h-full min-h-0 flex-col overflow-hidden bg-gradient-to-br from-[#0a1f38] via-primary to-[#0d2347] max-lg:overflow-y-auto">
+      <section className="relative flex h-full min-h-0 flex-col overflow-hidden bg-gradient-to-br from-primary-dark via-primary to-primary-dark max-lg:overflow-y-auto">
         <div
           className="pointer-events-none absolute inset-0 overflow-hidden"
           aria-hidden
@@ -156,7 +156,7 @@ export default function LoginPage() {
       </section>
 
       {/* Right — sign in */}
-      <section className="flex h-full min-h-0 flex-col overflow-hidden border-t border-grey-200 bg-grey-50 max-lg:overflow-y-auto lg:border-t-0">
+      <section className="flex h-full min-h-0 flex-col overflow-hidden border-t border-grey-200 bg-bg-app max-lg:overflow-y-auto lg:border-t-0">
         <div className="mx-auto flex h-full w-full max-w-[420px] min-h-0 flex-col justify-center px-5 py-4 sm:px-8 lg:px-10 lg:py-5">
           <div className="w-full overflow-hidden rounded-2xl border border-grey-200 bg-white shadow-lg">
             <div className="border-b border-grey-100 px-6 py-5 sm:px-7">
@@ -227,12 +227,14 @@ export default function LoginPage() {
               </Button>
 
               <p className="mt-3 text-center">
-                <button
+                <Button
                   type="button"
-                  className="text-xs text-grey-500 hover:text-primary"
+                  variant="ghost"
+                  size="sm"
+                  className="text-grey-500 hover:text-primary"
                 >
                   Forgot Session? Contact Admin
-                </button>
+                </Button>
               </p>
             </form>
           </div>

@@ -1,18 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
-/* AP Vision Care mobile app — lib/core/theme/app_colors.dart + app_theme.dart */
+/* AP Vision Care — Andhra Pradesh medical & health program theme */
 @theme {
+  /* Brand — trust blue (government + clinical) */
   --color-primary: #1a3a6b;
   --color-primary-dark: #0d2347;
   --color-primary-light: #2952a3;
-  --color-primary-container: #d6e4ff;
+  --color-primary-container: #e8f4fc;
+
+  /* Wellness — healing teal */
   --color-accent: #00897b;
   --color-accent-light: #4db6ac;
   --color-accent-dark: #00695c;
   --color-accent-soft: #b2dfdb;
+
   --color-gold: #d4a017;
   --color-gold-light: #ffd54f;
+
+  /* Clinical status */
   --color-success: #2e7d32;
   --color-success-light: #4caf50;
   --color-warning: #e65100;
@@ -21,6 +27,9 @@
   --color-error-light: #f44336;
   --color-info: #01579b;
   --color-info-light: #2196f3;
+  --color-clinical: #0277bd;
+
+  /* Neutrals — clean hospital UI */
   --color-grey-50: #fafafa;
   --color-grey-100: #f5f5f5;
   --color-grey-200: #eeeeee;
@@ -32,7 +41,7 @@
   --color-grey-800: #424242;
   --color-grey-900: #212121;
 
-  /* Semantic aliases (landing + dashboards) */
+  /* Semantic aliases */
   --color-navy: #1a3a6b;
   --color-navy-2: #0d2347;
   --color-ink: #212121;
@@ -40,15 +49,16 @@
   --color-teal-d: #00695c;
   --color-teal-soft: #b2dfdb;
   --color-blue: #2952a3;
-  --color-blue-soft: #d6e4ff;
+  --color-blue-soft: #e8f4fc;
   --color-amber: #e65100;
   --color-amber-soft: #fff3e0;
   --color-green: #2e7d32;
   --color-green-soft: #e8f5e9;
   --color-red: #c62828;
   --color-red-soft: #ffebee;
-  --color-bg-app: #fafafa;
+  --color-bg-app: #f0f7fa;
   --color-surface: #ffffff;
+  --color-surface-clinical: #f5f7fa;
   --color-line: #eeeeee;
   --color-line-2: #f5f5f5;
   --color-muted: #757575;
@@ -64,10 +74,11 @@
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
-  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.15);
+  --shadow-sm:
+    0 1px 3px rgba(13, 35, 71, 0.08), 0 1px 2px rgba(13, 35, 71, 0.05);
+  --shadow-md: 0 4px 12px rgba(13, 35, 71, 0.1);
+  --shadow-lg: 0 8px 24px rgba(13, 35, 71, 0.12);
+  --shadow-xl: 0 20px 60px rgba(13, 35, 71, 0.15);
   --animate-fade-up: fade-up 0.4s ease both;
   --animate-fade-in: fade-in 0.3s ease both;
   --animate-pulse-soft: pulse-soft 2s ease-in-out infinite;
@@ -116,7 +127,7 @@
   }
 
   body {
-    @apply min-h-screen bg-grey-50 font-sans text-grey-900 antialiased;
+    @apply min-h-screen bg-bg-app font-sans text-grey-900 antialiased;
   }
 
   a {

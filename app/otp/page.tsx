@@ -2,6 +2,9 @@
 import { useState, useRef, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getRoleById } from "@/app/lib/auth-roles";
+import { LOCATION_REQUIRED_ROLES } from "@/app/components/registration/constants";
+import { persistDemoLogin } from "@/app/lib/demo-session";
+import { persistDefaultPatientSession } from "@/app/lib/dummy-data";
 import { Button } from "@/app/components/ui";
 import { cn } from "@/app/lib/cn";
 
@@ -42,8 +45,18 @@ function OtpContent() {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 800));
     setLoading(false);
+    persistDemoLogin(role, mobile);
     const destination = routeParam || getRoleById(role)?.href || "/login";
-    router.push(destination);
+    const encoded = encodeURIComponent(destination);
+
+    if (role === "patient") {
+      persistDefaultPatientSession(mobile);
+      router.push("/patient/dashboard");
+    } else if (LOCATION_REQUIRED_ROLES.has(role)) {
+      router.push(`/location?role=${role}&route=${encoded}`);
+    } else {
+      router.push(destination);
+    }
   };
 
   return (
@@ -53,7 +66,7 @@ function OtpContent() {
           <img
             src="/apvision.png"
             alt="AP Vision Care"
-            className="mx-auto mb-3 block size-[72px] rounded-[18px] bg-[#f0f4ff] object-contain p-1.5 shadow-[0_4px_20px_rgba(26,58,107,0.15)]"
+            className="mx-auto mb-3 block size-[72px] rounded-[18px] bg-primary-container object-contain p-1.5 shadow-md"
           />
           <h1 className="text-xl font-black text-primary">OTP Verification</h1>
           <p className="text-xs text-grey-500">

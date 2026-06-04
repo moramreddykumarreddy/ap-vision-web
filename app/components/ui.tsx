@@ -1,4 +1,5 @@
 "use client";
+import { colorAlpha, colors } from "@/app/lib/theme";
 
 import type {
   ButtonHTMLAttributes,
@@ -20,27 +21,51 @@ export function fadeDelay(index: number) {
   return delayClass[Math.min(Math.max(index, 1), 6)] ?? "delay-75";
 }
 
-/* ── Button ─────────────────────────────────────────── */
-type ButtonVariant = "primary" | "accent" | "outline" | "ghost" | "danger";
-type ButtonSize = "sm" | "md" | "lg";
+/* ── Button (single theme app-wide) ─────────────────── */
+export type ButtonVariant =
+  | "primary"
+  | "accent"
+  | "outline"
+  | "ghost"
+  | "danger"
+  | "inverse"
+  | "onDark"
+  | "outlineOnDark";
 
-const btnBase =
-  "inline-flex items-center justify-center gap-1.5 rounded-lg border-0 font-semibold transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-60";
+export type ButtonSize = "sm" | "md" | "lg";
+
+const btnFocus =
+  "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-accent/30";
+
+/** Main CTA — healing teal (use for Submit, Register, Save, etc.) */
+const btnPrimary =
+  "border-0 bg-accent text-white shadow-md hover:bg-accent-dark hover:-translate-y-px hover:shadow-lg active:translate-y-0";
+
+const btnBase = cn(
+  "inline-flex items-center justify-center gap-1.5 rounded-lg font-semibold transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-md",
+  btnFocus,
+);
 
 const btnVariants: Record<ButtonVariant, string> = {
-  primary:
-    "bg-primary text-white hover:bg-primary-dark hover:-translate-y-px hover:shadow-md",
-  accent: "bg-accent text-white hover:bg-accent-dark",
+  primary: btnPrimary,
+  accent: btnPrimary,
   outline:
-    "border-[1.5px] border-grey-300 bg-transparent text-grey-700 hover:border-primary hover:text-primary",
-  ghost: "bg-transparent text-primary hover:bg-primary/5",
-  danger: "bg-error text-white hover:bg-error/90",
+    "border-[1.5px] border-grey-300 bg-white text-primary hover:border-primary hover:bg-primary/5",
+  ghost: "border-0 bg-transparent text-primary hover:bg-primary/5",
+  danger:
+    "border-0 bg-error text-white hover:bg-error/90 hover:-translate-y-px hover:shadow-md",
+  inverse:
+    "border-0 bg-white text-primary shadow-sm hover:-translate-y-px hover:bg-white/95 hover:shadow-md",
+  onDark:
+    "border-0 bg-white/20 text-white hover:bg-white/30",
+  outlineOnDark:
+    "border border-white/25 bg-transparent text-white hover:border-white/40 hover:bg-white/10",
 };
 
 const btnSizes: Record<ButtonSize, string> = {
   sm: "px-2.5 py-1 text-[11px]",
-  md: "px-3.5 py-1.5 text-xs",
-  lg: "px-5 py-2.5 text-[13px]",
+  md: "px-3.5 py-2.5 text-xs",
+  lg: "px-5 py-3 text-[13px]",
 };
 
 export function Button({
@@ -196,13 +221,9 @@ export function SectionHeader({
     <div className="mb-2 flex items-center justify-between">
       <h3 className="text-[13px] font-bold text-grey-900">{title}</h3>
       {actionLabel && (
-        <button
-          type="button"
-          onClick={onAction}
-          className="cursor-pointer rounded-sm border-0 bg-transparent px-2 py-0.5 text-[11px] font-semibold text-primary transition-colors hover:bg-primary/5"
-        >
+        <Button type="button" variant="ghost" size="sm" onClick={onAction}>
           {actionLabel} →
-        </button>
+        </Button>
       )}
     </div>
   );
@@ -272,13 +293,15 @@ export function BannerCard({
           {subtitle && <p className="text-[11px] opacity-75">{subtitle}</p>}
         </div>
         {badge && (
-          <button
+          <Button
             type="button"
+            variant="onDark"
+            size="sm"
+            className="rounded-full px-3.5"
             onClick={onBadgeClick}
-            className="cursor-pointer rounded-full border-0 bg-white/20 px-3.5 py-1 text-xs text-white"
           >
             {badge}
-          </button>
+          </Button>
         )}
       </div>
       {kpis && (
@@ -327,8 +350,8 @@ export function ListItem({
       <div
         className="flex size-8 shrink-0 items-center justify-center rounded-full text-[13px] font-extrabold"
         style={{
-          background: avatarBg ?? "#E3F2FD",
-          color: avatarColor ?? "#1A3A6B",
+          background: avatarBg ?? colorAlpha(colors.primary, "18"),
+          color: avatarColor ?? colors.primary,
         }}
       >
         {avatar}
@@ -435,12 +458,12 @@ export function QuickActionBtn({
 export function RankBadge({ rank }: { rank: number }) {
   const bg =
     rank === 1
-      ? "#D4A017"
+      ? colors.gold
       : rank === 2
-        ? "#9E9E9E"
+        ? colors.grey500
         : rank === 3
           ? "#CD7F32"
-          : "#EEEEEE";
+          : colors.grey200;
   const color = rank <= 3 ? "white" : "#666";
   return (
     <div
