@@ -26,8 +26,8 @@ export default function LoginPage() {
       setRoleError("Please select your role to continue");
       return;
     }
-    if (mobile.length !== 10) {
-      setMobileError("Enter a valid 10-digit mobile number");
+    if (mobile.replace(/\D/g, "").length < 6) {
+      setMobileError("Enter at least 6 digits (demo accepts any number)");
       return;
     }
 

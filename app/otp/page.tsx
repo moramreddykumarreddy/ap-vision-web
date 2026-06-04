@@ -3,6 +3,8 @@ import { useState, useRef, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getRoleById } from "@/app/lib/auth-roles";
 import { LOCATION_REQUIRED_ROLES } from "@/app/components/registration/constants";
+import { persistDemoLogin } from "@/app/lib/demo-session";
+import { persistDefaultPatientSession } from "@/app/lib/dummy-data";
 import { Button } from "@/app/components/ui";
 import { cn } from "@/app/lib/cn";
 
@@ -43,11 +45,13 @@ function OtpContent() {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 800));
     setLoading(false);
+    persistDemoLogin(role, mobile);
     const destination = routeParam || getRoleById(role)?.href || "/login";
     const encoded = encodeURIComponent(destination);
 
     if (role === "patient") {
-      router.push(`/patient/select?mobile=${mobile}`);
+      persistDefaultPatientSession(mobile);
+      router.push("/patient/dashboard");
     } else if (LOCATION_REQUIRED_ROLES.has(role)) {
       router.push(`/location?role=${role}&route=${encoded}`);
     } else {
