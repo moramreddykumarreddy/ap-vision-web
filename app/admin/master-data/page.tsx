@@ -8,7 +8,6 @@ const sections = [
   { title: "Districts & Mandals", count: 13, icon: "🗺️" },
   { title: "Referral Hospitals", count: 48, icon: "🏥" },
   { title: "Nodal Officers", count: 13, icon: "🏢" },
-  { title: "Vendors", count: 24, icon: "🏭" },
   { title: "Tele-Ophthalmologists", count: 36, icon: "👁️" },
 ];
 
@@ -21,7 +20,7 @@ export default function MasterDataPage() {
       topbar={
         <Topbar
           title="Master Data"
-          subtitle="District, hospital, vendor & user configuration"
+          subtitle="District, hospital & user configuration"
         />
       }
     >

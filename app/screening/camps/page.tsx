@@ -1,4 +1,5 @@
 'use client';
+import { colorAlpha, colors } from '@/app/lib/theme';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
@@ -242,7 +243,7 @@ export default function CampManagement() {
               {success ? (
                 <SuccessBanner message="Camp has been marked as Completed!" />
               ) : (
-                <div style={{ fontSize: 13, color: '#424242', lineHeight: 1.5 }}>
+                <div style={{ fontSize: 13, color: colors.grey800, lineHeight: 1.5 }}>
                   Are you sure you want to end <strong>{endCampTarget.name}</strong>? Ending the camp will freeze the registrations and update its status to <strong>Completed</strong>.
                 </div>
               )}

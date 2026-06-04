@@ -1,4 +1,5 @@
 "use client";
+import { colorAlpha, colors } from '@/app/lib/theme';
 import { useRouter } from "next/navigation";
 import Sidebar from "@/app/components/Sidebar";
 import Topbar from "@/app/components/Topbar";
@@ -29,37 +30,37 @@ const analyticsModules = [
   {
     icon: "📊",
     label: "State Analytics",
-    color: "#1A3A6B",
+    color: colors.primary,
     href: "/admin/analytics/state",
   },
   {
     icon: "🗺️",
     label: "District View",
-    color: "#1A3A6B",
+    color: colors.primary,
     href: "/admin/analytics/district",
   },
   {
     icon: "🤖",
     label: "AI Risk",
-    color: "#6A1B9A",
+    color: colors.clinical,
     href: "/admin/analytics/ai",
   },
   {
     icon: "🥗",
     label: "Nutrition Risk",
-    color: "#E65100",
+    color: colors.warning,
     href: "/admin/analytics/nutrition",
   },
   {
     icon: "🏫",
     label: "School Vision",
-    color: "#00897B",
+    color: colors.accent,
     href: "/admin/analytics/school",
   },
   {
     icon: "⚖️",
     label: "Decision Support",
-    color: "#D4A017",
+    color: colors.gold,
     href: "/admin/analytics/decision",
   },
 ];
@@ -92,28 +93,28 @@ export default function AdminDashboard() {
           title="Registered Today"
           value="842"
           icon="👤"
-          color="#1A3A6B"
+          color={colors.primary}
           delay={0.02}
         />
         <StatCard
           title="Screened Today"
           value="796"
           icon="👁️"
-          color="#2E7D32"
+          color={colors.success}
           delay={0.04}
         />
         <StatCard
           title="Spectacles Required"
           value="312"
           icon="👓"
-          color="#E65100"
+          color={colors.warning}
           delay={0.06}
         />
         <StatCard
           title="Spectacles Delivered"
           value="248"
           icon="📦"
-          color="#00897B"
+          color={colors.accent}
           delay={0.08}
         />
       </StatsGrid>
@@ -124,7 +125,7 @@ export default function AdminDashboard() {
           title="Total Referrals"
           value="8,420"
           icon="🏥"
-          color="#C62828"
+          color={colors.error}
           delay={0.05}
           onClick={() => router.push("/admin/referrals")}
         />
@@ -132,14 +133,14 @@ export default function AdminDashboard() {
           title="Teleconsultations"
           value="5,678"
           icon="📹"
-          color="#1A3A6B"
+          color={colors.primary}
           delay={0.1}
         />
         <StatCard
           title="Districts Active"
           value="13"
           icon="🗺️"
-          color="#1A3A6B"
+          color={colors.primary}
           delay={0.15}
           onClick={() => router.push("/admin/analytics/district")}
         />
@@ -147,7 +148,7 @@ export default function AdminDashboard() {
           title="Camps This Month"
           value="248"
           icon="⛺"
-          color="#1A3A6B"
+          color={colors.primary}
           delay={0.2}
         />
       </StatsGrid>
@@ -200,14 +201,14 @@ export default function AdminDashboard() {
                 <div className="min-w-20 text-right">
                   <div
                     className="text-base font-extrabold"
-                    style={{ color: d.coverage >= 85 ? "#2E7D32" : "#E65100" }}
+                    style={{ color: d.coverage >= 85 ? colors.success : colors.warning }}
                   >
                     {d.coverage}%
                   </div>
                   <div className="text-[10px] text-grey-400">Coverage</div>
                   <ProgressBar
                     value={d.coverage}
-                    color={d.coverage >= 85 ? "#2E7D32" : "#E65100"}
+                    color={d.coverage >= 85 ? colors.success : colors.warning}
                   />
                 </div>
               </div>
@@ -222,25 +223,25 @@ export default function AdminDashboard() {
             icon: "📋",
             label: "EMR Timeline",
             href: "/admin/emr",
-            color: "#1A3A6B",
+            color: colors.primary,
           },
           {
             icon: "📁",
             label: "Documents",
             href: "/admin/documents",
-            color: "#00897B",
+            color: colors.accent,
           },
           {
             icon: "🏥",
             label: "Referrals",
             href: "/admin/referrals",
-            color: "#C62828",
+            color: colors.error,
           },
           {
             icon: "📄",
             label: "Reports",
             href: "/admin/reports",
-            color: "#D4A017",
+            color: colors.gold,
           },
         ].map((t, i) => (
           <Card

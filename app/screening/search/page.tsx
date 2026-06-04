@@ -1,4 +1,5 @@
 "use client";
+import { colorAlpha, colors } from "@/app/lib/theme";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Sidebar from "@/app/components/Sidebar";
@@ -143,7 +144,11 @@ export default function PatientSearch() {
 
       {!searched && (
         <div
-          style={{ textAlign: "center", padding: "60px 0", color: "#9E9E9E" }}
+          style={{
+            textAlign: "center",
+            padding: "60px 0",
+            color: colors.grey500,
+          }}
         >
           <div style={{ fontSize: 48, marginBottom: 12 }}>🔍</div>
           <div style={{ fontSize: 16, fontWeight: 600 }}>
@@ -164,7 +169,11 @@ export default function PatientSearch() {
 
       {searched && results.length === 0 && (
         <div
-          style={{ textAlign: "center", padding: "60px 0", color: "#9E9E9E" }}
+          style={{
+            textAlign: "center",
+            padding: "60px 0",
+            color: colors.grey500,
+          }}
         >
           <div style={{ fontSize: 48, marginBottom: 12 }}>😕</div>
           <div style={{ fontSize: 16, fontWeight: 600 }}>No exact match</div>
@@ -194,7 +203,7 @@ export default function PatientSearch() {
             style={{
               fontSize: 13,
               fontWeight: 600,
-              color: "#9E9E9E",
+              color: colors.grey500,
               marginBottom: 12,
             }}
           >
@@ -230,7 +239,9 @@ export default function PatientSearch() {
               className="size-8 animate-spin rounded-full border-2 border-grey-200 border-t-primary"
               style={{ margin: "0 auto 16px" }}
             />
-            <div style={{ fontSize: 14, fontWeight: 700, color: "#1A3A6B" }}>
+            <div
+              style={{ fontSize: 14, fontWeight: 700, color: colors.primary }}
+            >
               Reading QR Code...
             </div>
           </div>
@@ -248,10 +259,10 @@ export default function PatientSearch() {
               style={{
                 width: 220,
                 height: 220,
-                border: "3px dashed #1A3A6B",
+                border: "3px dashed ${colors.primary}",
                 borderRadius: 16,
                 position: "relative",
-                background: "#ECEFF1",
+                background: colors.surfaceMuted,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -265,15 +276,19 @@ export default function PatientSearch() {
                   left: 0,
                   right: 0,
                   height: 4,
-                  background: "#E53935",
-                  boxShadow: "0 0 8px #E53935",
+                  background: colors.errorLight,
+                  boxShadow: `0 0 8px ${colors.errorLight}`,
                   animation: "scanLine 2.5s linear infinite",
                 }}
               />
               <span style={{ fontSize: 48 }}>📷</span>
             </div>
             <div
-              style={{ fontSize: 12, color: "#757575", textAlign: "center" }}
+              style={{
+                fontSize: 12,
+                color: colors.grey600,
+                textAlign: "center",
+              }}
             >
               Simulate scanning by selecting a patient's QR code card below:
             </div>
@@ -340,8 +355,8 @@ function PatientCard({
               width: 44,
               height: 44,
               borderRadius: "50%",
-              background: "#1A3A6B20",
-              color: "#1A3A6B",
+              background: "colorAlpha(colors.primary, '20')",
+              color: colors.primary,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -355,15 +370,15 @@ function PatientCard({
           <div style={{ flex: 1 }}>
             <div className="flex items-center gap-8 mb-4">
               <span style={{ fontSize: 14, fontWeight: 800 }}>{p.name}</span>
-              <span style={{ fontSize: 11, color: "#9E9E9E" }}>
+              <span style={{ fontSize: 11, color: colors.grey500 }}>
                 {p.age}y • {p.gender}
               </span>
               <StatusBadge label={p.status} />
             </div>
-            <div style={{ fontSize: 11, color: "#9E9E9E" }}>
+            <div style={{ fontSize: 11, color: colors.grey500 }}>
               📋 {p.id} • 📍 {p.village} • 📞 {p.phone}
             </div>
-            <div style={{ fontSize: 11, color: "#757575", marginTop: 2 }}>
+            <div style={{ fontSize: 11, color: colors.grey600, marginTop: 2 }}>
               Last visit: {p.lastVisit} • {p.diagnosis}
             </div>
           </div>

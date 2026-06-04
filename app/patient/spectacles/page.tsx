@@ -1,4 +1,5 @@
 "use client";
+import { colorAlpha, colors } from '@/app/lib/theme';
 import Sidebar from "@/app/components/Sidebar";
 import Topbar from "@/app/components/Topbar";
 import { AppShell } from "@/app/components/app-shell";
@@ -15,7 +16,7 @@ import { usePatientSession } from "@/app/lib/use-patient-session";
 
 const timeline = [
   { label: "Prescription Approved", done: true },
-  { label: "Order Placed with Vendor", done: true },
+  { label: "Spectacle Order Placed", done: true },
   { label: "Manufacturing", done: true },
   { label: "Quality Check", done: false },
   { label: "Dispatched to Camp", done: false },
@@ -63,7 +64,7 @@ export default function SpectacleTracking() {
               </div>
               <ProgressBar
                 value={s.progress}
-                color={s.progress === 100 ? "#2E7D32" : "#1A3A6B"}
+                color={s.progress === 100 ? colors.success : colors.primary}
               />
               <div className="mt-1 text-[11px] text-grey-400">
                 📍 {s.location}

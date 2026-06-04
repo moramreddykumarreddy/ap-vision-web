@@ -1,4 +1,5 @@
 "use client";
+import { colorAlpha, colors } from "@/app/lib/theme";
 import { useState } from "react";
 import Sidebar from "@/app/components/Sidebar";
 import Topbar from "@/app/components/Topbar";
@@ -131,21 +132,25 @@ export default function ReferralManagement() {
   };
 
   const stats = [
-    { label: "Total Referrals", v: refs.length.toString(), color: "#1A3A6B" },
+    {
+      label: "Total Referrals",
+      v: refs.length.toString(),
+      color: colors.primary,
+    },
     {
       label: "Pending",
       v: refs.filter((r) => r.status === "Pending").length.toString(),
-      color: "#E65100",
+      color: colors.warning,
     },
     {
       label: "Approved",
       v: refs.filter((r) => r.status === "Approved").length.toString(),
-      color: "#00897B",
+      color: colors.accent,
     },
     {
       label: "Completed",
       v: refs.filter((r) => r.status === "Completed").length.toString(),
-      color: "#2E7D32",
+      color: colors.success,
     },
   ];
 
@@ -277,7 +282,7 @@ export default function ReferralManagement() {
             <DetailRow label="Date" value={viewRef.date} />
             <DetailRow label="Priority" value={viewRef.priority} />
             <DetailRow label="Status" value={viewRef.status} />
-            <div className="mt-3.5 rounded-[10px] border border-[#FFD54F40] bg-[#FFF8E1] p-3.5 text-xs text-[#5D4037]">
+            <div className="mt-3.5 rounded-[10px] border border-gold/25 bg-amber-soft p-3.5 text-xs text-grey-800">
               <strong>Clinical Note:</strong> Patient requires specialized
               evaluation. All relevant reports and fundus photographs have been
               attached. Appointment to be scheduled within 7 days of this

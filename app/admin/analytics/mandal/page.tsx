@@ -1,4 +1,5 @@
 "use client";
+import { colorAlpha, colors } from '@/app/lib/theme';
 import Sidebar from "@/app/components/Sidebar";
 import Topbar from "@/app/components/Topbar";
 import { AppShell } from "@/app/components/app-shell";
@@ -31,12 +32,12 @@ export default function MandalAnalyticsPage() {
       }
     >
       <StatsGrid cols={3} className="mb-4">
-        <StatCard title="Camps Active" value="18" icon="⛺" color="#1A3A6B" />
+        <StatCard title="Camps Active" value="18" icon="⛺" color={colors.primary} />
         <StatCard
           title="Pending Deliveries"
           value="41"
           icon="📦"
-          color="#E65100"
+          color={colors.warning}
         />
       </StatsGrid>
       <SectionHeader title="Mandal Coverage" />
@@ -48,7 +49,7 @@ export default function MandalAnalyticsPage() {
                 <span>{m.name}</span>
                 <span>{m.coverage}%</span>
               </div>
-              <ProgressBar value={m.coverage} color="#00897B" />
+              <ProgressBar value={m.coverage} color={colors.accent} />
               <div className="mt-2 text-xs text-grey-400">
                 {m.camps} camps • {m.pending} pending deliveries
               </div>

@@ -10,7 +10,7 @@ interface NavItem {
 }
 
 interface SidebarProps {
-  role: "admin" | "screening" | "nodal" | "tele" | "vendor" | "patient";
+  role: "admin" | "screening" | "nodal" | "tele" | "patient";
   userName: string;
   userSub: string;
 }
@@ -54,17 +54,11 @@ const navConfig: Record<string, NavItem[]> = {
     { icon: "👥", label: "Team Management", href: "/nodal/teams" },
     { icon: "✅", label: "Approvals", href: "/nodal/approvals", badge: 3 },
     { icon: "🏥", label: "Referral Verify", href: "/nodal/referrals" },
-    { icon: "🛒", label: "Vendor Monitor", href: "/nodal/vendors" },
   ],
   tele: [
     { icon: "🏠", label: "Dashboard", href: "/tele/dashboard" },
     { icon: "📅", label: "Consultation List", href: "/tele/consultations" },
     { icon: "📹", label: "Video Consultation", href: "/tele/video" },
-  ],
-  vendor: [
-    { icon: "🏠", label: "Dashboard", href: "/vendor/dashboard" },
-    { icon: "📦", label: "Order Details", href: "/vendor/order/ORD-001" },
-    { icon: "✅", label: "Delivery Verify", href: "/vendor/delivery" },
   ],
   patient: [
     { icon: "🏠", label: "Dashboard", href: "/patient/dashboard" },
@@ -85,7 +79,6 @@ const roleLabels: Record<string, string> = {
   screening: "Screening Team",
   nodal: "Nodal Officer",
   tele: "Tele-Ophthalmologist",
-  vendor: "Vendor",
   patient: "Patient",
 };
 

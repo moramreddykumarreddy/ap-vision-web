@@ -1,4 +1,5 @@
 "use client";
+import { colorAlpha, colors } from "@/app/lib/theme";
 import { useState, useMemo, useEffect } from "react";
 import Sidebar from "@/app/components/Sidebar";
 import Topbar from "@/app/components/Topbar";
@@ -105,7 +106,7 @@ export default function PatientReferralScreen() {
             >
               <div>
                 <div style={{ fontSize: 15, fontWeight: 800 }}>{r.reason}</div>
-                <div style={{ fontSize: 11, color: "#9E9E9E" }}>
+                <div style={{ fontSize: 11, color: colors.grey500 }}>
                   {r.id} • {r.date}
                 </div>
               </div>
@@ -119,7 +120,11 @@ export default function PatientReferralScreen() {
               </div>
             </div>
             <div
-              style={{ background: "#F5F5F5", borderRadius: 10, padding: 14 }}
+              style={{
+                background: colors.grey100,
+                borderRadius: 10,
+                padding: 14,
+              }}
             >
               {[
                 { l: "Hospital", v: r.hospital },
@@ -133,7 +138,7 @@ export default function PatientReferralScreen() {
                     padding: "6px 0",
                   }}
                 >
-                  <span style={{ fontSize: 12, color: "#9E9E9E" }}>
+                  <span style={{ fontSize: 12, color: colors.grey500 }}>
                     {item.l}
                   </span>
                   <span style={{ fontSize: 13, fontWeight: 700 }}>
@@ -172,7 +177,11 @@ export default function PatientReferralScreen() {
       ))}
       {referrals.length === 0 && (
         <div
-          style={{ textAlign: "center", padding: "60px 0", color: "#9E9E9E" }}
+          style={{
+            textAlign: "center",
+            padding: "60px 0",
+            color: colors.grey500,
+          }}
         >
           <div style={{ fontSize: 48 }}>✅</div>
           <div style={{ fontSize: 16, fontWeight: 600, marginTop: 12 }}>
@@ -196,7 +205,7 @@ export default function PatientReferralScreen() {
         >
           <div
             style={{
-              border: "2px solid #EEEEEE",
+              border: "2px solid ${colors.grey200}",
               padding: 20,
               borderRadius: 12,
               fontFamily: "serif",
@@ -205,7 +214,7 @@ export default function PatientReferralScreen() {
             <div
               style={{
                 textAlign: "center",
-                borderBottom: "2px solid #1A3A6B",
+                borderBottom: "2px solid ${colors.primary}",
                 paddingBottom: 10,
                 marginBottom: 14,
               }}
@@ -214,13 +223,13 @@ export default function PatientReferralScreen() {
                 style={{
                   fontSize: 18,
                   fontWeight: 900,
-                  color: "#1A3A6B",
+                  color: colors.primary,
                   textTransform: "uppercase",
                 }}
               >
                 AP Digital Vision Program
               </div>
-              <div style={{ fontSize: 11, color: "#757575" }}>
+              <div style={{ fontSize: 11, color: colors.grey600 }}>
                 Department of Health & Family Welfare, Govt. of Andhra Pradesh
               </div>
             </div>
@@ -278,7 +287,7 @@ export default function PatientReferralScreen() {
                 <div style={{ textAlign: "center", fontSize: 11 }}>
                   <div
                     style={{
-                      borderBottom: "1px solid #757575",
+                      borderBottom: "1px solid ${colors.grey600}",
                       width: 140,
                       height: 30,
                     }}
@@ -314,9 +323,9 @@ export default function PatientReferralScreen() {
               style={{
                 width: "100%",
                 height: 180,
-                background: "#ECEFF1",
+                background: colors.surfaceMuted,
                 borderRadius: 12,
-                border: "1px solid #CFD8DC",
+                border: `1px solid ${colors.grey300}`,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -338,7 +347,9 @@ export default function PatientReferralScreen() {
                 }}
               />
               <span style={{ fontSize: 36 }}>🗺️</span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: "#1A3A6B" }}>
+              <span
+                style={{ fontSize: 13, fontWeight: 700, color: colors.primary }}
+              >
                 GGH Vijayawada Route Map
               </span>
             </div>
@@ -356,9 +367,9 @@ export default function PatientReferralScreen() {
                   marginTop: 8,
                   padding: 12,
                   borderRadius: 8,
-                  background: "#F5F7FA",
+                  background: colors.surfaceClinical,
                   fontSize: 12,
-                  color: "#424242",
+                  color: colors.grey800,
                   lineHeight: 1.5,
                 }}
               >

@@ -18,12 +18,12 @@ const logs = [
   {
     time: "2025-06-03 16:40",
     role: "Super Admin",
-    action: "Updated vendor SLA configuration",
+    action: "Updated spectacle delivery SLA configuration",
   },
   {
     time: "2025-06-03 14:02",
-    role: "Vendor",
-    action: "Marked order ORD-012 dispatched",
+    role: "Nodal Officer",
+    action: "Confirmed spectacle order ORD-012 dispatched",
   },
 ];
 

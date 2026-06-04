@@ -1,4 +1,5 @@
 "use client";
+import { colorAlpha, colors } from '@/app/lib/theme';
 import Sidebar from "@/app/components/Sidebar";
 import Topbar from "@/app/components/Topbar";
 import { AppShell } from "@/app/components/app-shell";
@@ -32,7 +33,7 @@ export default function TeleconsultationScreen() {
       {upcoming.map((c) => (
         <div
           key={c.id}
-          className="animate-fade-up mb-3 rounded-[20px] bg-gradient-to-br from-primary to-[#01579B] p-6 text-white"
+          className="animate-fade-up mb-3 rounded-[20px] bg-gradient-to-br from-primary to-info p-6 text-white"
         >
           <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-[9px] font-extrabold tracking-wide">
             UPCOMING
@@ -49,10 +50,7 @@ export default function TeleconsultationScreen() {
               </div>
             </div>
           </div>
-          <Button
-            full
-            className="mt-4 bg-white font-extrabold text-primary hover:bg-white/90"
-          >
+          <Button variant="inverse" full className="mt-4 font-extrabold">
             📹 Join Video Call
           </Button>
         </div>

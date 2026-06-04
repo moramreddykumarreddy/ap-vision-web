@@ -1,3 +1,4 @@
+import { colorAlpha, colors } from '@/app/lib/theme';
 /** Central demo data for AP Vision web prototype */
 
 export type DemoPatient = {
@@ -279,7 +280,7 @@ const SPECTACLES_BY_PATIENT: Record<
       id: "ORD-004",
       status: "Quality Check",
       progress: 75,
-      location: "Quality verification at vendor",
+      location: "Quality verification",
       ordered: "28 May 2025",
       expected: "05 Jun 2025",
     },
@@ -421,28 +422,28 @@ export function getActivityForPatient(patientId: string) {
       label: "Prescription Generated",
       sub: `Camp screening • ${p?.district ?? "Krishna"}`,
       date: "02 Jun 2025",
-      color: "#1A3A6B",
+      color: colors.primary,
     },
     {
       icon: "👓",
       label: "Spectacles Ordered",
       sub: "Vision Plus Ltd • Krishna District",
       date: "01 Jun 2025",
-      color: "#00897B",
+      color: colors.accent,
     },
     {
       icon: "🔬",
       label: "Vision Screening Done",
       sub: "Vijayawada Urban Camp",
       date: "01 Jun 2025",
-      color: "#D4A017",
+      color: colors.gold,
     },
     {
       icon: "🏥",
       label: "Referral Updated",
       sub: "Specialist network",
       date: "28 May 2025",
-      color: "#C62828",
+      color: colors.error,
     },
   ];
 }

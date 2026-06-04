@@ -66,7 +66,7 @@ function OtpContent() {
           <img
             src="/apvision.png"
             alt="AP Vision Care"
-            className="mx-auto mb-3 block size-[72px] rounded-[18px] bg-[#f0f4ff] object-contain p-1.5 shadow-[0_4px_20px_rgba(26,58,107,0.15)]"
+            className="mx-auto mb-3 block size-[72px] rounded-[18px] bg-primary-container object-contain p-1.5 shadow-md"
           />
           <h1 className="text-xl font-black text-primary">OTP Verification</h1>
           <p className="text-xs text-grey-500">

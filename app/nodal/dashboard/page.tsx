@@ -1,4 +1,5 @@
 'use client';
+import { colorAlpha, colors } from '@/app/lib/theme';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
@@ -14,11 +15,6 @@ const referrals = [
   { id: 'REF-001', patientName: 'Narasimha Rao', condition: 'Glaucoma', date: '01 Jun 2025', status: 'Pending' },
   { id: 'REF-002', patientName: 'Padmavathi', condition: 'Diabetic Retinopathy', date: '31 May 2025', status: 'Approved' },
 ];
-const orders = [
-  { id: 'ORD-001', vendor: 'Vision Plus Ltd', items: 150, status: 'In Progress' },
-  { id: 'ORD-002', vendor: 'ClearSight Optics', items: 200, status: 'Delivered' },
-];
-
 export default function NodalDashboard() {
   const router = useRouter();
   const pendingApprovals = prescriptions.filter(p => p.status === 'Pending').length;
@@ -41,10 +37,10 @@ export default function NodalDashboard() {
 
       <SectionHeader title="District Summary" />
       <StatsGrid cols={4} className="mt-2 mb-3.5">
-        <StatCard title="Total Patients" value="15,200" icon="👥" color="#1A3A6B" delay={0.05} />
-        <StatCard title="Pending Approvals" value={`${pendingApprovals}`} icon="⏳" color="#E65100" delay={0.10} subtitle="Action Required" onClick={() => router.push('/nodal/approvals')} />
-        <StatCard title="Active Orders" value={`${orders.length}`} icon="🛒" color="#00897B" delay={0.15} onClick={() => router.push('/nodal/vendors')} />
-        <StatCard title="Referrals" value={`${referrals.length}`} icon="🏥" color="#C62828" delay={0.20} subtitle={`${pendingReferrals} pending`} />
+        <StatCard title="Total Patients" value="15,200" icon="👥" color={colors.primary} delay={0.05} />
+        <StatCard title="Pending Approvals" value={`${pendingApprovals}`} icon="⏳" color={colors.warning} delay={0.10} subtitle="Action Required" onClick={() => router.push('/nodal/approvals')} />
+        <StatCard title="Referrals" value={`${referrals.length}`} icon="🏥" color={colors.error} delay={0.15} subtitle={`${pendingReferrals} pending`} onClick={() => router.push('/nodal/referrals')} />
+        <StatCard title="Teams Active" value="8" icon="👥" color={colors.accent} delay={0.20} onClick={() => router.push('/nodal/teams')} />
       </StatsGrid>
 
       {pendingApprovals > 0 && (

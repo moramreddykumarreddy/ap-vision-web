@@ -1,4 +1,5 @@
 'use client';
+import { colorAlpha, colors } from '@/app/lib/theme';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
 import Topbar from '@/app/components/Topbar';
@@ -21,7 +22,7 @@ export default function ScreeningDashboard() {
       topbar={<Topbar title="Screening Team" subtitle="Dr. Srinivasa Rao • Team Lead" />}
     >
       {activeCamp && (
-        <div className="animate-fade-up mb-5 flex items-center gap-4 rounded-[20px] bg-gradient-to-br from-primary to-[#00897B] px-6 py-5 text-white">
+        <div className="animate-fade-up mb-5 flex items-center gap-4 rounded-[20px] bg-gradient-to-br from-primary to-accent px-6 py-5 text-white">
           <div className="flex size-[52px] shrink-0 items-center justify-center rounded-full bg-white/20 text-2xl">⛺</div>
           <div className="min-w-0 flex-1">
             <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-[9px] font-bold tracking-wide">● ACTIVE CAMP</span>
@@ -37,19 +38,19 @@ export default function ScreeningDashboard() {
 
       <SectionHeader title="Today's Summary" />
       <StatsGrid cols={4} className="mt-2 mb-3.5">
-        <StatCard title="Patients Registered" value={`${activeCamp?.registered ?? 145}`} icon="📋" color="#1A3A6B" delay={0.05} />
-        <StatCard title="Patients Screened" value={`${activeCamp?.screened ?? 132}`} icon="👁️" color="#1A3A6B" delay={0.10} subtitle="91%" />
-        <StatCard title="Prescriptions" value={`${activeCamp?.prescriptions ?? 48}`} icon="💊" color="#00897B" delay={0.15} />
-        <StatCard title="Referrals" value={`${activeCamp?.referrals ?? 12}`} icon="🏥" color="#E65100" delay={0.20} />
+        <StatCard title="Patients Registered" value={`${activeCamp?.registered ?? 145}`} icon="📋" color={colors.primary} delay={0.05} />
+        <StatCard title="Patients Screened" value={`${activeCamp?.screened ?? 132}`} icon="👁️" color={colors.primary} delay={0.10} subtitle="91%" />
+        <StatCard title="Prescriptions" value={`${activeCamp?.prescriptions ?? 48}`} icon="💊" color={colors.accent} delay={0.15} />
+        <StatCard title="Referrals" value={`${activeCamp?.referrals ?? 12}`} icon="🏥" color={colors.warning} delay={0.20} />
       </StatsGrid>
 
       <SectionHeader title="Quick Actions" />
       <div className="mt-2 mb-3.5 flex flex-wrap gap-2.5">
         {[
-          { icon: '👤', label: 'Register Patient', color: '#1A3A6B', href: '/screening/register' },
-          { icon: '📷', label: 'Scan QR', color: '#2952A3', href: '/screening/search' },
-          { icon: '🔍', label: 'Search Patient', color: '#00897B', href: '/screening/search' },
-          { icon: '⛺', label: 'Manage Camp', color: '#D4A017', href: '/screening/camps' },
+          { icon: '👤', label: 'Register Patient', color: colors.primary, href: '/screening/register' },
+          { icon: '📷', label: 'Scan QR', color: colors.primaryLight, href: '/screening/search' },
+          { icon: '🔍', label: 'Search Patient', color: colors.accent, href: '/screening/search' },
+          { icon: '⛺', label: 'Manage Camp', color: colors.gold, href: '/screening/camps' },
         ].map(a => (
           <QuickActionBtn key={a.label} icon={a.icon} label={a.label} color={a.color} onClick={() => router.push(a.href)} />
         ))}

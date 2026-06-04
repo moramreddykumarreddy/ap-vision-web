@@ -8,8 +8,8 @@ export default function PatientRegistrationPage() {
   const router = useRouter();
 
   return (
-    <div className="flex min-h-screen flex-col bg-grey-50">
-      <header className="sticky top-0 z-50 flex h-14 shrink-0 items-center gap-3 bg-primary px-4 text-white shadow-md sm:px-5">
+    <div className="flex min-h-screen flex-col bg-bg-app">
+      <header className="sticky top-0 z-50 flex h-14 shrink-0 items-center gap-3 bg-primary-dark px-4 text-white shadow-md sm:px-5">
         <button
           type="button"
           onClick={() => router.push("/")}

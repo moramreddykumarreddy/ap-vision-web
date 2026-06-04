@@ -1,4 +1,5 @@
 'use client';
+import { colorAlpha, colors } from '@/app/lib/theme';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/app/components/Sidebar';
@@ -66,7 +67,7 @@ export default function VideoConsultation() {
                 <div style={{
                   position: 'absolute', bottom: 12, right: 12,
                   width: 100, height: 75, borderRadius: 10,
-                  background: '#1A3A6B', border: '2px solid rgba(255,255,255,.3)',
+                  background: colors.primary, border: '2px solid rgba(255,255,255,.3)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   color: 'rgba(255,255,255,.7)', fontSize: 12,
                 }}>You</div>
@@ -80,10 +81,10 @@ export default function VideoConsultation() {
 
               {/* Controls */}
               <div style={{ background: '#1C2333', borderRadius: '0 0 20px 20px', padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
-                <button className="flex size-10 items-center justify-center rounded-full text-lg transition-colors" onClick={() => setMuted(!muted)} title="Mute" style={{ background: muted ? '#C62828' : 'rgba(255,255,255,.1)' }}>
+                <button className="flex size-10 items-center justify-center rounded-full text-lg transition-colors" onClick={() => setMuted(!muted)} title="Mute" style={{ background: muted ? colors.error : 'rgba(255,255,255,.1)' }}>
                   {muted ? '🔇' : '🎙️'}
                 </button>
-                <button className="flex size-10 items-center justify-center rounded-full text-lg transition-colors" onClick={() => setVideoOff(!videoOff)} title="Video" style={{ background: videoOff ? '#C62828' : 'rgba(255,255,255,.1)' }}>
+                <button className="flex size-10 items-center justify-center rounded-full text-lg transition-colors" onClick={() => setVideoOff(!videoOff)} title="Video" style={{ background: videoOff ? colors.error : 'rgba(255,255,255,.1)' }}>
                   {videoOff ? '📷' : '📹'}
                 </button>
                 <button className="flex size-10 items-center justify-center rounded-full text-lg transition-colors" title="Screen Share">🖥️</button>
@@ -106,7 +107,7 @@ export default function VideoConsultation() {
                     { l: 'Referred by', v: 'Dr. Srinivasa Rao' },
                   ].map(item => (
                     <div key={item.l} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                      <span style={{ fontSize: 11, color: '#9E9E9E' }}>{item.l}</span>
+                      <span style={{ fontSize: 11, color: colors.grey500 }}>{item.l}</span>
                       <span style={{ fontSize: 12, fontWeight: 700 }}>{item.v}</span>
                     </div>
                   ))}
@@ -161,26 +162,26 @@ export default function VideoConsultation() {
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                     <label style={{ fontSize: 11, fontWeight: 700 }}>Right Eye OD Sphere</label>
-                    <input type="text" value={odSphere} onChange={e => setOdSphere(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13 }} />
+                    <input type="text" value={odSphere} onChange={e => setOdSphere(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13 }} />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                     <label style={{ fontSize: 11, fontWeight: 700 }}>Left Eye OS Sphere</label>
-                    <input type="text" value={osSphere} onChange={e => setOsSphere(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13 }} />
+                    <input type="text" value={osSphere} onChange={e => setOsSphere(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13 }} />
                   </div>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                     <label style={{ fontSize: 11, fontWeight: 700 }}>Right Eye OD Cylinder</label>
-                    <input type="text" value={odCyl} onChange={e => setOdCyl(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13 }} />
+                    <input type="text" value={odCyl} onChange={e => setOdCyl(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13 }} />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                     <label style={{ fontSize: 11, fontWeight: 700 }}>Left Eye OS Cylinder</label>
-                    <input type="text" value={osCyl} onChange={e => setOsCyl(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13 }} />
+                    <input type="text" value={osCyl} onChange={e => setOsCyl(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13 }} />
                   </div>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                   <label style={{ fontSize: 11, fontWeight: 700 }}>Lens Type</label>
-                  <select value={lensType} onChange={e => setLensType(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13, background: 'white' }}>
+                  <select value={lensType} onChange={e => setLensType(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13, background: 'white' }}>
                     <option value="Single Vision">Single Vision</option>
                     <option value="Bifocal">Bifocal</option>
                     <option value="Progressive">Progressive</option>
@@ -209,7 +210,7 @@ export default function VideoConsultation() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                   <label style={{ fontSize: 11, fontWeight: 700 }}>Select Referral Hospital</label>
-                  <select value={hospital} onChange={e => setHospital(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13, background: 'white' }}>
+                  <select value={hospital} onChange={e => setHospital(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13, background: 'white' }}>
                     <option value="SVIMS, Tirupati">SVIMS, Tirupati</option>
                     <option value="Government General Hospital, Vijayawada">Government General Hospital, Vijayawada</option>
                     <option value="LV Prasad Eye Institute, Vijayawada">LV Prasad Eye Institute, Vijayawada</option>
@@ -217,7 +218,7 @@ export default function VideoConsultation() {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                   <label style={{ fontSize: 11, fontWeight: 700 }}>Urgency Level</label>
-                  <select value={urgent} onChange={e => setUrgent(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13, background: 'white' }}>
+                  <select value={urgent} onChange={e => setUrgent(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13, background: 'white' }}>
                     <option value="Routine">Routine</option>
                     <option value="Urgent">Urgent / Priority</option>
                     <option value="Critical">Critical</option>
@@ -225,7 +226,7 @@ export default function VideoConsultation() {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                   <label style={{ fontSize: 11, fontWeight: 700 }}>Referral Reason / Diagnosis</label>
-                  <textarea value={reason} onChange={e => setReason(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #E0E0E0', fontSize: 13, height: 70, resize: 'none' }} />
+                  <textarea value={reason} onChange={e => setReason(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13, height: 70, resize: 'none' }} />
                 </div>
               </div>
             )}
@@ -245,7 +246,7 @@ export default function VideoConsultation() {
               <div style={{
                 width: 280, height: 280,
                 borderRadius: '50%',
-                background: 'radial-gradient(circle, #F57C00 20%, #E65100 80%)',
+                background: 'radial-gradient(circle, #F57C00 20%, colors.warning 80%)',
                 border: '4px solid #3E2723',
                 position: 'relative',
                 boxShadow: 'inset 0 0 40px rgba(0,0,0,0.6), 0 8px 24px rgba(0,0,0,0.15)',
@@ -283,7 +284,7 @@ export default function VideoConsultation() {
                   <circle cx="160" cy="180" r="4" fill="#B71C1C" />
                 </svg>
               </div>
-              <div style={{ fontSize: 12, color: '#757575', textAlign: 'center', lineHeight: 1.5 }}>
+              <div style={{ fontSize: 12, color: colors.grey600, textAlign: 'center', lineHeight: 1.5 }}>
                 Left Eye (OS) Fundus Scan showing mild microaneurysms and early stage Diabetic Retinopathy signs in macula region.
               </div>
             </div>

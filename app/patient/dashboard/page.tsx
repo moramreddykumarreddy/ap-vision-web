@@ -1,4 +1,5 @@
 "use client";
+import { colorAlpha, colors } from "@/app/lib/theme";
 import { useRouter } from "next/navigation";
 import Sidebar from "@/app/components/Sidebar";
 import Topbar from "@/app/components/Topbar";
@@ -52,8 +53,8 @@ export default function PatientDashboard() {
           </div>
         </div>
         <Button
+          variant="onDark"
           size="sm"
-          className="bg-white/20 text-white hover:bg-white/30"
           onClick={() => router.push("/patient/profile")}
         >
           View Profile
@@ -65,7 +66,7 @@ export default function PatientDashboard() {
           title="Prescriptions"
           value={String(prescriptions.length)}
           icon="💊"
-          color="#1A3A6B"
+          color={colors.primary}
           delay={0.05}
           onClick={() => router.push("/patient/prescriptions")}
         />
@@ -73,7 +74,7 @@ export default function PatientDashboard() {
           title="Spectacles"
           value={String(spectacles.length)}
           icon="👓"
-          color="#00897B"
+          color={colors.accent}
           delay={0.1}
           onClick={() => router.push("/patient/spectacles")}
         />
@@ -81,7 +82,7 @@ export default function PatientDashboard() {
           title="Referrals"
           value={String(referrals.length)}
           icon="🏥"
-          color="#C62828"
+          color={colors.error}
           delay={0.15}
           onClick={() => router.push("/patient/referrals")}
         />
@@ -89,18 +90,18 @@ export default function PatientDashboard() {
           title="Consultations"
           value={String(teleconsultations.length)}
           icon="📹"
-          color="#D4A017"
+          color={colors.gold}
           delay={0.2}
           onClick={() => router.push("/patient/teleconsultation")}
         />
       </StatsGrid>
 
       {upcomingTele && (
-        <div className="animate-fade-up mb-3.5 flex items-center gap-3.5 rounded-[14px] border-[1.5px] border-[rgba(0,137,123,0.2)] bg-[rgba(0,137,123,0.05)] p-4.5">
+        <div className="animate-fade-up mb-3.5 flex items-center gap-3.5 rounded-[14px] border-[1.5px] border-accent/20 bg-accent/5 p-4.5">
           <span className="text-[28px]">📅</span>
           <div className="min-w-0 flex-1">
             <div className="text-sm font-bold">Next Appointment</div>
-            <div className="text-xs text-[#00897B]">
+            <div className="text-xs text-accent">
               Tele-consultation with {upcomingTele.doctor}
             </div>
             <div className="text-[11px] text-grey-400">
@@ -108,7 +109,7 @@ export default function PatientDashboard() {
             </div>
           </div>
           <Button
-            variant="accent"
+            variant="primary"
             size="sm"
             onClick={() => router.push("/patient/teleconsultation")}
           >
@@ -147,31 +148,31 @@ export default function PatientDashboard() {
           {
             icon: "💊",
             label: "Prescriptions",
-            color: "#1A3A6B",
+            color: colors.primary,
             href: "/patient/prescriptions",
           },
           {
             icon: "👓",
             label: "Spectacles",
-            color: "#00897B",
+            color: colors.accent,
             href: "/patient/spectacles",
           },
           {
             icon: "🏥",
             label: "Referrals",
-            color: "#C62828",
+            color: colors.error,
             href: "/patient/referrals",
           },
           {
             icon: "📹",
             label: "Teleconsult",
-            color: "#D4A017",
+            color: colors.gold,
             href: "/patient/teleconsultation",
           },
           {
             icon: "👤",
             label: "Profile",
-            color: "#6A1B9A",
+            color: colors.clinical,
             href: "/patient/profile",
           },
         ].map((a, i) => (
