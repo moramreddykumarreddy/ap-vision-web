@@ -41,7 +41,7 @@ export default function Modal({
       <div
         onClick={(e) => e.stopPropagation()}
         style={{ maxWidth: width }}
-        className="flex max-h-[92vh] w-full flex-col overflow-hidden rounded-t-[18px] bg-white shadow-[0_24px_80px_rgba(13,35,71,0.25)] animate-fade-up sm:max-h-[90vh] sm:rounded-[18px]"
+        className="shadow-brand-modal flex max-h-[92vh] w-full flex-col overflow-hidden rounded-t-[18px] bg-white animate-fade-up sm:max-h-[90vh] sm:rounded-[18px]"
       >
         <div className="flex shrink-0 items-start justify-between border-b border-grey-200 px-4 pb-3 pt-4 sm:px-[22px] sm:pb-3.5 sm:pt-[18px]">
           <div>

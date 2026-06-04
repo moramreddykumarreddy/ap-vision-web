@@ -42,7 +42,7 @@ export function BasicInfoStep({ form, update }: StepProps) {
           </div>
           <button
             type="button"
-            className="absolute bottom-0 right-0 flex size-9 items-center justify-center rounded-full bg-primary text-white shadow-md"
+            className="absolute bottom-0 right-0 flex size-9 items-center justify-center rounded-full bg-error text-white shadow-md"
             aria-label="Upload photo"
           >
             📷

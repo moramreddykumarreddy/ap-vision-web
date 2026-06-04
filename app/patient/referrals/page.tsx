@@ -342,7 +342,7 @@ export default function PatientReferralScreen() {
                   inset: 0,
                   opacity: 0.15,
                   background:
-                    "radial-gradient(circle, #000 10%, transparent 11%)",
+                    `radial-gradient(circle, ${colors.gray} 10%, transparent 11%)`,
                   backgroundSize: "12px 12px",
                 }}
               />

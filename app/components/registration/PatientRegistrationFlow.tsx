@@ -52,7 +52,7 @@ export default function PatientRegistrationFlow({
               key={i}
               className={cn(
                 "h-1 flex-1 rounded-sm transition-colors",
-                i <= step ? "bg-primary" : "bg-grey-200",
+                i <= step ? "bg-error" : "bg-grey-200",
               )}
             />
           ))}

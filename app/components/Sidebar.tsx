@@ -130,7 +130,7 @@ function SidebarPanel({
         )}
       </div>
 
-      <div className="px-3.5 pb-1 pt-2 text-[9px] font-bold uppercase tracking-[1.5px] text-white/35">
+      <div className="px-3.5 pb-1 pt-2 text-[9px] font-bold uppercase tracking-[1.5px] text-white/60">
         {roleLabels[role]}
       </div>
 
@@ -144,9 +144,9 @@ function SidebarPanel({
               role="button"
               tabIndex={0}
               className={cn(
-                "mb-px flex cursor-pointer items-center gap-2 rounded-md px-2.5 py-2 text-xs font-medium text-white/65 transition-all duration-150",
-                active && "bg-white/12 font-semibold text-white",
-                !active && "hover:bg-white/7 hover:text-white",
+                "mb-px flex cursor-pointer items-center gap-2 rounded-md px-2.5 py-2 text-xs font-medium text-white/90 transition-all duration-150",
+                active && "bg-white/15 font-semibold text-white",
+                !active && "hover:bg-white/10 hover:text-white",
               )}
               onClick={() => go(item.href)}
               onKeyDown={(e) => e.key === "Enter" && go(item.href)}
@@ -168,7 +168,7 @@ function SidebarPanel({
       <div className="border-t border-white/10 p-2">
         <button
           type="button"
-          className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-xs font-semibold text-white/75 transition-colors hover:bg-white/10 hover:text-white"
+          className="flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-xs font-semibold text-white/90 transition-colors hover:bg-white/10 hover:text-white"
           onClick={() => {
             onClose?.();
             router.push("/");

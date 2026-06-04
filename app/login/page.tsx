@@ -128,7 +128,7 @@ export default function LoginPage() {
           </div>
 
           {roleError && (
-            <p className="mt-2 shrink-0 rounded-lg bg-amber-500/20 px-3 py-1.5 text-center text-xs font-semibold text-amber-100">
+            <p className="mt-2 shrink-0 rounded-lg bg-red-soft px-3 py-1.5 text-center text-xs font-semibold text-error">
               {roleError}
             </p>
           )}

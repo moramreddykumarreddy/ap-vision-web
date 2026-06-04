@@ -194,7 +194,7 @@ export function BrandLogo({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex size-[42px] items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-light shadow-[0_4px_12px_rgba(26,58,107,0.35)]",
+        "shadow-brand-logo flex size-[42px] items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-light",
         className,
       )}
     >
