@@ -216,17 +216,17 @@ const AI_FEATURES = [
 
 const HOTSPOTS = [
   { name: "Anantapur", pct: 88, color: "bg-primary" },
-  { name: "Kurnool", pct: 74, color: "bg-primary-light" },
-  { name: "Chittoor", pct: 61, color: "bg-clinical" },
-  { name: "Guntur", pct: 45, color: "bg-accent" },
-  { name: "Visakhapatnam", pct: 33, color: "bg-accent-light" },
+  { name: "Kurnool", pct: 74, color: "bg-primary/80" },
+  { name: "Chittoor", pct: 61, color: "bg-error" },
+  { name: "Guntur", pct: 45, color: "bg-grey-500" },
+  { name: "Visakhapatnam", pct: 33, color: "bg-error/70" },
 ];
 
 const JOURNEY_STEPS = [
   {
     icon: "clipboard" as IconName,
-    bg: "bg-accent-soft",
-    color: "text-accent-dark",
+    bg: "bg-blue-soft",
+    color: "text-primary",
     title: "Registered & Screened",
     sub: "Anantapur Camp · 09:14 AM",
     done: true,
@@ -337,13 +337,7 @@ export default function LandingPage() {
       <LandingNav />
 
       {/* Hero */}
-      <section
-        className="relative overflow-hidden px-4 pb-14 pt-24 sm:px-6 sm:pb-[84px] sm:pt-[120px] lg:px-[46px] lg:pt-[138px]"
-        style={{
-          background:
-            "radial-gradient(ellipse 55% 50% at 78% 5%, rgba(0,137,123,0.08), transparent 65%), radial-gradient(ellipse 45% 40% at 5% 95%, rgba(26,58,107,0.06), transparent 70%)",
-        }}
-      >
+      <section className="bg-landing-hero relative overflow-hidden px-4 pb-14 pt-24 sm:px-6 sm:pb-[84px] sm:pt-[120px] lg:px-[46px] lg:pt-[138px]">
         <div className="mx-auto grid max-w-[1260px] items-center gap-14 lg:grid-cols-[1.04fr_0.96fr] lg:gap-14">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent-soft px-[15px] py-[7px] text-[12.5px] font-semibold text-accent-dark">
@@ -400,7 +394,7 @@ export default function LandingPage() {
           </div>
 
           <div className="relative">
-            <div className="absolute -right-2 -top-[22px] z-[3] hidden items-center gap-[11px] rounded-[13px] border border-grey-200 bg-white px-[17px] py-[13px] shadow-[0_6px_20px_rgba(16,40,70,0.07)] sm:flex">
+            <div className="shadow-brand-float absolute -right-2 -top-[22px] z-[3] hidden items-center gap-[11px] rounded-[13px] border border-grey-200 bg-white px-[17px] py-[13px] sm:flex">
               <div className="flex size-9 items-center justify-center rounded-[10px] bg-accent-soft">
                 <Icon name="trend" className="text-accent-dark" size={18} />
               </div>
@@ -411,7 +405,7 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
-            <div className="absolute -bottom-5 -left-7 z-[3] hidden items-center gap-[11px] rounded-[13px] border border-grey-200 bg-white px-[17px] py-[13px] shadow-[0_6px_20px_rgba(16,40,70,0.07)] sm:flex">
+            <div className="shadow-brand-float absolute -bottom-5 -left-7 z-[3] hidden items-center gap-[11px] rounded-[13px] border border-grey-200 bg-white px-[17px] py-[13px] sm:flex">
               <div className="flex size-9 items-center justify-center rounded-[10px] bg-blue-soft">
                 <Icon name="glasses" className="text-blue" size={18} />
               </div>
@@ -422,7 +416,7 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
-            <div className="relative z-[2] rounded-2xl border border-grey-200 bg-white p-4 shadow-[0_20px_50px_rgba(16,40,70,0.12)] sm:rounded-[24px] sm:p-[26px]">
+            <div className="shadow-brand-card relative z-[2] rounded-2xl border border-grey-200 bg-white p-4 sm:rounded-[24px] sm:p-[26px]">
               <div className="mb-5 flex items-center justify-between">
                 <div className="text-[14.5px] font-bold text-primary">
                   Citizen Journey · Ramesh K.
@@ -583,7 +577,7 @@ export default function LandingPage() {
                 {i < WORKFLOW.length - 1 && (
                   <span className="absolute right-0 top-[27px] hidden h-0.5 w-4 bg-grey-200 lg:block" />
                 )}
-                <div className="mx-auto mb-[18px] flex size-14 items-center justify-center rounded-2xl border-[1.5px] border-grey-200 bg-white text-accent-dark shadow-[0_1px_3px_rgba(16,40,70,0.06)]">
+                <div className="shadow-brand-workflow mx-auto mb-[18px] flex size-14 items-center justify-center rounded-2xl border-[1.5px] border-grey-200 bg-white text-accent-dark">
                   <Icon name={step.icon} size={24} />
                 </div>
                 <h4 className="mb-2 text-[15px] font-bold text-primary">

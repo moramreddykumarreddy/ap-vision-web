@@ -142,8 +142,8 @@ export function AreaTypeSelector({
           className={cn(
             "rounded-lg border-[1.5px] py-3.5 text-sm font-semibold transition-all",
             value === opt
-              ? "border-primary bg-primary text-white"
-              : "border-grey-300 text-grey-600 hover:border-primary",
+              ? "border-error bg-error text-white"
+              : "border-grey-300 text-grey-600 hover:border-error",
           )}
         >
           {opt}

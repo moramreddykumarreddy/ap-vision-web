@@ -56,7 +56,7 @@ export default function VideoConsultation() {
           <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
             {/* Video */}
             <div>
-              <div className="relative max-h-[380px] aspect-video overflow-hidden rounded-xl bg-[#0a0a12]">
+              <div className="relative max-h-[380px] aspect-video overflow-hidden rounded-xl bg-primary">
                 <div className="flex h-full flex-col items-center justify-center gap-3 text-white/60">
                   <div style={{ fontSize: 48 }}>👤</div>
                   <div style={{ fontSize: 16, fontWeight: 600 }}>Ramaiah Venkata</div>
@@ -80,7 +80,7 @@ export default function VideoConsultation() {
               </div>
 
               {/* Controls */}
-              <div style={{ background: '#1C2333', borderRadius: '0 0 20px 20px', padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
+              <div style={{ background: colors.primary, borderRadius: '0 0 20px 20px', padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
                 <button className="flex size-10 items-center justify-center rounded-full text-lg transition-colors" onClick={() => setMuted(!muted)} title="Mute" style={{ background: muted ? colors.error : 'rgba(255,255,255,.1)' }}>
                   {muted ? '🔇' : '🎙️'}
                 </button>
@@ -246,8 +246,8 @@ export default function VideoConsultation() {
               <div style={{
                 width: 280, height: 280,
                 borderRadius: '50%',
-                background: 'radial-gradient(circle, #F57C00 20%, colors.warning 80%)',
-                border: '4px solid #3E2723',
+                background: `radial-gradient(circle, ${colors.error} 20%, ${colors.primary} 80%)`,
+                border: `4px solid ${colors.primary}`,
                 position: 'relative',
                 boxShadow: 'inset 0 0 40px rgba(0,0,0,0.6), 0 8px 24px rgba(0,0,0,0.15)',
                 display: 'flex',
@@ -260,8 +260,8 @@ export default function VideoConsultation() {
                   position: 'absolute', right: '20%', top: '35%',
                   width: 50, height: 60,
                   borderRadius: '50%',
-                  background: '#FFE082',
-                  boxShadow: '0 0 15px #FFD54F',
+                  background: colors.grey500,
+                  boxShadow: `0 0 15px ${colors.grey500}`,
                   opacity: 0.95,
                 }} />
                 {/* macula */}
@@ -269,19 +269,19 @@ export default function VideoConsultation() {
                   position: 'absolute', left: '25%', top: '45%',
                   width: 30, height: 30,
                   borderRadius: '50%',
-                  background: '#D84315',
+                  background: colors.error,
                   opacity: 0.8,
                 }} />
                 {/* blood vessels representation using lines */}
                 <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
-                  <path d="M 224 126 Q 180 80 120 100" fill="none" stroke="#D32F2F" strokeWidth="2.5" opacity="0.85" />
-                  <path d="M 224 126 Q 160 180 100 200" fill="none" stroke="#D32F2F" strokeWidth="2" opacity="0.8" />
-                  <path d="M 224 126 Q 260 80 270 90" fill="none" stroke="#D32F2F" strokeWidth="1.5" opacity="0.75" />
-                  <path d="M 224 126 Q 250 190 260 210" fill="none" stroke="#D32F2F" strokeWidth="2.5" opacity="0.8" />
+                  <path d="M 224 126 Q 180 80 120 100" fill="none" stroke={colors.error} strokeWidth="2.5" opacity="0.85" />
+                  <path d="M 224 126 Q 160 180 100 200" fill="none" stroke={colors.error} strokeWidth="2" opacity="0.8" />
+                  <path d="M 224 126 Q 260 80 270 90" fill="none" stroke={colors.error} strokeWidth="1.5" opacity="0.75" />
+                  <path d="M 224 126 Q 250 190 260 210" fill="none" stroke={colors.error} strokeWidth="2.5" opacity="0.8" />
                   {/* microaneurysms */}
-                  <circle cx="150" cy="120" r="3" fill="#B71C1C" />
-                  <circle cx="120" cy="160" r="2.5" fill="#B71C1C" />
-                  <circle cx="160" cy="180" r="4" fill="#B71C1C" />
+                  <circle cx="150" cy="120" r="3" fill={colors.error} />
+                  <circle cx="120" cy="160" r="2.5" fill={colors.error} />
+                  <circle cx="160" cy="180" r="4" fill={colors.error} />
                 </svg>
               </div>
               <div style={{ fontSize: 12, color: colors.grey600, textAlign: 'center', lineHeight: 1.5 }}>

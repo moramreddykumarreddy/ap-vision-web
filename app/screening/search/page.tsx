@@ -355,7 +355,7 @@ function PatientCard({
               width: 44,
               height: 44,
               borderRadius: "50%",
-              background: "colorAlpha(colors.primary, '20')",
+              background: colorAlpha(colors.primary, "20"),
               color: colors.primary,
               display: "flex",
               alignItems: "center",

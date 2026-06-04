@@ -1,68 +1,75 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
-/* AP Vision Care — Andhra Pradesh medical & health program theme */
+/* AP Vision Care — brand palette only: blue #004990, red #e31b23, gray #6d6e71 */
 @theme {
-  /* Brand — trust blue (government + clinical) */
-  --color-primary: #1a3a6b;
-  --color-primary-dark: #0d2347;
-  --color-primary-light: #2952a3;
-  --color-primary-container: #e8f4fc;
+  --color-brand-blue: #004990;
+  --color-brand-red: #e31b23;
+  --color-brand-gray: #6d6e71;
 
-  /* Wellness — healing teal */
-  --color-accent: #00897b;
-  --color-accent-light: #4db6ac;
-  --color-accent-dark: #00695c;
-  --color-accent-soft: #b2dfdb;
+  /* Brand blue — primary, CTAs, navigation, positive status */
+  --color-primary: #004990;
+  --color-primary-dark: #004990;
+  --color-primary-light: #004990;
+  --color-primary-container: color-mix(in srgb, #004990 12%, #ffffff);
 
-  --color-gold: #d4a017;
-  --color-gold-light: #ffd54f;
+  /* CTAs & accents (same brand blue) */
+  --color-accent: #004990;
+  --color-accent-light: #004990;
+  --color-accent-dark: #004990;
+  --color-accent-soft: color-mix(in srgb, #004990 14%, #ffffff);
 
-  /* Clinical status */
-  --color-success: #2e7d32;
-  --color-success-light: #4caf50;
-  --color-warning: #e65100;
-  --color-warning-light: #ff9800;
-  --color-error: #c62828;
-  --color-error-light: #f44336;
-  --color-info: #01579b;
-  --color-info-light: #2196f3;
-  --color-clinical: #0277bd;
+  /* Brand red — errors, warnings, urgent */
+  --color-error: #e31b23;
+  --color-error-light: #e31b23;
+  --color-warning: #e31b23;
+  --color-warning-light: #e31b23;
+  --color-red: #e31b23;
+  --color-red-soft: color-mix(in srgb, #e31b23 10%, #ffffff);
+  --color-amber: #e31b23;
+  --color-amber-soft: color-mix(in srgb, #e31b23 10%, #ffffff);
 
-  /* Neutrals — clean hospital UI */
-  --color-grey-50: #fafafa;
-  --color-grey-100: #f5f5f5;
-  --color-grey-200: #eeeeee;
-  --color-grey-300: #e0e0e0;
-  --color-grey-400: #bdbdbd;
-  --color-grey-500: #9e9e9e;
-  --color-grey-600: #757575;
-  --color-grey-700: #616161;
-  --color-grey-800: #424242;
-  --color-grey-900: #212121;
+  /* Semantic blues (brand blue) */
+  --color-success: #004990;
+  --color-success-light: #004990;
+  --color-info: #004990;
+  --color-info-light: #004990;
+  --color-clinical: #004990;
+  --color-gold: #e31b23;
+  --color-gold-light: #e31b23;
+  --color-green: #004990;
+  --color-green-soft: color-mix(in srgb, #004990 10%, #ffffff);
+
+  /* Brand gray — borders & muted UI; darker mixes for readable body text on white */
+  --color-grey-50: color-mix(in srgb, #6d6e71 6%, #ffffff);
+  --color-grey-100: color-mix(in srgb, #6d6e71 10%, #ffffff);
+  --color-grey-200: color-mix(in srgb, #6d6e71 18%, #ffffff);
+  --color-grey-300: color-mix(in srgb, #6d6e71 28%, #ffffff);
+  --color-grey-400: color-mix(in srgb, #6d6e71 55%, #ffffff);
+  --color-grey-500: #6d6e71;
+  --color-grey-600: #6d6e71;
+  --color-grey-700: color-mix(in srgb, #6d6e71 72%, #000000);
+  --color-grey-800: color-mix(in srgb, #6d6e71 85%, #000000);
+  --color-grey-900: color-mix(in srgb, #6d6e71 92%, #000000);
 
   /* Semantic aliases */
-  --color-navy: #1a3a6b;
-  --color-navy-2: #0d2347;
-  --color-ink: #212121;
-  --color-teal: #00897b;
-  --color-teal-d: #00695c;
-  --color-teal-soft: #b2dfdb;
-  --color-blue: #2952a3;
-  --color-blue-soft: #e8f4fc;
-  --color-amber: #e65100;
-  --color-amber-soft: #fff3e0;
-  --color-green: #2e7d32;
-  --color-green-soft: #e8f5e9;
-  --color-red: #c62828;
-  --color-red-soft: #ffebee;
-  --color-bg-app: #f0f7fa;
+  --color-navy: #004990;
+  --color-navy-2: #004990;
+  --color-ink: #6d6e71;
+  --color-teal: #004990;
+  --color-teal-d: #004990;
+  --color-teal-soft: color-mix(in srgb, #004990 14%, #ffffff);
+  --color-blue: #004990;
+  --color-blue-soft: color-mix(in srgb, #004990 12%, #ffffff);
+
+  /* Surfaces — white base with gray tint for app background */
+  --color-bg-app: color-mix(in srgb, #6d6e71 6%, #ffffff);
   --color-surface: #ffffff;
-  --color-surface-clinical: #f5f7fa;
-  --color-line: #eeeeee;
-  --color-line-2: #f5f5f5;
-  --color-muted: #757575;
-  --color-muted-2: #bdbdbd;
+  --color-surface-clinical: color-mix(in srgb, #6d6e71 8%, #ffffff);
+  --color-line: color-mix(in srgb, #6d6e71 18%, #ffffff);
+  --color-line-2: color-mix(in srgb, #6d6e71 10%, #ffffff);
+  --color-muted: #6d6e71;
+  --color-muted-2: #6d6e71;
 
   --font-sans: "Inter", system-ui, sans-serif;
   --font-display: "Inter", system-ui, sans-serif;
@@ -75,10 +82,10 @@
   --radius-lg: 16px;
   --radius-xl: 20px;
   --shadow-sm:
-    0 1px 3px rgba(13, 35, 71, 0.08), 0 1px 2px rgba(13, 35, 71, 0.05);
-  --shadow-md: 0 4px 12px rgba(13, 35, 71, 0.1);
-  --shadow-lg: 0 8px 24px rgba(13, 35, 71, 0.12);
-  --shadow-xl: 0 20px 60px rgba(13, 35, 71, 0.15);
+    0 1px 3px rgba(0, 73, 144, 0.08), 0 1px 2px rgba(0, 73, 144, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 73, 144, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 73, 144, 0.12);
+  --shadow-xl: 0 20px 60px rgba(0, 73, 144, 0.15);
   --animate-fade-up: fade-up 0.4s ease both;
   --animate-fade-in: fade-in 0.3s ease both;
   --animate-pulse-soft: pulse-soft 2s ease-in-out infinite;
@@ -149,5 +156,42 @@
   select,
   textarea {
     @apply font-[inherit];
+  }
+}
+
+@layer utilities {
+  /* Landing hero — brand blue only */
+  .bg-landing-hero {
+    background:
+      radial-gradient(
+        ellipse 55% 50% at 78% 5%,
+        rgba(0, 73, 144, 0.08),
+        transparent 65%
+      ),
+      radial-gradient(
+        ellipse 45% 40% at 5% 95%,
+        rgba(0, 73, 144, 0.06),
+        transparent 70%
+      );
+  }
+
+  .shadow-brand-float {
+    box-shadow: 0 6px 20px rgba(0, 73, 144, 0.07);
+  }
+
+  .shadow-brand-card {
+    box-shadow: 0 20px 50px rgba(0, 73, 144, 0.12);
+  }
+
+  .shadow-brand-logo {
+    box-shadow: 0 4px 12px rgba(0, 73, 144, 0.35);
+  }
+
+  .shadow-brand-modal {
+    box-shadow: 0 24px 80px rgba(0, 73, 144, 0.25);
+  }
+
+  .shadow-brand-workflow {
+    box-shadow: 0 1px 3px rgba(0, 73, 144, 0.06);
   }
 }

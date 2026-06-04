@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Brand colors
+
+| Name | Hex |
+|------|-----|
+| Brand blue | `#004990` |
+| Brand red | `#e31b23` |
+| Brand gray | `#6d6e71` |
+
+Tokens live in `app/globals.css` (Tailwind `@theme`) and `app/lib/theme.ts`. Primary buttons use **brand red**; navigation and links use **brand blue**. See `docs/COLOR-THEME.md` for full mapping.
+
 ## Getting Started
 
 First, run the development server:

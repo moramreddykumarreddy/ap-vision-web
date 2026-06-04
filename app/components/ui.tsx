@@ -35,11 +35,11 @@ export type ButtonVariant =
 export type ButtonSize = "sm" | "md" | "lg";
 
 const btnFocus =
-  "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-accent/30";
+  "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/30";
 
-/** Main CTA — healing teal (use for Submit, Register, Save, etc.) */
+/** Main CTA — brand red #e31b23 (Register, Next, Save, Submit, etc.) */
 const btnPrimary =
-  "border-0 bg-accent text-white shadow-md hover:bg-accent-dark hover:-translate-y-px hover:shadow-lg active:translate-y-0";
+  "border-0 bg-error text-white shadow-md hover:bg-error/90 hover:-translate-y-px hover:shadow-lg active:translate-y-0 focus-visible:ring-error/30";
 
 const btnBase = cn(
   "inline-flex items-center justify-center gap-1.5 rounded-lg font-semibold transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-md",
@@ -53,7 +53,7 @@ const btnVariants: Record<ButtonVariant, string> = {
     "border-[1.5px] border-grey-300 bg-white text-primary hover:border-primary hover:bg-primary/5",
   ghost: "border-0 bg-transparent text-primary hover:bg-primary/5",
   danger:
-    "border-0 bg-error text-white hover:bg-error/90 hover:-translate-y-px hover:shadow-md",
+    "border-[1.5px] border-error bg-transparent text-error hover:bg-error hover:text-white hover:-translate-y-px hover:shadow-md",
   inverse:
     "border-0 bg-white text-primary shadow-sm hover:-translate-y-px hover:bg-white/95 hover:shadow-md",
   onDark:
@@ -458,13 +458,13 @@ export function QuickActionBtn({
 export function RankBadge({ rank }: { rank: number }) {
   const bg =
     rank === 1
-      ? colors.gold
+      ? colors.primary
       : rank === 2
         ? colors.grey500
         : rank === 3
-          ? "#CD7F32"
+          ? colors.error
           : colors.grey200;
-  const color = rank <= 3 ? "white" : "#666";
+  const color = rank <= 3 ? "white" : colors.grey600;
   return (
     <div
       className="flex size-8 items-center justify-center rounded-full text-sm font-black"
@@ -522,7 +522,7 @@ export function Stepper({
               className={cn(
                 "flex size-6 shrink-0 items-center justify-center rounded-full border-2 text-[10px] font-bold",
                 done && "border-success bg-success text-white",
-                active && !done && "border-primary bg-primary text-white",
+                active && !done && "border-error bg-error text-white",
                 !done && !active && "border-grey-300 text-grey-500",
               )}
             >
