@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { BrandLogo } from "@/app/components/BrandLogo";
 import PatientRegistrationFlow from "@/app/components/registration/PatientRegistrationFlow";
 
 export default function PatientRegistrationPage() {
@@ -18,6 +19,7 @@ export default function PatientRegistrationPage() {
         >
           ✕
         </button>
+        <BrandLogo size="xs" onDark className="hidden sm:block" />
         <div className="min-w-0 flex-1">
           <h1 className="truncate text-base font-bold">
             New Patient Registration

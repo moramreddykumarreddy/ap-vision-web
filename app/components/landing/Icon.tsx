@@ -190,15 +190,4 @@ export function Icon({
   );
 }
 
-export function BrandLogo({ className }: { className?: string }) {
-  return (
-    <div
-      className={cn(
-        "shadow-brand-logo flex size-[42px] items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-light",
-        className,
-      )}
-    >
-      <Icon name="eye" className="text-white" size={23} />
-    </div>
-  );
-}
+export { BrandLogo } from "@/app/components/BrandLogo";

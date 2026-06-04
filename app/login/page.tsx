@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { BrandLogo } from "@/app/components/BrandLogo";
 import { AUTH_ROLES } from "@/app/lib/auth-roles";
 import { Button, FormGroup, Input } from "@/app/components/ui";
 import { cn } from "@/app/lib/cn";
@@ -54,11 +55,7 @@ export default function LoginPage() {
         <div className="relative mx-auto flex h-full w-full max-w-[480px] min-h-0 flex-col justify-center px-5 py-4 sm:px-8 lg:px-10 lg:py-5">
           <header className="mb-4 flex shrink-0 items-center justify-between gap-3 lg:mb-5">
             <div className="flex min-w-0 items-center gap-2.5">
-              <img
-                src="/apvision.png"
-                alt="AP Vision Care"
-                className="size-10 shrink-0 rounded-lg bg-white object-contain p-0.5 shadow-md"
-              />
+              <BrandLogo size="sm" onDark />
               <div className="min-w-0">
                 <p className="truncate text-sm font-extrabold leading-tight text-white">
                   AP Vision Care

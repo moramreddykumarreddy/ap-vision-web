@@ -34,7 +34,7 @@ export default function LandingNav() {
   return (
     <header className={landingNavClass}>
       <Link href="/" className="flex min-w-0 items-center gap-2 sm:gap-3">
-        <BrandLogo />
+        <BrandLogo size="md" onDark className="max-w-[min(140px,40vw)]" />
         <div className="min-w-0 leading-tight">
           <div className="truncate text-sm font-extrabold leading-none text-white sm:text-[16.5px]">
             AP Vision Care
