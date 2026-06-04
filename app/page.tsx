@@ -338,7 +338,7 @@ export default function LandingPage() {
 
       {/* Hero */}
       <section
-        className="relative overflow-hidden px-6 pb-[84px] pt-[138px] lg:px-[46px]"
+        className="relative overflow-hidden px-4 pb-14 pt-24 sm:px-6 sm:pb-[84px] sm:pt-[120px] lg:px-[46px] lg:pt-[138px]"
         style={{
           background:
             "radial-gradient(ellipse 55% 50% at 78% 5%, rgba(0,137,123,0.08), transparent 65%), radial-gradient(ellipse 45% 40% at 5% 95%, rgba(26,58,107,0.06), transparent 70%)",
@@ -400,7 +400,7 @@ export default function LandingPage() {
           </div>
 
           <div className="relative">
-            <div className="absolute -right-2 -top-[22px] z-[3] flex items-center gap-[11px] rounded-[13px] border border-grey-200 bg-white px-[17px] py-[13px] shadow-[0_6px_20px_rgba(16,40,70,0.07)]">
+            <div className="absolute -right-2 -top-[22px] z-[3] hidden items-center gap-[11px] rounded-[13px] border border-grey-200 bg-white px-[17px] py-[13px] shadow-[0_6px_20px_rgba(16,40,70,0.07)] sm:flex">
               <div className="flex size-9 items-center justify-center rounded-[10px] bg-accent-soft">
                 <Icon name="trend" className="text-accent-dark" size={18} />
               </div>
@@ -411,7 +411,7 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
-            <div className="absolute -bottom-5 -left-7 z-[3] flex items-center gap-[11px] rounded-[13px] border border-grey-200 bg-white px-[17px] py-[13px] shadow-[0_6px_20px_rgba(16,40,70,0.07)]">
+            <div className="absolute -bottom-5 -left-7 z-[3] hidden items-center gap-[11px] rounded-[13px] border border-grey-200 bg-white px-[17px] py-[13px] shadow-[0_6px_20px_rgba(16,40,70,0.07)] sm:flex">
               <div className="flex size-9 items-center justify-center rounded-[10px] bg-blue-soft">
                 <Icon name="glasses" className="text-blue" size={18} />
               </div>
@@ -422,7 +422,7 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
-            <div className="relative z-[2] rounded-[24px] border border-grey-200 bg-white p-[26px] shadow-[0_20px_50px_rgba(16,40,70,0.12)]">
+            <div className="relative z-[2] rounded-2xl border border-grey-200 bg-white p-4 shadow-[0_20px_50px_rgba(16,40,70,0.12)] sm:rounded-[24px] sm:p-[26px]">
               <div className="mb-5 flex items-center justify-between">
                 <div className="text-[14.5px] font-bold text-primary">
                   Citizen Journey · Ramesh K.
@@ -673,7 +673,7 @@ export default function LandingPage() {
 
       {/* CTA */}
       <section className="px-6 py-[90px] lg:px-[46px]">
-        <div className="relative mx-auto max-w-[980px] overflow-hidden rounded-2xl bg-gradient-to-br from-primary-dark via-primary to-accent px-[54px] py-[62px] text-center text-white">
+        <div className="relative mx-auto max-w-[980px] overflow-hidden rounded-2xl bg-gradient-to-br from-primary-dark via-primary to-accent px-6 py-10 text-center text-white sm:px-10 sm:py-14 md:px-[54px] md:py-[62px]">
           <div className="pointer-events-none absolute -right-[8%] -top-1/2 size-[380px] rounded-full bg-white/8" />
           <h2 className="relative mb-3.5 text-[clamp(26px,3vw,38px)] font-extrabold">
             Every citizen&apos;s journey,

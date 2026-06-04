@@ -111,7 +111,7 @@ export default function TeamManagement() {
                     </div>
                     <StatusBadge label={t.status} />
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, background: colors.grey100, borderRadius: 10, padding: 14 }}>
+                  <div className="grid grid-cols-1 gap-3 rounded-[10px] bg-grey-100 p-3.5 sm:grid-cols-3 sm:gap-3 sm:p-3.5">
                     <div style={{ textAlign: 'center' }}>
                       <div style={{ fontSize: 20, fontWeight: 900 }}>{t.members}</div>
                       <div style={{ fontSize: 10, color: colors.grey500 }}>Members</div>

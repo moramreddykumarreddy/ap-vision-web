@@ -155,7 +155,7 @@ export default function AdminDashboard() {
 
       <div className="mt-3.5">
         <SectionHeader title="Analytics Modules" />
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
           {analyticsModules.map((m, i) => (
             <div
               key={m.label}

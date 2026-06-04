@@ -123,11 +123,18 @@
 
   html {
     scroll-behavior: auto;
-    scroll-padding-top: 70px;
+    scroll-padding-top: 56px;
+    overflow-x: hidden;
+  }
+
+  @media (min-width: 640px) {
+    html {
+      scroll-padding-top: 70px;
+    }
   }
 
   body {
-    @apply min-h-screen bg-bg-app font-sans text-grey-900 antialiased;
+    @apply min-h-screen overflow-x-hidden bg-bg-app font-sans text-grey-900 antialiased;
   }
 
   a {

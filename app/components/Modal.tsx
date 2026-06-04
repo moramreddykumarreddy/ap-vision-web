@@ -36,14 +36,14 @@ export default function Modal({
       role="dialog"
       aria-modal="true"
       onClick={onClose}
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-primary-dark/55 p-5 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-[9999] flex items-end justify-center bg-primary-dark/55 p-0 backdrop-blur-sm animate-fade-in sm:items-center sm:p-5"
     >
       <div
         onClick={(e) => e.stopPropagation()}
         style={{ maxWidth: width }}
-        className="flex max-h-[90vh] w-full flex-col overflow-hidden rounded-[18px] bg-white shadow-[0_24px_80px_rgba(13,35,71,0.25)] animate-fade-up"
+        className="flex max-h-[92vh] w-full flex-col overflow-hidden rounded-t-[18px] bg-white shadow-[0_24px_80px_rgba(13,35,71,0.25)] animate-fade-up sm:max-h-[90vh] sm:rounded-[18px]"
       >
-        <div className="flex shrink-0 items-start justify-between border-b border-grey-200 px-[22px] pb-3.5 pt-[18px]">
+        <div className="flex shrink-0 items-start justify-between border-b border-grey-200 px-4 pb-3 pt-4 sm:px-[22px] sm:pb-3.5 sm:pt-[18px]">
           <div>
             <div className="text-base font-extrabold text-primary-dark">
               {title}
@@ -62,12 +62,12 @@ export default function Modal({
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-[22px] py-[18px]">
+        <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-[22px] sm:py-[18px]">
           {children}
         </div>
 
         {actions && (
-          <div className="flex shrink-0 justify-end gap-2.5 border-t border-grey-200 px-[22px] py-3.5">
+          <div className="flex shrink-0 flex-col-reverse gap-2 border-t border-grey-200 px-4 py-3 sm:flex-row sm:justify-end sm:gap-2.5 sm:px-[22px] sm:py-3.5">
             {actions}
           </div>
         )}

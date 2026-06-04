@@ -60,8 +60,8 @@ function OtpContent() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary-dark to-primary p-6">
-      <div className="w-full max-w-[400px] animate-fade-up rounded-xl bg-white p-10 shadow-xl">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary-dark to-primary p-4 sm:p-6">
+      <div className="w-full max-w-[400px] animate-fade-up rounded-xl bg-white p-6 shadow-xl sm:p-10">
         <div className="mb-6 text-center">
           <img
             src="/apvision.png"
@@ -86,7 +86,7 @@ function OtpContent() {
           Enter the 6-digit OTP sent to your mobile
         </p>
 
-        <div className="mb-6 flex justify-center gap-2.5">
+        <div className="mb-6 flex justify-center gap-1.5 sm:gap-2.5">
           {otp.map((v, i) => (
             <input
               key={i}
@@ -95,7 +95,7 @@ function OtpContent() {
               }}
               id={`otp-${i}`}
               className={cn(
-                "size-12 w-12 rounded-md border-[1.5px] border-grey-300 bg-white p-0 text-center text-[22px] font-extrabold text-grey-900 transition-[border-color,box-shadow] focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/10",
+                "size-10 w-10 rounded-md border-[1.5px] border-grey-300 bg-white p-0 text-center text-lg font-extrabold text-grey-900 transition-[border-color,box-shadow] focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/10 sm:size-12 sm:w-12 sm:text-[22px]",
               )}
               value={v}
               onChange={(e) => handleKey(i, e.target.value)}

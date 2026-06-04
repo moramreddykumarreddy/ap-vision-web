@@ -218,7 +218,7 @@ export function SectionHeader({
   onAction?: () => void;
 }) {
   return (
-    <div className="mb-2 flex items-center justify-between">
+    <div className="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
       <h3 className="text-[13px] font-bold text-grey-900">{title}</h3>
       {actionLabel && (
         <Button type="button" variant="ghost" size="sm" onClick={onAction}>
@@ -388,7 +388,7 @@ export function AlertBanner({
   return (
     <div
       className={cn(
-        "mb-4 flex items-center gap-3 rounded-md border-[1.5px] px-4 py-3.5",
+        "mb-4 flex flex-col gap-3 rounded-md border-[1.5px] px-4 py-3.5 sm:flex-row sm:items-center",
         alertStyles[type],
       )}
     >
@@ -511,7 +511,8 @@ export function Stepper({
   current: number;
 }) {
   return (
-    <div className="mb-3.5 flex items-center">
+    <div className="-mx-1 mb-3.5 overflow-x-auto pb-1">
+      <div className="flex min-w-max items-center px-1">
       {steps.map((label, i) => {
         const done = i < current;
         const active = i === current;
@@ -529,7 +530,7 @@ export function Stepper({
             </div>
             <span
               className={cn(
-                "ml-2 text-[11px] font-semibold",
+                "ml-2 hidden text-[11px] font-semibold sm:inline",
                 done && "text-success",
                 active && !done && "text-primary",
                 !done && !active && "text-grey-400",
@@ -548,6 +549,7 @@ export function Stepper({
           </div>
         );
       })}
+      </div>
     </div>
   );
 }
