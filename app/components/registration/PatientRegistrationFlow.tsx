@@ -18,6 +18,7 @@ export default function PatientRegistrationFlow({
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Record<string, string>>({
     areaType: "Urban",
+    decisionCase: "C",
   });
 
   const update = useCallback((k: string, v: string) => {
@@ -84,7 +85,7 @@ export default function PatientRegistrationFlow({
             className="flex-1"
             onClick={handleNext}
           >
-            {isLast ? "✓ Generate Prescription" : "Next →"}
+            {isLast ? "✓ Submit for Approval" : "Next →"}
           </Button>
         </div>
       </div>

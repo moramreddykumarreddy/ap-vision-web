@@ -20,6 +20,12 @@ const navConfig: Record<string, NavItem[]> = {
     { icon: "📊", label: "Dashboard", href: "/admin/dashboard" },
     { icon: "🗺️", label: "State Analytics", href: "/admin/analytics/state" },
     { icon: "📍", label: "District View", href: "/admin/analytics/district" },
+    { icon: "🏘️", label: "Mandal View", href: "/admin/analytics/mandal" },
+    {
+      icon: "👥",
+      label: "Demographics",
+      href: "/admin/analytics/demographics",
+    },
     { icon: "🤖", label: "AI Risk Analytics", href: "/admin/analytics/ai" },
     { icon: "🥗", label: "Nutrition Risk", href: "/admin/analytics/nutrition" },
     { icon: "🏫", label: "School Vision", href: "/admin/analytics/school" },
@@ -32,6 +38,9 @@ const navConfig: Record<string, NavItem[]> = {
     { icon: "📋", label: "EMR Timeline", href: "/admin/emr" },
     { icon: "📁", label: "Documents", href: "/admin/documents" },
     { icon: "🏥", label: "Referrals", href: "/admin/referrals" },
+    { icon: "🗄️", label: "Master Data", href: "/admin/master-data" },
+    { icon: "📜", label: "Audit Logs", href: "/admin/audit" },
+    { icon: "🧠", label: "AI Config", href: "/admin/ai-config" },
     { icon: "📄", label: "Reports", href: "/admin/reports" },
   ],
   screening: [
@@ -44,6 +53,7 @@ const navConfig: Record<string, NavItem[]> = {
     { icon: "🏠", label: "Dashboard", href: "/nodal/dashboard" },
     { icon: "👥", label: "Team Management", href: "/nodal/teams" },
     { icon: "✅", label: "Approvals", href: "/nodal/approvals", badge: 3 },
+    { icon: "🏥", label: "Referral Verify", href: "/nodal/referrals" },
     { icon: "🛒", label: "Vendor Monitor", href: "/nodal/vendors" },
   ],
   tele: [
