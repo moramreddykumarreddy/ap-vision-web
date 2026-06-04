@@ -1,4 +1,7 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { AppShellProvider } from "@/app/components/app-shell-context";
 import { cn } from "@/app/lib/cn";
 
 export function AppShell({
@@ -11,15 +14,17 @@ export function AppShell({
   children: ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen">
-      {sidebar}
-      <div className="flex min-h-screen flex-1 flex-col max-md:ml-0 md:ml-[230px]">
-        {topbar}
-        <main className="mx-auto w-full max-w-[1400px] flex-1 p-3.5 pt-[66px]">
-          {children}
-        </main>
+    <AppShellProvider>
+      <div className="flex min-h-screen">
+        {sidebar}
+        <div className="flex min-h-screen min-w-0 flex-1 flex-col md:ml-[230px]">
+          {topbar}
+          <main className="mx-auto w-full max-w-[1400px] flex-1 px-3 py-3 pt-[58px] sm:px-4 sm:py-3.5 sm:pt-[66px]">
+            {children}
+          </main>
+        </div>
       </div>
-    </div>
+    </AppShellProvider>
   );
 }
 
@@ -37,8 +42,8 @@ export function StatsGrid({
       className={cn(
         "grid gap-2.5",
         cols === 3
-          ? "grid-cols-2 lg:grid-cols-3"
-          : "grid-cols-2 lg:grid-cols-4",
+          ? "grid-cols-1 min-[380px]:grid-cols-2 lg:grid-cols-3"
+          : "grid-cols-1 min-[380px]:grid-cols-2 lg:grid-cols-4",
         className,
       )}
     >
@@ -129,7 +134,7 @@ export function TableWrap({ children }: { children: ReactNode }) {
 
 export function DataTable({ children }: { children: ReactNode }) {
   return (
-    <table className="w-full border-collapse [&_th]:border-b-2 [&_th]:border-grey-200 [&_th]:bg-grey-50 [&_th]:px-4 [&_th]:py-3 [&_th]:text-left [&_th]:text-[11px] [&_th]:font-bold [&_th]:uppercase [&_th]:tracking-wide [&_th]:text-grey-600 [&_td]:border-b [&_td]:border-grey-100 [&_td]:px-4 [&_td]:py-3.5 [&_td]:text-[13px] [&_td]:text-grey-800 [&_tr:hover_td]:bg-grey-50 [&_tr:last-child_td]:border-b-0">
+    <table className="w-full min-w-[520px] border-collapse [&_th]:border-b-2 [&_th]:border-grey-200 [&_th]:bg-grey-50 [&_th]:px-2.5 [&_th]:py-2.5 [&_th]:text-left [&_th]:text-[10px] [&_th]:font-bold [&_th]:uppercase [&_th]:tracking-wide [&_th]:text-grey-600 sm:[&_th]:px-4 sm:[&_th]:py-3 sm:[&_th]:text-[11px] [&_td]:border-b [&_td]:border-grey-100 [&_td]:px-2.5 [&_td]:py-3 [&_td]:text-xs [&_td]:text-grey-800 sm:[&_td]:px-4 sm:[&_td]:py-3.5 sm:[&_td]:text-[13px] [&_tr:hover_td]:bg-grey-50 [&_tr:last-child_td]:border-b-0">
       {children}
     </table>
   );

@@ -33,13 +33,13 @@ export default function LandingNav() {
 
   return (
     <header className={landingNavClass}>
-      <Link href="/" className="flex items-center gap-3">
+      <Link href="/" className="flex min-w-0 items-center gap-2 sm:gap-3">
         <BrandLogo />
-        <div className="leading-tight">
-          <div className="text-[16.5px] font-extrabold leading-none text-white">
+        <div className="min-w-0 leading-tight">
+          <div className="truncate text-sm font-extrabold leading-none text-white sm:text-[16.5px]">
             AP Vision Care
           </div>
-          <div className="mt-[3px] text-[10.5px] text-white/60">
+          <div className="mt-[3px] hidden text-[10.5px] text-white/60 sm:block">
             Digital Vision Care &amp; Health Intelligence
           </div>
         </div>
@@ -89,7 +89,7 @@ export default function LandingNav() {
       {open && (
         <div
           className={cn(
-            "absolute inset-x-0 top-[70px] border-b border-white/10 bg-primary-dark px-6 py-4 md:hidden",
+            "absolute inset-x-0 top-14 border-b border-white/10 bg-primary-dark px-4 py-4 sm:top-[70px] sm:px-6 md:hidden",
           )}
         >
           {NAV_LINKS.map((link) => (

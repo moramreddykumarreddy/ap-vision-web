@@ -9,6 +9,11 @@ export const metadata: Metadata = {
     "AP Vision Care, Andhra Pradesh, eye care, vision screening, tele-ophthalmology, government health",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: {

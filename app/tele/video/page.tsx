@@ -53,7 +53,7 @@ export default function VideoConsultation() {
       sidebar={<Sidebar role="tele" userName="Dr. Anita Rao" userSub="SVIMS, Tirupati" />}
       topbar={<Topbar title="Video Consultation" subtitle="Ramaiah Venkata • Diabetic Retinopathy" />}
     >
-          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 20 }}>
+          <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
             {/* Video */}
             <div>
               <div className="relative max-h-[380px] aspect-video overflow-hidden rounded-xl bg-[#0a0a12]">
@@ -159,7 +159,7 @@ export default function VideoConsultation() {
               <SuccessBanner message={successMsg} />
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                     <label style={{ fontSize: 11, fontWeight: 700 }}>Right Eye OD Sphere</label>
                     <input type="text" value={odSphere} onChange={e => setOdSphere(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13 }} />
@@ -169,7 +169,7 @@ export default function VideoConsultation() {
                     <input type="text" value={osSphere} onChange={e => setOsSphere(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13 }} />
                   </div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                     <label style={{ fontSize: 11, fontWeight: 700 }}>Right Eye OD Cylinder</label>
                     <input type="text" value={odCyl} onChange={e => setOdCyl(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid ${colors.grey300}', fontSize: 13 }} />

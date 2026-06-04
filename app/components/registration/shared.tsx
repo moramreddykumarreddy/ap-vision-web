@@ -133,7 +133,7 @@ export function AreaTypeSelector({
 }) {
   const options = ["Urban", "Rural", "Tribal"];
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className="grid grid-cols-1 gap-2 min-[360px]:grid-cols-3">
       {options.map((opt) => (
         <button
           key={opt}

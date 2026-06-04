@@ -53,7 +53,7 @@ export const landingIconVariants = [
 
 /** Landing navbar + footer */
 export const landingNavClass =
-  "fixed inset-x-0 top-0 z-[100] flex h-[70px] items-center justify-between border-b border-white/10 bg-primary-dark/95 px-6 backdrop-blur-md lg:px-[46px]";
+  "fixed inset-x-0 top-0 z-[100] flex h-14 min-h-14 items-center justify-between gap-3 border-b border-white/10 bg-primary-dark/95 px-4 backdrop-blur-md sm:h-[70px] sm:min-h-[70px] sm:px-6 lg:px-[46px]";
 
 /** Shared focus ring for all buttons */
 export const buttonFocusClass =

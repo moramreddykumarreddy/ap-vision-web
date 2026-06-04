@@ -66,7 +66,7 @@ export default function ScreeningDashboard() {
                 <StatusBadge label={c.status} />
               </div>
               <div className="mb-2 text-xs text-grey-400">{c.mandal}, {c.district} • {c.date}</div>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {[
                   { l: 'Registered', v: c.registered },
                   { l: 'Screened', v: c.screened },
